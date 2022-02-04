@@ -79,9 +79,11 @@ public class Activity implements Serializable {
     public void setActivityImage(ImageIcon icon) {
         activityImage = icon;
     }
+
     public ImageIcon getActivityImage() {
         return activityImage;
     }
+
     public void createActivityImage(String fileName) {
         activityImage = new ImageIcon(fileName);
     }

@@ -106,7 +106,7 @@ public class AppPanel extends JPanel {
     }
 
     public void createCBTimeLimit() {
-        interval = new String[]{"5", "15", "30", "45", "60"};
+        interval = new String[]{"1", "5", "15", "30", "45", "60"};
         cmbTimeLimit = new JComboBox<>(interval);
         cmbTimeLimit.setSelectedIndex(3);
     }
