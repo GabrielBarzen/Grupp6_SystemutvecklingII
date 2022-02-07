@@ -54,6 +54,10 @@ public class AppPanel extends JPanel {
         activities = new LinkedList<>();
     }
 
+    public AppPanel() {
+
+    }
+
     public void setupPanel() {
         setSize(new Dimension(819, 438));
     }
@@ -89,7 +93,7 @@ public class AppPanel extends JPanel {
         JPanel centerPnl = new JPanel();
         centerPnl.setSize(new Dimension(intervalPnl.getWidth(), intervalPnl.getHeight()));
         centerPnl.setBackground(clrPanels);
-        updateLblInterval();
+        updateLblInterval(1001010101);// parameter
         btnInterval = new JButton("Ändra intervall");
         startTimer(Integer.parseInt((String) cmbTimeLimit.getSelectedItem()), 59);
         centerPnl.add(cmbTimeLimit);
@@ -99,10 +103,11 @@ public class AppPanel extends JPanel {
         intervalPnl.add(lblTimerInfo, BorderLayout.SOUTH);
     }
 
-    public void updateLblInterval() {
+    public int updateLblInterval(int intervalminute) {
         int interval;
         interval = Integer.parseInt((String) cmbTimeLimit.getSelectedItem());
         lblInterval.setText("Aktivt tidsintervall: " + interval + " minuter");
+        return 10;
     }
 
     public void createCBTimeLimit() {
@@ -226,7 +231,8 @@ public class AppPanel extends JPanel {
         return new ImageIcon(newImg);
     }
 
-    public void showNotification(Activity activity) {
+    public int showNotification(Activity activity, int x, int y) {
+        int framesize= x+y;
         Toolkit.getDefaultToolkit().beep();
         ImageIcon activityIcon = createActivityIcon(activity);
         String[] buttons = {"Jag har gjort aktiviteten!", "Påminn mig om fem minuter",};
@@ -249,6 +255,7 @@ public class AppPanel extends JPanel {
             activity.setCompleted(false);
             mainPanel.sendActivityFromGUI(activity);
         }
+        return framesize;
     }
 
     public class welcomePane extends JOptionPane {
@@ -279,7 +286,7 @@ public class AppPanel extends JPanel {
                 interval = Integer.parseInt((String) cmbTimeLimit.getSelectedItem());
                 countTimerInterval(interval);
                 mainPanel.sendChosenInterval(interval);
-                updateLblInterval();
+                updateLblInterval(10101001);
             }
         }
     }

@@ -95,7 +95,7 @@ public class MainFrame extends JFrame {
      * @param activity the received object.
      */
     public void showNotification(Activity activity) {
-        mainPanel.getAppPanel().showNotification(activity);
+        mainPanel.getAppPanel().showNotification(activity,0,0);
     }
 
     /**
