@@ -45,4 +45,8 @@ public class MainPanel extends JPanel {
     public void sendChosenInterval(int interval) {
         mainFrame.sendChosenInterval(interval);
     }
+
+    public MainFrame getMainFrame() {
+        return mainFrame;
+    }
 }
