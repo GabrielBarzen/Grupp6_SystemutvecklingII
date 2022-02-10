@@ -33,6 +33,8 @@ public class AppPanel extends JPanel {
     private JButton btnInterval;
     private JPanel intervalPnl;
     private JLabel lblInterval;
+    //Add New Exercise
+    private JButton btnAddExercise;
 
     private BorderLayout borderLayout = new BorderLayout();
     private ActionListener listener = new ButtonListener();
@@ -89,11 +91,19 @@ public class AppPanel extends JPanel {
         JPanel centerPnl = new JPanel();
         centerPnl.setSize(new Dimension(intervalPnl.getWidth(), intervalPnl.getHeight()));
         centerPnl.setBackground(clrPanels);
+        centerPnl.setLayout(new BorderLayout());
         updateLblInterval();
         btnInterval = new JButton("Ändra intervall");
         startTimer(Integer.parseInt((String) cmbTimeLimit.getSelectedItem()), 59);
-        centerPnl.add(cmbTimeLimit);
-        centerPnl.add(btnInterval);
+
+
+        centerPnl.add(cmbTimeLimit, BorderLayout.NORTH);
+        centerPnl.add(btnInterval, BorderLayout.CENTER);
+        //Add exercise
+        btnAddExercise = new JButton("Lägg till övning");
+        btnAddExercise.addActionListener(listener);
+        centerPnl.add(btnAddExercise, BorderLayout.SOUTH);
+
         intervalPnl.add(lblInterval, BorderLayout.NORTH);
         intervalPnl.add(centerPnl, BorderLayout.CENTER);
         intervalPnl.add(lblTimerInfo, BorderLayout.SOUTH);
@@ -280,6 +290,10 @@ public class AppPanel extends JPanel {
                 countTimerInterval(interval);
                 mainPanel.sendChosenInterval(interval);
                 updateLblInterval();
+            }
+            //Add new exercise
+            if(click == btnAddExercise) {
+                JOptionPane.showMessageDialog(null, "Lägg till övning");
             }
         }
     }
