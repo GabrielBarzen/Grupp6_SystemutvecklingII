@@ -15,11 +15,11 @@ public class AddActivityFrame extends JFrame {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.exit(0);
+//                System.exit(0);
             }
         });
         setLayout(null);
