@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
-
 public class AddActivityFrame extends JFrame {
 
     public AddActivityFrame(MainFrame mainFrame) {
