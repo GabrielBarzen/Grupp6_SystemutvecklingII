@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class AddActivityPanel extends JPanel {
     private JTextField nameTxtField;
@@ -36,6 +37,7 @@ public class AddActivityPanel extends JPanel {
         instructionTxtArea = new JTextArea();
         addImageBtn = new JButton("Lägg till en bild");
         imageLabel = new JLabel();
+        imageLabel.setMaximumSize(new Dimension(40, 50));
 
         enterBtn = new JButton("Lägg till övning");
         exitBtn = new JButton("Avbryt");
@@ -80,8 +82,8 @@ public class AddActivityPanel extends JPanel {
         c.gridheight = 1;
         add(addImageBtn, c);
         c.gridx = 1;
-        c.ipady = 40;
-        c.gridheight = 4;
+//        c.ipady = 40;
+//        c.gridheight = 4;
         add(imageLabel, c);
 
 
@@ -116,10 +118,22 @@ public class AddActivityPanel extends JPanel {
         addImageBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Picture soon come");
+                selectImage();
             }
         });
     }
+
+    public void selectImage() {
+        JFileChooser fileChooser = new JFileChooser();
+
+        int response = fileChooser.showOpenDialog(null);
+        if(response == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            imageLabel.setIcon(new ImageIcon(file.getAbsolutePath()));
+            addActivityFrame.setMinimumSize(new Dimension(500, 600));
+        }
+    }
+
     public void addActivity() {
         JOptionPane.showMessageDialog(null, "You added " + nameTxtField.getText());
         try {
@@ -129,8 +143,4 @@ public class AddActivityPanel extends JPanel {
             ex.printStackTrace();
         }
     }
-
-//    public ImageIcon selectImage() {
-//
-//    }
 }
