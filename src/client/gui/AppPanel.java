@@ -138,6 +138,7 @@ public class AppPanel extends JPanel {
             minuteInterval--;
             if (minuteInterval == -1) {
                 stopTimer();
+                showWindowsNotification();
             }
             secondInterval = 59;
         }
@@ -249,6 +250,28 @@ public class AppPanel extends JPanel {
             activity.setCompleted(false);
             mainPanel.sendActivityFromGUI(activity);
         }
+    }
+    //Code to Fix bug of no notification when window is mimimized
+    public void showWindowsNotification() {
+
+        try {
+            SystemTray systemTray = SystemTray.getSystemTray();
+
+            Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("exercise.png"));
+
+            TrayIcon trayIcon = new TrayIcon(image, "Motion dags");
+            trayIcon.setImageAutoSize(true);
+            trayIcon.setToolTip("EDIM");
+
+            systemTray.add(trayIcon);
+
+            trayIcon.displayMessage("Dags att göra en övning", "EDIM", TrayIcon.MessageType.INFO);
+            //notification without Java text
+            //trayIcon.displayMessage("Dags att göra en övning", "EDIM", TrayIcon.MessageType.NONE);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public class welcomePane extends JOptionPane {
