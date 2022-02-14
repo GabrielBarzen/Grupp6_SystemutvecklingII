@@ -293,7 +293,6 @@ public class AppPanel extends JPanel {
             }
             //Add new exercise
             if(click == btnAddExercise) {
-//                JOptionPane.showMessageDialog(null, "Lägg till övning");
                 new AddActivityFrame(mainPanel.getMainFrame());
             }
         }
