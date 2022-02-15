@@ -6,9 +6,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.PrintWriter;
 
+/**
+ * author: Satya Singh
+ * This class makes up the panel where the user is able to fill in the new activity details
+ */
 public class AddActivityPanel extends JPanel {
     private JTextField nameTxtField;
     private JLabel nameLabel;
@@ -20,7 +26,7 @@ public class AddActivityPanel extends JPanel {
     private JLabel imageLabel;
     private JButton enterBtn;
     private JButton exitBtn;
-    private File imageFile;
+    private BufferedImage bufferedImage;
 
     private AddActivityFrame addActivityFrame;
     private MainFrame mainFrame;
@@ -122,12 +128,12 @@ public class AddActivityPanel extends JPanel {
         addImageBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               imageFile = selectImage();
+               selectImage();
             }
         });
     }
 
-    private File selectImage() {
+    private void selectImage() {
         JFileChooser fileChooser = new JFileChooser();
         File file = null;
         int response = fileChooser.showOpenDialog(null);
@@ -138,30 +144,44 @@ public class AddActivityPanel extends JPanel {
                 imageLabel.setIcon(icon);
             } catch(Exception e) {}
         }
-        return file;
     }
 
     private BufferedImage scaleImage(int w, int h, BufferedImage img) throws Exception {
-        BufferedImage bi;
-        bi = new BufferedImage(w, h, BufferedImage.TRANSLUCENT);
-        Graphics2D g2d = (Graphics2D) bi.createGraphics();
+        BufferedImage bufferedImage;
+        bufferedImage = new BufferedImage(w, h, BufferedImage.TRANSLUCENT);
+        Graphics2D g2d = (Graphics2D) bufferedImage.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
         g2d.drawImage(img, 0, 0, w, h, null);
         g2d.dispose();
-        return bi;
+        this.bufferedImage = bufferedImage;
+        return bufferedImage;
     }
-//    private void saveImage() {
-//        try {
+    
+    private void saveImage() {
+        try {
 //            BufferedImage bufferedImage = new BufferedImage(imageFile.getAbsolutePath());
 //            bufferedImage.get
-//
-//        }catch(Exception e) { }
-//    }
+
+
+        }catch(Exception e) { }
+    }
+
+    /**
+     * Have to change file to activities.txt
+     */
+    public void saveExerciseDetails() {
+        PrintWriter writer = new PrintWriter(new FileWriter("files/test.txt", true));
+        writer.println(nameTxtField.getText());
+        writer.println(instructionTxtArea.getText());
+        writer.println(descriptionTxtArea.getText());
+        writer.close();
+    }
 
     public void addActivity() {
         JOptionPane.showMessageDialog(null, "You added " + nameTxtField.getText());
-
+        saveImage();
+        saveExerciseDetails();
         try {
             addActivityFrame.dispose();
             Thread.sleep(500);
