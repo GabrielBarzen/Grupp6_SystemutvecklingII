@@ -2,7 +2,7 @@ package tests;
 
 import client.gui.AppPanel;
 import server.Activity;
-
+//Benny, Linn
 import static org.junit.Assert.*;
 
 public class AppPanelTest {

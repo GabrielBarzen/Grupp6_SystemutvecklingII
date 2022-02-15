@@ -1,5 +1,6 @@
 package server;
 
+import javax.naming.LimitExceededException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -25,23 +26,25 @@ public class UserRegister {
         return userHashMap;
     }
 
-    public void setUserHashMap(HashMap userList) {
+    public HashMap setUserHashMap(HashMap userList) {
         this.userHashMap = userList;
+        return (HashMap) userHashMap;
     }
 
     public LinkedList<User> getUserLinkedList() {
         return userLinkedList;
     }
 
-    public void setUserLinkedList(LinkedList<User> userLinkedList) {
+    public LinkedList setUserLinkedList(LinkedList<User> userLinkedList) {
         this.userLinkedList = userLinkedList;
+        return userLinkedList;
     }
 
     /**
      * Updates the HashMap and LinkedList with a new updated User object.
      * @param updatedUser
      */
-    public void updateUser(User updatedUser) {
+    public LinkedList updateUser(User updatedUser) {
         userHashMap.remove(updatedUser.getUsername());
         userHashMap.put(updatedUser.getUsername(), updatedUser);
 
@@ -51,5 +54,7 @@ public class UserRegister {
             }
         }
         userLinkedList.add(updatedUser);
+        return userLinkedList;
     }
+
 }
