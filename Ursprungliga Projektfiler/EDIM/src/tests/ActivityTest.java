@@ -44,10 +44,5 @@ public class ActivityTest {
         assertTrue(activity.isCompleted());
     }
 
-    @Test
-    public void creatingActivityImage(){
-        activity.createActivityImage("imagesClient/exercise.png");
-        ImageIcon imageIcon = new ImageIcon("imagesClient/exercise.png");
-        //assertEquals(activity.getActivityImage(),imageIcon);
-    }
+
 }

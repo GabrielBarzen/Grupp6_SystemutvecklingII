@@ -33,48 +33,67 @@ public class UserTimer implements ActionListener {
     /**
      * Starts the timer object.
      */
-    public void startTimer() {
+    public boolean startTimer() {
         timer = new Timer(60000, this);
         timer.start();
+        if(timer == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+
     }
 
     /**
      * Stops the timer object.
      */
-    public void stopTimer() {
+    public boolean stopTimer() {
         currentTime = 0;
         if(timer!=null) {
             timer.stop();
             timer = null;
         }
+        if(timer == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+
     }
 
     /**
      * Updates the user object with the received user.
      * @param user the received user.
      */
-    public void updateUser(User user) {
+    public User updateUser(User user) {
         this.user = user;
+        return user;
     }
 
     public int getCurrentTime() {
         return currentTime;
     }
 
-    public void setCurrentTime(int currentTime) {
+    public int setCurrentTime(int currentTime) {
         this.currentTime = currentTime;
+        return currentTime;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setDelayTimer(int delay) {
+    public int setDelayTimer(int delay) {
         this.delay = delay;
+        return delay;
     }
 
-    public void setActiveDelay(boolean active){
+    public boolean setActiveDelay(boolean active){
         this.activateDelay = active;
+        return active;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -115,7 +134,7 @@ public class UserTimer implements ActionListener {
      * @return a boolean if they are the same value.
      */
     public boolean checkTimeInterval() {
-        System.out.println("UserTimer:  currentTime: " + currentTime + " notifInterval: " + user.getNotificationInterval());
+        System.out.println("UserTimer:  currentTime: " + currentTime + " notifiInterval: " + user.getNotificationInterval());
         if (currentTime >= user.getNotificationInterval()) {
             return true;
         }

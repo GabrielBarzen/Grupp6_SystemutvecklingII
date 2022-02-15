@@ -118,6 +118,7 @@ public class ServerController extends Thread {
      * @param username the received username.
      */
     public void sendActivity(String username) {
+
         User user = userRegister.getUserHashMap().get(username);
         if (user.getDelayedActivity() != null) {
             sendBuffer.put(user.getDelayedActivity());
@@ -135,6 +136,7 @@ public class ServerController extends Thread {
             sendBuffer.put(activityToSend);
             System.out.println("Sending activity: " + activityToSend.getActivityName());
         }
+
     }
 
     /**
