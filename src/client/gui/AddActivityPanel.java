@@ -1,10 +1,13 @@
 package client.gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 
 public class AddActivityPanel extends JPanel {
     private JTextField nameTxtField;
@@ -17,6 +20,7 @@ public class AddActivityPanel extends JPanel {
     private JLabel imageLabel;
     private JButton enterBtn;
     private JButton exitBtn;
+    private File imageFile;
 
     private AddActivityFrame addActivityFrame;
     private MainFrame mainFrame;
@@ -118,29 +122,51 @@ public class AddActivityPanel extends JPanel {
         addImageBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selectImage();
+               imageFile = selectImage();
             }
         });
     }
 
-    public void selectImage() {
+    private File selectImage() {
         JFileChooser fileChooser = new JFileChooser();
-
+        File file = null;
         int response = fileChooser.showOpenDialog(null);
         if(response == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            imageLabel.setIcon(new ImageIcon(file.getAbsolutePath()));
-            addActivityFrame.setMinimumSize(new Dimension(500, 600));
+            file = fileChooser.getSelectedFile();
+            try {
+                ImageIcon icon = new ImageIcon(scaleImage(120,120, ImageIO.read(new File(file.getAbsolutePath()))));
+                imageLabel.setIcon(icon);
+            } catch(Exception e) {}
         }
+        return file;
     }
+
+    private BufferedImage scaleImage(int w, int h, BufferedImage img) throws Exception {
+        BufferedImage bi;
+        bi = new BufferedImage(w, h, BufferedImage.TRANSLUCENT);
+        Graphics2D g2d = (Graphics2D) bi.createGraphics();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+        g2d.drawImage(img, 0, 0, w, h, null);
+        g2d.dispose();
+        return bi;
+    }
+//    private void saveImage() {
+//        try {
+//            BufferedImage bufferedImage = new BufferedImage(imageFile.getAbsolutePath());
+//            bufferedImage.get
+//
+//        }catch(Exception e) { }
+//    }
 
     public void addActivity() {
         JOptionPane.showMessageDialog(null, "You added " + nameTxtField.getText());
+
         try {
             addActivityFrame.dispose();
             Thread.sleep(500);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+//            ex.printStackTrace();
         }
     }
 }
