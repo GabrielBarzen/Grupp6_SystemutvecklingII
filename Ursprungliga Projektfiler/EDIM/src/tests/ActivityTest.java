@@ -1,6 +1,7 @@
-package server;
+package tests;
 
 import org.junit.Test;
+import server.Activity;
 
 import javax.swing.*;
 

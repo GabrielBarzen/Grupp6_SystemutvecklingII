@@ -1,5 +1,6 @@
-package client.gui;
+package tests;
 
+import client.gui.AppPanel;
 import server.Activity;
 
 import static org.junit.Assert.*;

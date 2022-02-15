@@ -42,24 +42,27 @@ public class User implements Serializable {
         return username;
     }
 
-    public void setUsername(String username) {
+    public String setUsername(String username) {
         this.username = username;
+        return username;
     }
 
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public int setAge(int age) {
         this.age = age;
+        return age;
     }
 
     public int getNotificationInterval() {
         return notificationInterval;
     }
 
-    public void setNotificationInterval(int notificationInterval) {
+    public int setNotificationInterval(int notificationInterval) {
         this.notificationInterval = notificationInterval;
+        return notificationInterval;
     }
 
     public boolean isOnline() {
