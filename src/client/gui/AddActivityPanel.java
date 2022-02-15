@@ -6,10 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
 
 /**
  * author: Satya Singh
@@ -31,12 +28,21 @@ public class AddActivityPanel extends JPanel {
     private AddActivityFrame addActivityFrame;
     private MainFrame mainFrame;
 
+    /**
+     *
+     * @param addActivityFrame Frame housing this JPanel extension class
+     * @param mainFrame The main frame of the GUI
+     */
     public AddActivityPanel(AddActivityFrame addActivityFrame, MainFrame mainFrame) {
         this.addActivityFrame = addActivityFrame;
         this.mainFrame = mainFrame;
         initComponents();
     }
 
+    /**
+     * This method is responsible for instantiating the global variables in the class, and also calling the
+     * initLayout() method
+     */
     public void initComponents() {
         nameLabel = new JLabel("Övningens namn");
         nameTxtField = new JTextField();
@@ -55,6 +61,9 @@ public class AddActivityPanel extends JPanel {
         initLayout();
     }
 
+    /**
+     * This method sets up the GridBag Layout on the panel
+     */
     public void initLayout() {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -92,8 +101,6 @@ public class AddActivityPanel extends JPanel {
         c.gridheight = 1;
         add(addImageBtn, c);
         c.gridx = 1;
-//        c.ipady = 40;
-//        c.gridheight = 4;
         add(imageLabel, c);
 
 
@@ -109,6 +116,9 @@ public class AddActivityPanel extends JPanel {
         addListeners();
     }
 
+    /**
+     * This method adds Actioon Listeners to the buttons on the panel
+     */
     public void addListeners() {
         exitBtn.addActionListener(new ActionListener() {
             @Override
@@ -133,6 +143,9 @@ public class AddActivityPanel extends JPanel {
         });
     }
 
+    /**
+     * This method facilitates the selecting of an image through JFileChoose
+     */
     private void selectImage() {
         JFileChooser fileChooser = new JFileChooser();
         File file = null;
@@ -146,6 +159,14 @@ public class AddActivityPanel extends JPanel {
         }
     }
 
+    /**
+     *
+     * @param w width of scaled image
+     * @param h height of scaled image
+     * @param img image to scale
+     * @return scaled buffered image
+     * This method scales and returns an image to fit on a JLabel
+     */
     private BufferedImage scaleImage(int w, int h, BufferedImage img) throws Exception {
         BufferedImage bufferedImage;
         bufferedImage = new BufferedImage(w, h, BufferedImage.TRANSLUCENT);
@@ -157,27 +178,47 @@ public class AddActivityPanel extends JPanel {
         this.bufferedImage = bufferedImage;
         return bufferedImage;
     }
-    
+
+    /**
+     * Have to change directory to imagesServer
+     *
+     * This method saves the image of the exercise selected by the user
+     */
     private void saveImage() {
         try {
-//            BufferedImage bufferedImage = new BufferedImage(imageFile.getAbsolutePath());
-//            bufferedImage.get
+            if(bufferedImage != null) {
+                File file = new File("files/testImg.png");
+                ImageIO.write(bufferedImage, "png", file);
+            }
 
-
-        }catch(Exception e) { }
+        }catch(Exception e) {
+            System.out.println("couldn't write");
+        }
     }
 
     /**
      * Have to change file to activities.txt
+     *
+     * This method saves the name, instructions and description of the exercise
+     * to the activities.txt file
      */
     public void saveExerciseDetails() {
-        PrintWriter writer = new PrintWriter(new FileWriter("files/test.txt", true));
-        writer.println(nameTxtField.getText());
-        writer.println(instructionTxtArea.getText());
-        writer.println(descriptionTxtArea.getText());
-        writer.close();
+
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter("files/test.txt", true));
+            writer.println(nameTxtField.getText());
+            writer.println(instructionTxtArea.getText());
+            writer.println(descriptionTxtArea.getText());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * This method is called when the addActivity button is clicked
+     * It calls the methods that save the image and exercise details
+     */
     public void addActivity() {
         JOptionPane.showMessageDialog(null, "You added " + nameTxtField.getText());
         saveImage();
