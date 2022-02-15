@@ -18,8 +18,8 @@ public class ActivityRegister {
         createRegister(file);
     }
 
-    private void createRegister(String file) {
-        activityRegister=new LinkedList<Activity>();
+    public LinkedList<Activity> createRegister(String file) {
+        activityRegister = new LinkedList<Activity>();
         int nbrOfActivities;
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
@@ -34,7 +34,9 @@ public class ActivityRegister {
             }
         } catch (IOException e) {
             e.printStackTrace();
+
         }
+        return activityRegister;
     }
 
     public LinkedList<Activity> getActivityRegister() {
