@@ -1,11 +1,8 @@
 package tests;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import server.Buffer;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BufferTest {
     Buffer buffer=new Buffer();

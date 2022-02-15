@@ -54,7 +54,7 @@ public class ClientCommunicationController {
     /**
      * This method tries to close the socket and the connection to the server.
      */
-    public void disconnect() {
+    public Boolean disconnect() {
         isConnected = false;
         try {
             Thread.sleep(2000);
@@ -62,6 +62,7 @@ public class ClientCommunicationController {
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
+        return socket.isClosed();
     }
 
     /**

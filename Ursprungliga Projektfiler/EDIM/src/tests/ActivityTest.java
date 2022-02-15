@@ -1,11 +1,13 @@
 package tests;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import server.Activity;
 
 import javax.swing.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 /**
  * Author: Linn Borgström
@@ -23,6 +25,9 @@ public class ActivityTest {
     public void getActivityInfo() {
         activity.setActivityInfo("Du har nu tränat lår och rumpa samt ökat din koncentration.");
         assertEquals("Du har nu tränat lår och rumpa samt ökat din koncentration.", activity.getActivityInfo());
+    }
+
+    private void assertEquals(String s, String activityInfo) {
     }
 
     @Test

@@ -1,12 +1,12 @@
 package tests;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import server.Activity;
 import server.User;
-
 import java.util.LinkedList;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserTest {
     private LinkedList<Activity> completedActivities=new LinkedList<>();
@@ -63,18 +63,22 @@ public class UserTest {
 
     @Test
     public void isOnline() {
+        //Todo Verkar aldrig vara skapad
     }
 
     @Test
     public void setOnline() {
+        //Todo Verkar aldrig vara skapad
     }
 
     @Test
     public void getUserType() {
+        //Todo Bara en enum
     }
 
     @Test
     public void setUserType() {
+        //Todo Bara en enum
     }
 
     @Test
