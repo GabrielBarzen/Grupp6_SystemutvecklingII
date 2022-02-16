@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 
 /**
- * @author: Satya Singh
+ * @author Satya Singh
  * This class makes up the panel where the user is able to fill in the new activity details
  */
 public class AddActivityPanel extends JPanel {
@@ -206,10 +206,10 @@ public class AddActivityPanel extends JPanel {
 
 
         StringBuilder instructionsString = new StringBuilder();
-        StringBuilder descriptionString = new StringBuilder();
         for(String line : instructionTxtArea.getText().split("\\n")) {
             instructionsString.append(line + "\t&");
         }
+        StringBuilder descriptionString = new StringBuilder();
         for(String line : descriptionTxtArea.getText().split("\\n")) {
             descriptionString.append(line + "\t&");
         }
@@ -233,9 +233,9 @@ public class AddActivityPanel extends JPanel {
     public void addActivity() {
         if(nameTxtField.getText().isBlank() || instructionTxtArea.getText().isBlank()
                 || descriptionTxtArea.getText().isBlank() || imageLabel.getIcon() == null) {
-            JOptionPane.showMessageDialog(null, "Fill in all fields before adding exercise");
+            JOptionPane.showMessageDialog(null, "All information måste anges innan du kan spara övningen");
         } else {
-            JOptionPane.showMessageDialog(null, "You added " + nameTxtField.getText());
+            JOptionPane.showMessageDialog(null, "Du har lagt till " + nameTxtField.getText());
             saveImage();
             saveExerciseDetails();
 

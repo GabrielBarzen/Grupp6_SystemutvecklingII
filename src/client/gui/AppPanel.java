@@ -14,7 +14,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * This is the panel in the frame that contains pretty much all of the components in the GUI.
+ * This is the panel in the frame that contains pretty much all the components in the GUI.
  *
  * @version 1.0
  * @author Oscar Kareld, Chanon Borgstrom, Carolin Nordstrom
@@ -33,7 +33,6 @@ public class AppPanel extends JPanel {
     private JButton btnInterval;
     private JPanel intervalPnl;
     private JLabel lblInterval;
-    //Add New Exercise
     private JButton btnAddExercise;
 
     private BorderLayout borderLayout = new BorderLayout();
@@ -80,33 +79,51 @@ public class AppPanel extends JPanel {
         addActivityListener();
     }
 
-    public void createIntervalPanel() {
+    /**
+     * @author Satya Singh
+     * This method creates the interval panel on the left side of the GUI and
+     * populates it with componenets
+     */
+    private void createIntervalPanel() {
         intervalPnl = new JPanel();
         intervalPnl.setLayout(new BorderLayout());
         intervalPnl.setBackground(clrPanels);
         intervalPnl.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.LIGHT_GRAY));
 
+        btnInterval = new JButton("Ändra intervall");
+        btnAddExercise = new JButton("Lägg till övning");
+        btnAddExercise.addActionListener(listener);
         lblInterval = new JLabel();
         lblTimerInfo = new JLabel();
+        startTimer(Integer.parseInt((String) cmbTimeLimit.getSelectedItem()), 59);
+        updateLblInterval();
+
         JPanel centerPnl = new JPanel();
         centerPnl.setSize(new Dimension(intervalPnl.getWidth(), intervalPnl.getHeight()));
         centerPnl.setBackground(clrPanels);
-        centerPnl.setLayout(new BorderLayout());
-        updateLblInterval();
-        btnInterval = new JButton("Ändra intervall");
-        startTimer(Integer.parseInt((String) cmbTimeLimit.getSelectedItem()), 59);
+        centerPnl.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
 
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
 
-        centerPnl.add(cmbTimeLimit, BorderLayout.NORTH);
-        centerPnl.add(btnInterval, BorderLayout.CENTER);
-        //Add exercise
-        btnAddExercise = new JButton("Lägg till övning");
-        btnAddExercise.addActionListener(listener);
-        centerPnl.add(btnAddExercise, BorderLayout.SOUTH);
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 1;
+        centerPnl.add(cmbTimeLimit, c);
+        c.gridwidth = 2;
+        c.gridx = 1;
+        centerPnl.add(btnInterval, c);
+
+        c.gridwidth = 1;
+        c.gridx = 0;
+        c.gridy = 2;
+        centerPnl.add(btnAddExercise, c);
 
         intervalPnl.add(lblInterval, BorderLayout.NORTH);
         intervalPnl.add(centerPnl, BorderLayout.CENTER);
         intervalPnl.add(lblTimerInfo, BorderLayout.SOUTH);
+
     }
 
     public void updateLblInterval() {
@@ -226,7 +243,12 @@ public class AppPanel extends JPanel {
     }
 
     public void showActivityInfo(String activityInfo) {
-        taActivityInfo.setText(activityInfo);
+        String[] lines = activityInfo.split("&");
+        StringBuilder info = new StringBuilder();
+        for(String s: lines) {
+            info.append(s + " ");
+        }
+        taActivityInfo.setText(info.toString());
     }
 
     public ImageIcon createActivityIcon(Activity activity) {
@@ -240,12 +262,8 @@ public class AppPanel extends JPanel {
         Toolkit.getDefaultToolkit().beep();
         ImageIcon activityIcon = createActivityIcon(activity);
         String[] buttons = {"Jag har gjort aktiviteten!", "Påminn mig om fem minuter",};
-        String instruction = activity.getActivityInstruction();
-        String[] instructions = new String[3];
+        String[] instructions = activity.getActivityInstruction().split("&");
 
-        if (instruction.contains("&")) {
-            instructions = instruction.split("&");
-        }
         int answer = welcomePane.showOptionDialog(null, instructions, activity.getActivityName(),
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, activityIcon, buttons, buttons[0]);
         if (answer == 0) {
@@ -291,7 +309,6 @@ public class AppPanel extends JPanel {
                 mainPanel.sendChosenInterval(interval);
                 updateLblInterval();
             }
-            //Add new exercise
             if(click == btnAddExercise) {
                 new AddActivityFrame();
             }

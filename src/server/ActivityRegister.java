@@ -20,7 +20,7 @@ public class ActivityRegister {
     }
 
     /**
-     * @author: Satya Singh
+     * @author Satya Singh
      * Rewrote the old method to work with the 'Add new activity' functionality.
      * This method reads the lines in the text file and creates a
      * Linked List with the activities in the file.
