@@ -27,7 +27,9 @@ public class AddActivityPanel extends JPanel {
     private AddActivityFrame addActivityFrame;
 
     /**
-     *
+     * This constructor initiates the AddActivityFrame instance with the incoming parameter, to allow
+     * for communication with the frame.
+     * It also calls the initComponents() function to set up the components of the panel.
      * @param addActivityFrame Frame housing this JPanel extension class
      */
     public AddActivityPanel(AddActivityFrame addActivityFrame) {
@@ -58,7 +60,8 @@ public class AddActivityPanel extends JPanel {
     }
 
     /**
-     * This method sets up the GridBag Layout on the panel
+     * This function sets up the GridBag Layout on the panel and calls the
+     * addListeners() function.
      */
     public void initLayout() {
         setLayout(new GridBagLayout());
@@ -115,7 +118,7 @@ public class AddActivityPanel extends JPanel {
     }
 
     /**
-     * This method adds Action Listeners to the buttons on the panel
+     * This function adds Action Listeners to the buttons on the panel
      */
     public void addListeners() {
         exitBtn.addActionListener(new ActionListener() {
@@ -142,7 +145,7 @@ public class AddActivityPanel extends JPanel {
     }
 
     /**
-     * This method facilitates the selecting of an image through JFileChoose
+     * This function facilitates the selecting of an image through JFileChoose
      */
     private void selectImage() {
         JFileChooser fileChooser = new JFileChooser();
@@ -163,7 +166,7 @@ public class AddActivityPanel extends JPanel {
      * @param h height of scaled image
      * @param img image to scale
      * @return scaled buffered image
-     * This method scales and returns an image to fit on a JLabel
+     * This function scales and returns an image to fit on a JLabel
      */
     private BufferedImage scaleImage(int w, int h, BufferedImage img) throws Exception {
         BufferedImage bufferedImage;
@@ -178,9 +181,7 @@ public class AddActivityPanel extends JPanel {
     }
 
     /**
-     * Have to change directory to imagesServer, and maybe also format to .jpg
-     *
-     * This method saves the image of the exercise selected by the user
+     * This function saves the image of the exercise selected by the user to imagesServer/
      */
     private void saveImage() {
         String path[] = nameTxtField.getText().split(" ");
@@ -196,10 +197,8 @@ public class AddActivityPanel extends JPanel {
     }
 
     /**
-     * Have to change file to activities.txt
-     *
-     * This method saves the name, instructions and description of the exercise
-     * to the activities.txt file
+     * This function saves the name, instructions and description of the exercise
+     * to the activities.txt file. It also adds the image path at the end.
      */
     public void saveExerciseDetails() {
         String path[] = nameTxtField.getText().split(" ");
@@ -228,7 +227,7 @@ public class AddActivityPanel extends JPanel {
     }
 
     /**
-     * This method is called when the addActivity button is clicked
+     * This function is called when the addActivity button is clicked
      * It calls the methods that save the image and exercise details
      */
     public void addActivity() {
