@@ -251,27 +251,31 @@ public class AppPanel extends JPanel {
             mainPanel.sendActivityFromGUI(activity);
         }
     }
-    //Code to Fix bug of no notification when window is mimimized
+
+    /**
+     * @author Satya Singh
+     * This function checks to see if the window is minimized and if so,
+     * displays a Windows notification to the user informing them that it's time to do an exercise.
+     */
     public void showWindowsNotification() {
+        if(mainPanel.checkIfMinimized()) {
+            try {
+                SystemTray systemTray = SystemTray.getSystemTray();
 
-        try {
-            SystemTray systemTray = SystemTray.getSystemTray();
+                Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("exercise.png"));
 
-            Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("exercise.png"));
+                TrayIcon trayIcon = new TrayIcon(image, "Motion dags");
+                trayIcon.setImageAutoSize(true);
+                trayIcon.setToolTip("EDIM");
 
-            TrayIcon trayIcon = new TrayIcon(image, "Motion dags");
-            trayIcon.setImageAutoSize(true);
-            trayIcon.setToolTip("EDIM");
+                systemTray.add(trayIcon);
 
-            systemTray.add(trayIcon);
-
-            trayIcon.displayMessage("Dags att göra en övning", "EDIM", TrayIcon.MessageType.INFO);
-            //notification without Java text
-            //trayIcon.displayMessage("Dags att göra en övning", "EDIM", TrayIcon.MessageType.NONE);
-        } catch (AWTException e) {
-            e.printStackTrace();
+                trayIcon.displayMessage("Dags att göra en övning", "EDIM", TrayIcon.MessageType.INFO);
+//                trayIcon.displayMessage("Dags att göra en övning", "EDIM", TrayIcon.MessageType.NONE);
+            } catch (AWTException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     public class welcomePane extends JOptionPane {
