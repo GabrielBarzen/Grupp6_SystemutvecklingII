@@ -19,25 +19,6 @@ public class ActivityRegister {
         createRegister(file);
     }
 
-//    private void createRegister(String file) {
-//        activityRegister=new LinkedList<Activity>();
-//        int nbrOfActivities;
-//
-//        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
-//            nbrOfActivities=Integer.parseInt(br.readLine());
-//            for (int i = 0; i < nbrOfActivities; i++) {
-//                Activity activity=new Activity();
-//                activity.setActivityName(br.readLine());
-//                activity.setActivityInstruction(br.readLine());
-//                activity.setActivityInfo(br.readLine());
-//                activity.createActivityImage(br.readLine());
-//                activityRegister.add(activity);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     /**
      * @author: Satya
      * Rewrote the old method to work with the 'Add new activity' functionality.
