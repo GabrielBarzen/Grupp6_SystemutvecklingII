@@ -2,6 +2,7 @@ package client.gui;
 
 import server.Activity;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -9,6 +10,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -262,17 +264,14 @@ public class AppPanel extends JPanel {
             try {
                 SystemTray systemTray = SystemTray.getSystemTray();
 
-                Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("exercise.png"));
+                Image image = ImageIO.read(new File("imagesClient/exercise.png"));
 
                 TrayIcon trayIcon = new TrayIcon(image, "Motion dags");
                 trayIcon.setImageAutoSize(true);
                 trayIcon.setToolTip("EDIM");
-
                 systemTray.add(trayIcon);
-
-                trayIcon.displayMessage("Dags att göra en övning", "EDIM", TrayIcon.MessageType.INFO);
-//                trayIcon.displayMessage("Dags att göra en övning", "EDIM", TrayIcon.MessageType.NONE);
-            } catch (AWTException e) {
+                trayIcon.displayMessage("Dags att göra en övning", "Every Day In Motion", TrayIcon.MessageType.NONE);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
