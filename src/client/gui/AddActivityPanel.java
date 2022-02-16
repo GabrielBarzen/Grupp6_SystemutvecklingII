@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 
 /**
- * author: Satya Singh
+ * @author: Satya Singh
  * This class makes up the panel where the user is able to fill in the new activity details
  */
 public class AddActivityPanel extends JPanel {
@@ -83,7 +83,9 @@ public class AddActivityPanel extends JPanel {
         c.gridx = 1;
         c.gridheight = 4;
         c.ipady = 40;
-        add(instructionTxtArea, c);
+        JScrollPane instructionPane = new JScrollPane(instructionTxtArea);
+        instructionPane.setPreferredSize(new Dimension(100,60));
+        add(instructionPane, c);
 
         c.gridx = 0;
         c.gridy = 5;
@@ -93,7 +95,9 @@ public class AddActivityPanel extends JPanel {
         c.gridx = 1;
         c.ipady = 40;
         c.gridheight = 4;
-        add(descriptionTxtArea, c);
+        JScrollPane descriptionPane = new JScrollPane(descriptionTxtArea);
+        descriptionPane.setPreferredSize(new Dimension(100,60));
+        add(descriptionPane, c);
 
         c.gridy = 9;
         c.gridx = 0;
@@ -233,8 +237,8 @@ public class AddActivityPanel extends JPanel {
      */
     public void addActivity() {
         JOptionPane.showMessageDialog(null, "You added " + nameTxtField.getText());
-        saveImage();
-        saveExerciseDetails();
+//        saveImage();
+//        saveExerciseDetails();
         try {
             addActivityFrame.dispose();
             Thread.sleep(500);

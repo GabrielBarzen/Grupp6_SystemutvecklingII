@@ -6,7 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * author: Satya Singh
+ * @author: Satya Singh
  * This class extends JFrame and will serve as the container for
  * the JPanel that will make up the 'Add new exercise' window
  */
