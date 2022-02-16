@@ -293,7 +293,7 @@ public class AppPanel extends JPanel {
             }
             //Add new exercise
             if(click == btnAddExercise) {
-                new AddActivityFrame(mainPanel.getMainFrame());
+                new AddActivityFrame();
             }
         }
     }

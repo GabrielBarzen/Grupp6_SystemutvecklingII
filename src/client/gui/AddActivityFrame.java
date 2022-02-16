@@ -13,21 +13,16 @@ import java.awt.event.WindowEvent;
 public class AddActivityFrame extends JFrame {
 
     /**
-     * A constructor that calls the setupFrame function and passes along
-     * an instance of the MainFrame class
-     * @param mainFrame instance of the MainFrame class
+     * A constructor that calls the setupFrame function
      */
-    public AddActivityFrame(MainFrame mainFrame) {
-        setupFrame(mainFrame);
+    public AddActivityFrame() {
+        setupFrame();
     }
 
     /**
      * This method sets up the frame and creates an instance of the AddActivityPanel class
-     * It passes along and instance of the MainFrame class
-     * @param mainFrame is the instance of the MainFrame class
      */
-    public void setupFrame(MainFrame mainFrame) {
-//        setBounds(0, 0, 500, 600);
+    public void setupFrame() {
         setMinimumSize(new Dimension(500,400));
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
@@ -36,14 +31,13 @@ public class AddActivityFrame extends JFrame {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-//                System.exit(0);
             }
         });
         setLayout(null);
         setTitle("Lägg till en övning");
-        setResizable(true);
+        setResizable(false);
         setLocationRelativeTo(null);    // Start in the middle of the screen.
-        AddActivityPanel addActivityPanel = new AddActivityPanel(this, mainFrame);
+        AddActivityPanel addActivityPanel = new AddActivityPanel(this);
         setContentPane(addActivityPanel);
         pack();
         setVisible(true);

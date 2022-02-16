@@ -24,18 +24,14 @@ public class AddActivityPanel extends JPanel {
     private JButton enterBtn;
     private JButton exitBtn;
     private BufferedImage bufferedImage;
-
     private AddActivityFrame addActivityFrame;
-    private MainFrame mainFrame;
 
     /**
      *
      * @param addActivityFrame Frame housing this JPanel extension class
-     * @param mainFrame The main frame of the GUI
      */
-    public AddActivityPanel(AddActivityFrame addActivityFrame, MainFrame mainFrame) {
+    public AddActivityPanel(AddActivityFrame addActivityFrame) {
         this.addActivityFrame = addActivityFrame;
-        this.mainFrame = mainFrame;
         initComponents();
     }
 
@@ -236,13 +232,19 @@ public class AddActivityPanel extends JPanel {
      * It calls the methods that save the image and exercise details
      */
     public void addActivity() {
-        JOptionPane.showMessageDialog(null, "You added " + nameTxtField.getText());
-//        saveImage();
-//        saveExerciseDetails();
-        try {
-            addActivityFrame.dispose();
-            Thread.sleep(500);
-        } catch (Exception ex) {
+        if(nameTxtField.getText().isBlank() || instructionTxtArea.getText().isBlank()
+                || descriptionTxtArea.getText().isBlank() || imageLabel.getIcon() == null) {
+            JOptionPane.showMessageDialog(null, "Fill in all fields before adding exercise");
+        } else {
+            JOptionPane.showMessageDialog(null, "You added " + nameTxtField.getText());
+            saveImage();
+            saveExerciseDetails();
+
+            try {
+                addActivityFrame.dispose();
+                Thread.sleep(500);
+            } catch (Exception ex) {
+            }
         }
     }
 }
