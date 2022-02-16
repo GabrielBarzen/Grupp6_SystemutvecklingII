@@ -2,6 +2,7 @@ package server;
 
 import java.io.*;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  * This class creates a register that handles Activity objects.
@@ -18,20 +19,47 @@ public class ActivityRegister {
         createRegister(file);
     }
 
+//    private void createRegister(String file) {
+//        activityRegister=new LinkedList<Activity>();
+//        int nbrOfActivities;
+//
+//        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+//            nbrOfActivities=Integer.parseInt(br.readLine());
+//            for (int i = 0; i < nbrOfActivities; i++) {
+//                Activity activity=new Activity();
+//                activity.setActivityName(br.readLine());
+//                activity.setActivityInstruction(br.readLine());
+//                activity.setActivityInfo(br.readLine());
+//                activity.createActivityImage(br.readLine());
+//                activityRegister.add(activity);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    /**
+     * author: Satya
+     * Rewrote the old method to work with the 'Add new activity' funcionality.
+     * This method reads the lines in the text file and creates a
+     * Linked List with the activities in the text file.
+     * @param file is the text file containing the activities
+     */
     private void createRegister(String file) {
         activityRegister=new LinkedList<Activity>();
-        int nbrOfActivities;
+        Scanner myReader;
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
-            nbrOfActivities=Integer.parseInt(br.readLine());
-            for (int i = 0; i < nbrOfActivities; i++) {
+        try  {
+            myReader = new Scanner(new File("files/activities.txt"));
+            while(myReader.hasNextLine()) {
                 Activity activity=new Activity();
-                activity.setActivityName(br.readLine());
-                activity.setActivityInstruction(br.readLine());
-                activity.setActivityInfo(br.readLine());
-                activity.createActivityImage(br.readLine());
+                activity.setActivityName(myReader.nextLine());
+                activity.setActivityInstruction(myReader.nextLine());
+                activity.setActivityInfo(myReader.nextLine());
+                activity.createActivityImage(myReader.nextLine());
                 activityRegister.add(activity);
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

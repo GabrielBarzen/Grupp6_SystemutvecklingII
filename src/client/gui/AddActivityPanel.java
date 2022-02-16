@@ -79,21 +79,21 @@ public class AddActivityPanel extends JPanel {
 
         c.gridx = 0;
         c.gridy = 1;
-        add(descriptionLabel, c);
+        add(instructionLabel, c);
         c.gridx = 1;
         c.gridheight = 4;
         c.ipady = 40;
-        add(descriptionTxtArea, c);
+        add(instructionTxtArea, c);
 
         c.gridx = 0;
         c.gridy = 5;
         c.gridheight = 1;
         c.ipady = 0;
-        add(instructionLabel, c);
+        add(descriptionLabel, c);
         c.gridx = 1;
         c.ipady = 40;
         c.gridheight = 4;
-        add(instructionTxtArea, c);
+        add(descriptionTxtArea, c);
 
         c.gridy = 9;
         c.gridx = 0;
@@ -103,7 +103,6 @@ public class AddActivityPanel extends JPanel {
         c.gridx = 1;
         add(imageLabel, c);
 
-
         c.gridx = 0;
         c.gridy = 14;
         c.gridheight = 1;
@@ -112,12 +111,11 @@ public class AddActivityPanel extends JPanel {
         c.gridx = 1;
         add(exitBtn, c);
 
-
         addListeners();
     }
 
     /**
-     * This method adds Actioon Listeners to the buttons on the panel
+     * This method adds Action Listeners to the buttons on the panel
      */
     public void addListeners() {
         exitBtn.addActionListener(new ActionListener() {
@@ -180,20 +178,21 @@ public class AddActivityPanel extends JPanel {
     }
 
     /**
-     * Have to change directory to imagesServer
+     * Have to change directory to imagesServer, and maybe also format to .jpg
      *
      * This method saves the image of the exercise selected by the user
      */
     private void saveImage() {
+        String path[] = nameTxtField.getText().split(" ");
+        String imagePath = "imagesServer/" + path[0] + ".png";
+
         try {
             if(bufferedImage != null) {
-                File file = new File("files/testImg.png");
+                File file = new File(imagePath);
                 ImageIO.write(bufferedImage, "png", file);
             }
 
-        }catch(Exception e) {
-            System.out.println("couldn't write");
-        }
+        }catch(Exception e) {    }
     }
 
     /**
@@ -203,12 +202,25 @@ public class AddActivityPanel extends JPanel {
      * to the activities.txt file
      */
     public void saveExerciseDetails() {
+        String path[] = nameTxtField.getText().split(" ");
+        String imagePath = "imagesServer/" + path[0] + ".png";
+
+
+        StringBuilder instructionsString = new StringBuilder();
+        StringBuilder descriptionString = new StringBuilder();
+        for(String line : instructionTxtArea.getText().split("\\n")) {
+            instructionsString.append(line + "\t&");
+        }
+        for(String line : descriptionTxtArea.getText().split("\\n")) {
+            descriptionString.append(line + "\t&");
+        }
 
         try {
-            PrintWriter writer = new PrintWriter(new FileWriter("files/test.txt", true));
+            PrintWriter writer = new PrintWriter(new FileWriter("files/activities.txt", true));
             writer.println(nameTxtField.getText());
-            writer.println(instructionTxtArea.getText());
-            writer.println(descriptionTxtArea.getText());
+            writer.println(instructionsString);
+            writer.println(descriptionString);
+            writer.println(imagePath);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -227,7 +239,6 @@ public class AddActivityPanel extends JPanel {
             addActivityFrame.dispose();
             Thread.sleep(500);
         } catch (Exception ex) {
-//            ex.printStackTrace();
         }
     }
 }

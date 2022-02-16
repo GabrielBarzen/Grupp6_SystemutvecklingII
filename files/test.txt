@@ -1,4 +1,3 @@
-10
 Knäböj
 Gör 10 knäböj (squats). &Glöm inte att ha tyngden på hälarna och att knäna ska peka i samma riktning som tårna.&
 Du har nu tränat lår och rumpa samt ökat din koncentration.
@@ -40,13 +39,6 @@ Gör 10 knäböj på ett ben! Det andra benet ska peka rakt framåt. &Börja med
 Du har nu tränat lår, rumpa, balans och dessutom ökat din koncentration.
 imagesServer/ettben.jpg
 Hopprep
-Ha ett hopprep.
-Hoppa med det. 
-Ramla ej.
-Hjälper att förstöra knän och rygg.
-Känns bättre när diskarna trycks ner.
-Säckhopp
-Ha en säck
-Hoppa i säcken
-Resa på sig efter man ramlat
-Bra sätt att få halm och strå i håret.
+Ha ett hopprep. (Går bra med vanligt rep också)	&Hoppa genom att följa instruktionerna.	&Känn dig stolt över att ha hoppat rep.	&
+Bra för att start ryggbesvär. Bra för att förstöra brosk.	&När du hoppat rep höjs din puls osv.	&
+imagesServer/Hopprep.png
