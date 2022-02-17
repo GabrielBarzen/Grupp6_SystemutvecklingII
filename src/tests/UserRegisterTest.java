@@ -49,7 +49,7 @@ class UserRegisterTest {
     @Test
     void updateUser() {
         user.updateUser(user2);
-        assertEquals(user2,user.updateUser(user2));
+        assertTrue(user.updateUser(user2));
 
         //testet är rätt för den visar samma user, men behöver förändras för att visa Linkedlistversionen.
     }

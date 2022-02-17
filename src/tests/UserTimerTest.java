@@ -7,6 +7,9 @@ import server.ServerController;
 import server.User;
 import server.UserTimer;
 
+import java.io.IOException;
+import java.net.BindException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -19,7 +22,7 @@ public class UserTimerTest {
     private ServerController serverController;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws IOException {
         serverController = new ServerController(4343);
         user = new User("Kalle");
         userTimer = new UserTimer(serverController, user);

@@ -1,19 +1,13 @@
 package tests;
 
 
-
-
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.Activity;
 import server.ActivityRegister;
 import java.util.LinkedList;
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 
 /**
  * Author: Linn Borgström
@@ -26,7 +20,7 @@ public class ActivityRegisterTest {
 
     @BeforeEach
     public void setUp(){
-        activityRegister = new ActivityRegister("Ursprungliga Projektfiler/EDIM/files/activities.txt");
+        activityRegister = new ActivityRegister("files/activities.txt");
         activity = new Activity();
     }
 
@@ -36,7 +30,7 @@ public class ActivityRegisterTest {
     @Test
     public void getActivityRegister() {
         activityLinkedList = new LinkedList<>();
-        activityLinkedList = activityRegister.createRegister("Ursprungliga Projektfiler/EDIM/files/activities.txt");
+        activityLinkedList = activityRegister.createRegister("files/activities.txt");
         assertEquals(activityLinkedList,activityRegister.getActivityRegister());
     }
 
@@ -45,6 +39,6 @@ public class ActivityRegisterTest {
      */
     @Test
     public void createActivityRegister() {
-        assertNotNull(activityRegister.createRegister("Ursprungliga Projektfiler/EDIM/files/activities.txt"));
+        assertNotNull(activityRegister.createRegister("files/activities.txt"));
     }
 }
