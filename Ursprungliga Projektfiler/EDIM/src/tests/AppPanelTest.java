@@ -6,6 +6,7 @@ import server.Activity;
 import static org.junit.Assert.*;
 
 public class AppPanelTest {
+    
 AppPanel appPanel=new AppPanel();
     @org.junit.Test
     public void updateLblInterval() { //should return the time value chosen by the user in exakt numbers as boolean.
