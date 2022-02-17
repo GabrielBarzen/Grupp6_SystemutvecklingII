@@ -1,15 +1,14 @@
 package tests;
 
-import org.junit.Before;
-import org.junit.Test;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import server.Activity;
 import server.ServerController;
 import server.User;
 import server.UserTimer;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * Author: Linn Borgström
  * Date: 2022-02-15
