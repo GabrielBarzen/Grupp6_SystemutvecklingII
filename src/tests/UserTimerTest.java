@@ -2,6 +2,8 @@ package tests;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import server.Activity;
 import server.ServerController;
 import server.User;
@@ -17,7 +19,7 @@ public class UserTimerTest {
     private UserTimer userTimer;
     private ServerController serverController;
 
-    @Before
+    @BeforeEach
     public void setUp(){
         serverController = new ServerController(4343);
         user = new User("Kalle");

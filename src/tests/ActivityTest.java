@@ -2,6 +2,7 @@ package tests;
 
 
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.Activity;
 import server.ActivityRegister;
@@ -25,7 +26,7 @@ class ActivityTest {
     /**
      * This doesn't work therefor I make a new object on row 23
      */
-    @Before
+    @BeforeEach
     public void setUp(){
         activity = new Activity();
     }
