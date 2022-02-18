@@ -10,9 +10,10 @@ public class Buffer<T> {
 	private LinkedList<T> buffer=new LinkedList<T>();
 
 
-	public synchronized void put(T obj) {
+	public synchronized Object put(T obj) {
 		buffer.addLast(obj);
 		notifyAll();
+		return obj;
 	}
 	
 	public synchronized T get() throws InterruptedException {

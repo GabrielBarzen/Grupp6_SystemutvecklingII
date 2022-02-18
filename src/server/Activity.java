@@ -2,9 +2,7 @@ package server;
 
 import javax.swing.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Date;
 
 
 /**
@@ -40,12 +38,14 @@ public class Activity implements Serializable {
         return activityInfo;
     }
 
-    public void setActivityInfo(String activityInfo) {
+    public String setActivityInfo(String activityInfo) {
         this.activityInfo = activityInfo;
+        return activityInfo;
     }
 
-    public void setActivityName(String activityName) {
+    public String setActivityName(String activityName) {
         this.activityName=activityName;
+        return activityName;
     }
 
     public String getActivityName() {
@@ -56,36 +56,41 @@ public class Activity implements Serializable {
         return activityInstruction;
     }
 
-    public void setActivityInstruction(String activityInstruction) {
+    public String setActivityInstruction(String activityInstruction) {
         this.activityInstruction = activityInstruction;
+        return activityInstruction;
     }
 
     public boolean isCompleted() {
         return isCompleted;
     }
 
-    public void setCompleted(boolean completed) {
+    public boolean setCompleted(boolean completed) {
         isCompleted = completed;
+        return completed;
     }
 
     public String getActivityUser() {
         return activityUser;
     }
 
-    public void setActivityUser(String activityUser) {
+    public String setActivityUser(String activityUser) {
         this.activityUser = activityUser;
+        return activityUser;
     }
 
-    public void setActivityImage(ImageIcon icon) {
+    public ImageIcon setActivityImage(ImageIcon icon) {
         activityImage = icon;
+        return icon;
     }
 
     public ImageIcon getActivityImage() {
         return activityImage;
     }
 
-    public void createActivityImage(String fileName) {
+    public ImageIcon createActivityImage(String fileName) {
         activityImage = new ImageIcon(fileName);
+        return activityImage;
     }
 }
 

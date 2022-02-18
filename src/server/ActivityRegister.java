@@ -18,7 +18,7 @@ public class ActivityRegister {
         createRegister(file);
     }
 
-    private void createRegister(String file) {
+    public LinkedList<Activity> createRegister(String file) {
         activityRegister=new LinkedList<Activity>();
         int nbrOfActivities;
 
@@ -35,6 +35,7 @@ public class ActivityRegister {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return activityRegister;
     }
 
     public LinkedList<Activity> getActivityRegister() {
