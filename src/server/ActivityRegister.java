@@ -2,7 +2,6 @@ package server;
 
 import java.io.*;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 /**
  * This class creates a register that handles Activity objects.
@@ -19,30 +18,20 @@ public class ActivityRegister {
         createRegister(file);
     }
 
-
-    /**
-     * @author Satya Singh
-     * Rewrote the old method to work with the 'Add new activity' functionality.
-     * This method reads the lines in the text file and creates a
-     * Linked List with the activities in the file.
-     * @param file is the text file containing the activities
-     */
     public LinkedList<Activity> createRegister(String file) {
-
         activityRegister=new LinkedList<Activity>();
-        Scanner myReader;
+        int nbrOfActivities;
 
-        try  {
-            myReader = new Scanner(new File(file));
-            while(myReader.hasNextLine()) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+            nbrOfActivities=Integer.parseInt(br.readLine());
+            for (int i = 0; i < nbrOfActivities; i++) {
                 Activity activity=new Activity();
-                activity.setActivityName(myReader.nextLine());
-                activity.setActivityInstruction(myReader.nextLine());
-                activity.setActivityInfo(myReader.nextLine());
-                activity.createActivityImage(myReader.nextLine());
+                activity.setActivityName(br.readLine());
+                activity.setActivityInstruction(br.readLine());
+                activity.setActivityInfo(br.readLine());
+                activity.createActivityImage(br.readLine());
                 activityRegister.add(activity);
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
