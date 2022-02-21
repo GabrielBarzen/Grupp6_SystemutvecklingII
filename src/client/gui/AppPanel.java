@@ -2,12 +2,14 @@ package client.gui;
 
 import server.Activity;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.*;
+import java.io.File;
 import java.util.*;
 import java.awt.event.*;
 import java.util.Timer;
@@ -164,6 +166,7 @@ public class AppPanel extends JPanel {
             minuteInterval--;
             if (minuteInterval == -1) {
                 stopTimer();
+                showWindowsNotification();
             }
             secondInterval = 59;
         }
@@ -277,6 +280,30 @@ public class AppPanel extends JPanel {
             mainPanel.sendActivityFromGUI(activity);
         }
     }
+
+    /**
+     * @author Satya Singh
+     * This function checks to see if the window is minimized and if so,
+     * displays a Windows notification to the user informing them that it's time to do an exercise.
+     */
+    public void showWindowsNotification() {
+        if(mainPanel.checkIfMinimized()) {
+            try {
+                SystemTray systemTray = SystemTray.getSystemTray();
+
+                Image image = ImageIO.read(new File("imagesClient/exercise.png"));
+
+                TrayIcon trayIcon = new TrayIcon(image, "Motion dags");
+                trayIcon.setImageAutoSize(true);
+                trayIcon.setToolTip("EDIM");
+                systemTray.add(trayIcon);
+                trayIcon.displayMessage("Dags att göra en övning", "Every Day In Motion", TrayIcon.MessageType.NONE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public class welcomePane extends JOptionPane {
         @Override
