@@ -144,7 +144,7 @@ public class ClientCommunicationController {
 
             while (isConnected) {
                 try {
-                    sleep(500);
+                    sleep(2000);
                     object = ois.readObject();
                     if (object instanceof User) {
                         User user = (User) object;
@@ -175,7 +175,6 @@ public class ClientCommunicationController {
          * Sends an image to the server
          */
         public void run() {
-            System.out.println("trying to send image");
             try (Socket socket = new Socket("localhost", 25000)) {
                 ImageIO.write(image, "png", socket.getOutputStream());
             } catch (Exception e) { }

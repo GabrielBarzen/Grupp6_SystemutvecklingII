@@ -51,8 +51,8 @@ public class ClientController {
     }
 
     public void saveActivity(Activity activity, BufferedImage image) {
+        ccc.sendObject(activity);
         ccc.sendObject(image);
-//        ccc.sendObject(activity);
     }
 
     /**

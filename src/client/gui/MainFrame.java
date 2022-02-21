@@ -127,7 +127,7 @@ public class MainFrame extends JFrame {
         activity.setActivityName(name);
         activity.setActivityInstruction(instructions);
         activity.setActivityInfo(description);
-
+        activity.setNew();
 
         clientController.saveActivity(activity, image);
     }
