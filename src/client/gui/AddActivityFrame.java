@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 
 /**
  * @author Satya Singh
@@ -41,6 +42,10 @@ public class AddActivityFrame extends JFrame {
         setContentPane(addActivityPanel);
         pack();
         setVisible(true);
+    }
+
+    public void sendActivity(String name, String instructions, String description, BufferedImage bufferedImage) {
+
     }
 
     /**
