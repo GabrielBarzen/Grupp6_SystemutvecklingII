@@ -5,6 +5,7 @@ import server.Activity;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 
 /**
  * This class starts the Login window and then awaits the user's input, and finally starts the main GUI.
@@ -121,5 +122,13 @@ public class MainFrame extends JFrame {
         clientController.setInterval(interval);
     }
 
+    public void saveActivity(String name, String instructions, String description, BufferedImage image) {
+        Activity activity = new Activity();
+        activity.setActivityName(name);
+        activity.setActivityInstruction(instructions);
+        activity.setActivityInfo(description);
 
+
+        clientController.saveActivity(activity, image);
+    }
 }

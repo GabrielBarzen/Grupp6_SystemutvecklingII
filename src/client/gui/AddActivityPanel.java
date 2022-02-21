@@ -235,7 +235,7 @@ public class AddActivityPanel extends JPanel {
         for(String line : descriptionTxtArea.getText().split("\\n")) {
             descriptionString.append(line + "\t&");
         }
-        addActivityFrame.sendActivity(nameTxtField.getText(), instructionsString.toString(), descriptionString.toString(), bufferedImage);
+        addActivityFrame.saveActivity(nameTxtField.getText(), instructionsString.toString(), descriptionString.toString(), bufferedImage);
     }
 
 

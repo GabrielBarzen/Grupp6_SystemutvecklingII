@@ -1,6 +1,11 @@
 package server;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -23,6 +28,7 @@ public class ServerController extends Thread {
     private Buffer<Object> receiveBuffer;
     private Buffer<Object> sendBuffer;
     private String userFilePath = "tmp/users.dat";
+    private ImageReceiver imageReceiver;
 
     /**
      * Constructs all the buffers and servers and HashMaps that is needed.
@@ -40,6 +46,8 @@ public class ServerController extends Thread {
         activityRegister = new ActivityRegister("files/activities.txt");
         userTimerHashMap = new HashMap<>();
         rand = new Random();
+        imageReceiver = new ImageReceiver();
+        imageReceiver.start();
     }
 
     /**
@@ -252,10 +260,34 @@ public class ServerController extends Thread {
                     } else {
                         setDelayedActivity(activity);
                     }
+                } else if (object instanceof BufferedImage) {
+                    System.out.println("image made it");
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private class ImageReceiver extends Thread {
+        private BufferedImage bufferedImage;
+
+        public void run() {
+            while (true) {
+                try (ServerSocket serv = new ServerSocket(25000)) {
+                    System.out.println("waiting...");
+                    try (Socket socket = serv.accept()) {
+                        System.out.println("client connected");
+                        bufferedImage = ImageIO.read(socket.getInputStream());
+                        System.out.println("image transferred");
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                }
+            }
+        }
+
     }
 }

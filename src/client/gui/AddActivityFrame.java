@@ -12,12 +12,14 @@ import java.awt.image.BufferedImage;
  * the JPanel that will make up the 'Add new exercise' window
  */
 public class AddActivityFrame extends JFrame {
+    private MainPanel mainPanel;
 
     /**
      * A constructor that calls the setupFrame function
      */
-    public AddActivityFrame() {
+    public AddActivityFrame(MainPanel mainPanel) {
         setupFrame();
+        this.mainPanel = mainPanel;
     }
 
     /**
@@ -44,8 +46,8 @@ public class AddActivityFrame extends JFrame {
         setVisible(true);
     }
 
-    public void sendActivity(String name, String instructions, String description, BufferedImage bufferedImage) {
-
+    public void saveActivity(String name, String instructions, String description, BufferedImage image) {
+        mainPanel.saveActivity(name, instructions, description, image);
     }
 
     /**
