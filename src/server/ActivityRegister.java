@@ -27,13 +27,13 @@ public class ActivityRegister {
      * Linked List with the activities in the file.
      * @param file is the text file containing the activities
      */
-    private void createRegister(String file) {
+    public LinkedList<Activity> createRegister(String file) {
 
         activityRegister=new LinkedList<Activity>();
         Scanner myReader;
 
         try  {
-            myReader = new Scanner(new File("files/activities.txt"));
+            myReader = new Scanner(new File(file));
             while(myReader.hasNextLine()) {
                 Activity activity=new Activity();
                 activity.setActivityName(myReader.nextLine());
