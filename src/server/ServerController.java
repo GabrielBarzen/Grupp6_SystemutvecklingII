@@ -22,7 +22,7 @@ public class ServerController extends Thread {
     private String className = "Class: ServerController ";
     private Buffer<Object> receiveBuffer;
     private Buffer<Object> sendBuffer;
-    private String userFilePath = "tmp/users.dat";
+    private String userFilePath = "files/users.dat";
 
     /**
      * Constructs all the buffers and servers and HashMaps that is needed.

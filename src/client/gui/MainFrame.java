@@ -49,7 +49,7 @@ public class MainFrame extends JFrame {
      * Sets up the main frame for the GUI.
      */
     public void setupFrame() {
-        setBounds(0, 0, 819, 438);
+        setBounds(0, 0, 850, 430);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 clientController.logOut();
