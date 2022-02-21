@@ -6,12 +6,11 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.LinkedList;
+import java.util.*;
+import java.awt.event.*;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * This is the panel in the frame that contains pretty much all the components in the GUI.

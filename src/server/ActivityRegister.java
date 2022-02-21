@@ -19,6 +19,7 @@ public class ActivityRegister {
         createRegister(file);
     }
 
+
     /**
      * @author Satya Singh
      * Rewrote the old method to work with the 'Add new activity' functionality.
@@ -27,6 +28,7 @@ public class ActivityRegister {
      * @param file is the text file containing the activities
      */
     private void createRegister(String file) {
+
         activityRegister=new LinkedList<Activity>();
         Scanner myReader;
 
@@ -44,6 +46,7 @@ public class ActivityRegister {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return activityRegister;
     }
 
     public LinkedList<Activity> getActivityRegister() {

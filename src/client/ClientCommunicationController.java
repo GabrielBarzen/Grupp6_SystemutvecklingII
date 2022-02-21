@@ -53,14 +53,21 @@ public class ClientCommunicationController {
 
     /**
      * This method tries to close the socket and the connection to the server.
+     * @return
      */
-    public void disconnect() {
+    public boolean disconnect() {
         isConnected = false;
         try {
             Thread.sleep(2000);
             socket.close();
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
+        }
+        if(socket.isConnected()){
+            return false;
+        }
+        else{
+            return true;
         }
     }
 

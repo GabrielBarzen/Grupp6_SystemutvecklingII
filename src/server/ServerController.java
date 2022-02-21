@@ -116,12 +116,14 @@ public class ServerController extends Thread {
      * else a new activity is sent to the client.
      *
      * @param username the received username.
+     * @return
      */
-    public void sendActivity(String username) {
+    public boolean sendActivity(String username) {
         User user = userRegister.getUserHashMap().get(username);
         if (user.getDelayedActivity() != null) {
             sendBuffer.put(user.getDelayedActivity());
             user.setDelayedActivity(null);
+            return false;
         } else {
             int nbrOfActivities = activityRegister.getActivityRegister().size();
             int activityNbr = rand.nextInt(nbrOfActivities);
@@ -134,7 +136,9 @@ public class ServerController extends Thread {
             activityToSend.setActivityImage(getActivity.getActivityImage());
             sendBuffer.put(activityToSend);
             System.out.println("Sending activity: " + activityToSend.getActivityName());
+            return true;
         }
+
     }
 
     /**
