@@ -41,12 +41,17 @@ public class ActivityRegister {
                 activity.setActivityInfo(myReader.nextLine());
                 activity.createActivityImage(myReader.nextLine());
                 activityRegister.add(activity);
+                System.out.println(activity.toString());
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
         return activityRegister;
+    }
+
+    public void updateRegister(String filePath) {
+        createRegister(filePath);
     }
 
     public LinkedList<Activity> getActivityRegister() {
