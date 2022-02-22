@@ -20,7 +20,6 @@ public class Activity implements Serializable {
     private boolean isCompleted = false;
     private String activityUser;
     private ImageIcon activityImage;
-    private boolean isNew = false;
 
     public Activity () {}
 
@@ -92,27 +91,6 @@ public class Activity implements Serializable {
     public ImageIcon createActivityImage(String fileName) {
         activityImage = new ImageIcon(fileName);
         return activityImage;
-    }
-
-    public boolean isNew() {
-        return isNew;
-    }
-
-    public void setNew() {
-        isNew = true;
-    }
-
-    @Override
-    public String toString() {
-        return "Activity{" +
-                "activityName='" + activityName + '\'' +
-                ", activityInstruction='" + activityInstruction + '\'' +
-                ", activityInfo='" + activityInfo + '\'' +
-                ", isCompleted=" + isCompleted +
-                ", activityUser='" + activityUser + '\'' +
-                ", activityImage=" + activityImage +
-                ", isNew=" + isNew +
-                '}';
     }
 }
 

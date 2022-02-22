@@ -4,12 +4,9 @@ import server.Activity;
 import server.User;
 import server.UserType;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -56,7 +53,6 @@ public class ClientCommunicationController {
 
     /**
      * This method tries to close the socket and the connection to the server.
-     *
      * @return
      */
     public boolean disconnect() {
@@ -67,9 +63,10 @@ public class ClientCommunicationController {
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
-        if (socket.isConnected()) {
+        if(socket.isConnected()){
             return false;
-        } else {
+        }
+        else{
             return true;
         }
     }
@@ -81,12 +78,7 @@ public class ClientCommunicationController {
      */
 
     public void sendObject(Object object) {
-        if(object instanceof BufferedImage) {
-            new ImageSender((BufferedImage) object).start();
-        } else {
-            buffer.put(object);
-        }
-
+        buffer.put(object);
     }
 
     // ClientSender starts a new thread which retrieves an object from a buffer and sends it to the server.
@@ -144,7 +136,7 @@ public class ClientCommunicationController {
 
             while (isConnected) {
                 try {
-                    sleep(2000);
+                    sleep(500);
                     object = ois.readObject();
                     if (object instanceof User) {
                         User user = (User) object;
@@ -161,23 +153,6 @@ public class ClientCommunicationController {
 
                 }
             }
-        }
-    }
-
-    private class ImageSender extends Thread {
-        private BufferedImage image;
-
-        public ImageSender(BufferedImage image) {
-            this.image = image;
-        }
-
-        /**
-         * Sends an image to the server
-         */
-        public void run() {
-            try (Socket socket = new Socket("localhost", 25000)) {
-                ImageIO.write(image, "png", socket.getOutputStream());
-            } catch (Exception e) { }
         }
     }
 }
