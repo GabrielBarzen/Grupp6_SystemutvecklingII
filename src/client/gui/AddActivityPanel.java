@@ -226,19 +226,6 @@ public class AddActivityPanel extends JPanel {
         }
     }
 
-    private void sendExercise() {
-        StringBuilder instructionsString = new StringBuilder();
-        for(String line : instructionTxtArea.getText().split("\\n")) {
-            instructionsString.append(line + "\t&");
-        }
-        StringBuilder descriptionString = new StringBuilder();
-        for(String line : descriptionTxtArea.getText().split("\\n")) {
-            descriptionString.append(line + "\t&");
-        }
-        addActivityFrame.saveActivity(nameTxtField.getText(), instructionsString.toString(), descriptionString.toString(), bufferedImage);
-    }
-
-
     /**
      * This function is called when the addActivity button is clicked
      * It calls the methods that save the image and exercise details
@@ -249,9 +236,9 @@ public class AddActivityPanel extends JPanel {
             JOptionPane.showMessageDialog(null, "All information måste anges innan du kan spara övningen");
         } else {
             JOptionPane.showMessageDialog(null, "Du har lagt till " + nameTxtField.getText());
-//            saveImage();
-//            saveExerciseDetails();
-            sendExercise();
+            saveImage();
+            saveExerciseDetails();
+
             try {
                 addActivityFrame.dispose();
                 Thread.sleep(500);

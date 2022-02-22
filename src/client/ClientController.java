@@ -7,8 +7,6 @@ import client.gui.MainFrame;
 import server.User;
 import server.UserType;
 
-import java.awt.image.BufferedImage;
-
 /**
  * This class manages the logic for the Client and controls the data flow.
  *
@@ -48,11 +46,6 @@ public class ClientController {
     public void sendActivityToCCC(Activity activity) {
         user.addActivityToList(activity);
         ccc.sendObject(activity);
-    }
-
-    public void saveActivity(Activity activity, BufferedImage image) {
-        ccc.sendObject(activity);
-        ccc.sendObject(image);
     }
 
     /**
