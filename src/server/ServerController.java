@@ -27,7 +27,7 @@ public class ServerController extends Thread {
     private String className = "Class: ServerController ";
     private Buffer<Object> receiveBuffer;
     private Buffer<Object> sendBuffer;
-    private String userFilePath = "tmp/users.dat";
+    private String userFilePath = "files/users.dat";
     private ImageReceiver imageReceiver;
     private String imagePath;
     /**

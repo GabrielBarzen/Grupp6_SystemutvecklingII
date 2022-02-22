@@ -101,6 +101,19 @@ public class Activity implements Serializable {
     public void setNew() {
         isNew = true;
     }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "activityName='" + activityName + '\'' +
+                ", activityInstruction='" + activityInstruction + '\'' +
+                ", activityInfo='" + activityInfo + '\'' +
+                ", isCompleted=" + isCompleted +
+                ", activityUser='" + activityUser + '\'' +
+                ", activityImage=" + activityImage +
+                ", isNew=" + isNew +
+                '}';
+    }
 }
 
 

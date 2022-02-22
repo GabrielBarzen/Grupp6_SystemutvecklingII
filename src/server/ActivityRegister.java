@@ -41,6 +41,7 @@ public class ActivityRegister {
                 activity.setActivityInfo(myReader.nextLine());
                 activity.createActivityImage(myReader.nextLine());
                 activityRegister.add(activity);
+                System.out.println(activity.toString());
             }
 
         } catch (IOException e) {
