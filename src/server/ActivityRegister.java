@@ -49,6 +49,10 @@ public class ActivityRegister {
         return activityRegister;
     }
 
+    public void updateRegister(String filePath) {
+        createRegister(filePath);
+    }
+
     public LinkedList<Activity> getActivityRegister() {
         return activityRegister;
     }

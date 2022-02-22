@@ -309,7 +309,7 @@ public class AppPanel extends JPanel {
                 updateLblInterval();
             }
             if(click == btnAddExercise) {
-                new AddActivityFrame();
+                new AddActivityFrame(mainPanel);
             }
         }
     }
