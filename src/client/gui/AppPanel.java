@@ -216,7 +216,6 @@ public class AppPanel extends JPanel {
             for (Activity activity : activities) {
                 if (activity.getActivityName().equals(newActivityName)) {
                     showActivityInfo(activity.getActivityInfo());
-                    System.out.println("Klickad på" + activity.getActivityInfo());
 
                 }
             }
@@ -224,9 +223,8 @@ public class AppPanel extends JPanel {
     }
 
     public String splitActivityNameAndTime(String activityName) {
-        activityName = activityName.replaceAll("[0-9]", "");
-        activityName = activityName.replaceAll(":", "");
-        activityName = activityName.replaceAll(" ", "");
+        String[] activityNameParts = activityName.split("-");
+        activityName = activityNameParts[0].trim();
         return activityName;
     }
 

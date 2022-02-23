@@ -48,7 +48,6 @@ public class UserRegister {
         userHashMap.put(updatedUser.getUsername(), updatedUser);
         LinkedList<User> usersToRemove = new LinkedList<>();
         for (User user : userLinkedList) {
-            System.out.println(userLinkedList);
             if (user.getUsername().equals(updatedUser.getUsername())) {
                 usersToRemove.add(user);
                 success=  true;

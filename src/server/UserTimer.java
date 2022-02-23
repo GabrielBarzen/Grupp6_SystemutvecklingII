@@ -20,7 +20,7 @@ public class UserTimer implements ActionListener {
     private int userInterval;
     private boolean activateDelay;
     private ServerController serverController;
-    private User user;
+    private volatile User user;
     private String className = "Class: UserTimer ";
 
 
