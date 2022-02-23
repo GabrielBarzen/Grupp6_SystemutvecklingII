@@ -1,8 +1,7 @@
 package server;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.CancellationException;
 
 /**
  * This class handles all the user objects.
@@ -43,16 +42,21 @@ public class UserRegister {
      * Updates the HashMap and LinkedList with a new updated User object.
      * @param updatedUser
      */
-    public boolean updateUser(User updatedUser) {
+    public boolean updateUser(User updatedUser) throws ConcurrentModificationException {
         boolean success = false;
         userHashMap.remove(updatedUser.getUsername());
         userHashMap.put(updatedUser.getUsername(), updatedUser);
-
+        LinkedList<User> usersToRemove = new LinkedList<>();
         for (User user : userLinkedList) {
+            System.out.println(userLinkedList);
             if (user.getUsername().equals(updatedUser.getUsername())) {
-                userLinkedList.remove(user);
+                usersToRemove.add(user);
                 success=  true;
             }
+        }
+        for (User u:usersToRemove ) {
+            userLinkedList.remove(u);
+
         }
         userLinkedList.add(updatedUser);
         return success;

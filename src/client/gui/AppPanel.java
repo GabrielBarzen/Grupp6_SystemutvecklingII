@@ -210,15 +210,14 @@ public class AppPanel extends JPanel {
     }
 
     public void addActivityListener() {
-        activityList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                String activityName = (String) activityList.getSelectedValue();
-                String newActivityName = splitActivityNameAndTime(activityName);
-                for (Activity activity : activities) {
-                    if (activity.getActivityName().equals(newActivityName)) {
-                        showActivityInfo(activity.getActivityInfo());
-                    }
+        activityList.addListSelectionListener(e -> {
+            String activityName = (String) activityList.getSelectedValue();
+            String newActivityName = splitActivityNameAndTime(activityName);
+            for (Activity activity : activities) {
+                if (activity.getActivityName().equals(newActivityName)) {
+                    showActivityInfo(activity.getActivityInfo());
+                    System.out.println("Klickad på" + activity.getActivityInfo());
+
                 }
             }
         });

@@ -90,4 +90,18 @@ public class User implements Serializable {
         this.delayedActivity = delayedActivity;
         return delayedActivity;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "completedActivities=" + completedActivities +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                ", notificationInterval=" + notificationInterval +
+                ", isOnline=" + isOnline +
+                ", userType=" + userType +
+                ", delayedActivity=" + delayedActivity +
+                ", className='" + className + '\'' +
+                '}';
+    }
 }
