@@ -1,6 +1,11 @@
 package server;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -22,8 +27,9 @@ public class ServerController extends Thread {
     private String className = "Class: ServerController ";
     private Buffer<Object> receiveBuffer;
     private Buffer<Object> sendBuffer;
-    private String userFilePath = "tmp/users.dat";
-
+    private String userFilePath = "files/users.dat";
+    private ImageReceiver imageReceiver;
+    private String imagePath;
     /**
      * Constructs all the buffers and servers and HashMaps that is needed.
      *
@@ -40,6 +46,8 @@ public class ServerController extends Thread {
         activityRegister = new ActivityRegister("files/activities.txt");
         userTimerHashMap = new HashMap<>();
         rand = new Random();
+        imageReceiver = new ImageReceiver();
+        imageReceiver.start();
     }
 
     /**
@@ -215,6 +223,47 @@ public class ServerController extends Thread {
     }
 
     /**
+     *
+     * @param activity
+     */
+    public void saveActivityDetails(Activity activity) {
+        String path[] = activity.getActivityName().split(" ");
+        imagePath = "imagesServer/" + path[0] + ".png";
+
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter("files/activities.txt", true));
+            writer.println(activity.getActivityName());
+            writer.println(activity.getActivityInstruction());
+            writer.println(activity.getActivityInfo());
+            writer.println(imagePath);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        activityRegister.updateRegister("files/activities.txt");
+    }
+
+    /**
+     *
+     * @param bufferedImage refers to the image to be saved
+     */
+    public void saveActivityImage(BufferedImage bufferedImage) {
+        if(imagePath != null) {
+            try {
+                File file = new File(imagePath);
+                ImageIO.write(bufferedImage, "png", file);
+                imagePath = null;
+            }catch(Exception e) {    }
+        }
+    }
+
+    /**
      * Receives a User object from the receive-Buffer and checks if it's a User or a Activity.
      */
     public void run() {
@@ -249,7 +298,11 @@ public class ServerController extends Thread {
 
                     if (activity.isCompleted()) {
                         userTimerHashMap.get(username).startTimer();
-                    } else {
+                    }
+                    else if(activity.isNew()) {
+                        saveActivityDetails(activity);
+                    }
+                    else {
                         setDelayedActivity(activity);
                     }
                 }
@@ -257,5 +310,25 @@ public class ServerController extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+    private class ImageReceiver extends Thread {
+        private BufferedImage bufferedImage;
+        public void run() {
+            while (true) {
+                try (ServerSocket serv = new ServerSocket(25000)) {
+                    System.out.println("waiting...");
+                    try (Socket socket = serv.accept()) {
+                        System.out.println("client connected");
+                        bufferedImage = ImageIO.read(socket.getInputStream());
+                        saveActivityImage(bufferedImage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                }
+            }
+        }
+
     }
 }
