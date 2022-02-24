@@ -3,6 +3,7 @@ package server;
 import javax.swing.*;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -25,8 +26,8 @@ public class Activity implements Serializable {
     public Activity () {}
 
     public String getTime() {
-        Calendar cal=Calendar.getInstance();
-        String datum=cal.getTime().getHours()+":"+cal.getTime().getMinutes();
+        Date date = new Date();
+        String datum= " - "+date.toLocaleString();
         return datum;
 
     }

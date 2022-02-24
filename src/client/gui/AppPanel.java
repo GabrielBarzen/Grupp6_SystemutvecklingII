@@ -210,24 +210,21 @@ public class AppPanel extends JPanel {
     }
 
     public void addActivityListener() {
-        activityList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                String activityName = (String) activityList.getSelectedValue();
-                String newActivityName = splitActivityNameAndTime(activityName);
-                for (Activity activity : activities) {
-                    if (activity.getActivityName().equals(newActivityName)) {
-                        showActivityInfo(activity.getActivityInfo());
-                    }
+        activityList.addListSelectionListener(e -> {
+            String activityName = (String) activityList.getSelectedValue();
+            String newActivityName = splitActivityNameAndTime(activityName);
+            for (Activity activity : activities) {
+                if (activity.getActivityName().equals(newActivityName)) {
+                    showActivityInfo(activity.getActivityInfo());
+
                 }
             }
         });
     }
 
     public String splitActivityNameAndTime(String activityName) {
-        activityName = activityName.replaceAll("[0-9]", "");
-        activityName = activityName.replaceAll(":", "");
-        activityName = activityName.replaceAll(" ", "");
+        String[] activityNameParts = activityName.split("-");
+        activityName = activityNameParts[0].trim();
         return activityName;
     }
 
