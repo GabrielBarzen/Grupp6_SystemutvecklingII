@@ -28,6 +28,7 @@ public class AppPanel extends JPanel {
     private LinkedList<Activity> activities;
     private JList activityList;
 
+    private JButton btnRemoveActivity;
     private JButton btnLogOut;
     private JButton btnInterval;
     private JPanel intervalPnl;
@@ -75,6 +76,7 @@ public class AppPanel extends JPanel {
 
         btnLogOut.addActionListener(listener);
         btnInterval.addActionListener(listener);
+        btnRemoveActivity.addActionListener(listener);
         addActivityListener();
     }
 
@@ -88,6 +90,8 @@ public class AppPanel extends JPanel {
         intervalPnl.setLayout(new BorderLayout());
         intervalPnl.setBackground(clrPanels);
         intervalPnl.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.LIGHT_GRAY));
+
+        btnRemoveActivity = new JButton("Ta bort utförd aktivitet");
 
         btnInterval = new JButton("Ändra intervall");
         btnAddExercise = new JButton("Lägg till övning");
@@ -107,17 +111,23 @@ public class AppPanel extends JPanel {
         c.weightx = 0.5;
 
         c.gridx = 0;
-        c.gridy = 0;
+        c.gridy = 1;
         c.gridwidth = 1;
         centerPnl.add(cmbTimeLimit, c);
         c.gridwidth = 2;
         c.gridx = 1;
+        c.gridy = 1;
         centerPnl.add(btnInterval, c);
 
         c.gridwidth = 1;
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 3;
         centerPnl.add(btnAddExercise, c);
+
+        c.gridwidth = 5;
+        c.gridx = 0;
+        c.gridy = 0;
+        centerPnl.add(btnRemoveActivity,c);
 
         intervalPnl.add(lblInterval, BorderLayout.NORTH);
         intervalPnl.add(centerPnl, BorderLayout.CENTER);
@@ -307,6 +317,22 @@ public class AppPanel extends JPanel {
             }
             if(click == btnAddExercise) {
                 new AddActivityFrame(mainPanel);
+            }
+            if(click == btnRemoveActivity){
+                System.out.println(activityList.getSelectedValue());
+                System.out.println(activityList.getSelectedIndex());
+                int activityToRemoveIndex = activityList.getSelectedIndex();
+                String activityToRemove = String.valueOf(activityList.getSelectedValue());
+                String activityName = splitActivityNameAndTime(activityToRemove);
+                /*for (Activity a:activities ) {
+                    if(a.getActivityName().equals(activityName)){
+                        activities.remove(a);
+                    }
+                }*/
+                //activityList.remove(activityToRemoveIndex);
+                activityList.remove(activityList.getSelectedIndex());
+                updateUI();
+
             }
         }
     }
