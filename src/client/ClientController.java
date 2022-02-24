@@ -21,6 +21,7 @@ public class ClientController {
     private MainFrame mainFrame;
     private ClientCommunicationController ccc;
     private User user;
+    private Activity currentActivity;
     private String className = "Class: ClientController ";
 
     /**
@@ -78,7 +79,12 @@ public class ClientController {
      * @param activity the received object.
      */
     public void receiveNotificationFromCCC(Activity activity) {
-        mainFrame.showNotification(activity);
+        setCurrentActivity(activity);
+        mainFrame.showNotification(currentActivity);
+    }
+
+    private void setCurrentActivity(Activity activity) {
+        currentActivity = activity;
     }
 
     /**

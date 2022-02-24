@@ -35,6 +35,7 @@ public class AppPanel extends JPanel {
     private JPanel intervalPnl;
     private JLabel lblInterval;
     private JButton btnAddExercise;
+    private TrayIcon trayIcon;
 
     private BorderLayout borderLayout = new BorderLayout();
     private ActionListener listener = new ButtonListener();
@@ -47,6 +48,7 @@ public class AppPanel extends JPanel {
     private Timer timer;
     private int minuteInterval;
     private int secondInterval;
+    private Activity currentActivity;
 
 
     public AppPanel(MainPanel mainPanel) {
@@ -197,7 +199,7 @@ public class AppPanel extends JPanel {
         taActivityInfo.setPreferredSize(new Dimension(200, 80));
         taActivityInfo.setLineWrap(true);
         taActivityInfo.setWrapStyleWord(true);
-        Font font = new Font("SansSerif", Font.PLAIN, 14); //Sarseriff
+        Font font = new Font("SansSerif", Font.PLAIN, 14);
         taActivityInfo.setFont(font);
         taActivityInfo.setEditable(false);
     }
@@ -258,6 +260,7 @@ public class AppPanel extends JPanel {
     }
 
     public void showNotification(Activity activity) {
+
         Toolkit.getDefaultToolkit().beep();
         ImageIcon activityIcon = createActivityIcon(activity);
         String[] buttons = {"Jag har gjort aktiviteten!", "Påminn mig om fem minuter",};
@@ -266,16 +269,25 @@ public class AppPanel extends JPanel {
         int answer = welcomePane.showOptionDialog(null, instructions, activity.getActivityName(),
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, activityIcon, buttons, buttons[0]);
         if (answer == 0) {
-            activity.setCompleted(true);
-            mainPanel.sendActivityFromGUI(activity);
-            updateActivityList(activity);
+            updateAppPanelCompletedActivity(activity);
+
 
         } else {
-            stopTimer();
-            startTimer(5, 59);
-            activity.setCompleted(false);
-            mainPanel.sendActivityFromGUI(activity);
+            updateAppPanelSnooze(activity);
         }
+    }
+
+    private void updateAppPanelSnooze(Activity activity) {
+        stopTimer();
+        startTimer(5, 59);
+        activity.setCompleted(false);
+        mainPanel.sendActivityFromGUI(activity);
+    }
+
+    private void updateAppPanelCompletedActivity(Activity activity) {
+        activity.setCompleted(true);
+        mainPanel.sendActivityFromGUI(activity);
+        updateActivityList(activity);
     }
 
     /**
@@ -290,7 +302,7 @@ public class AppPanel extends JPanel {
 
                 Image image = ImageIO.read(new File("imagesClient/exercise.png"));
 
-                TrayIcon trayIcon = new TrayIcon(image, "Motion dags");
+                trayIcon = new TrayIcon(image, "Motion dags");
                 trayIcon.setImageAutoSize(true);
                 trayIcon.setToolTip("EDIM");
                 systemTray.add(trayIcon);
@@ -299,6 +311,11 @@ public class AppPanel extends JPanel {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void sendNotification(Activity activity) {
+        currentActivity = activity;
+        showNotification(activity);
     }
 
 
@@ -337,4 +354,5 @@ public class AppPanel extends JPanel {
             }
         }
     }
+
 }
