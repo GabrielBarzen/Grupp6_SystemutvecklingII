@@ -3,6 +3,7 @@ package server;
 import javax.swing.*;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -20,12 +21,13 @@ public class Activity implements Serializable {
     private boolean isCompleted = false;
     private String activityUser;
     private ImageIcon activityImage;
+    private boolean isNew = false;
 
     public Activity () {}
 
     public String getTime() {
-        Calendar cal=Calendar.getInstance();
-        String datum=cal.getTime().getHours()+":"+cal.getTime().getMinutes();
+        Date date = new Date();
+        String datum= " - "+date.toLocaleString();
         return datum;
 
     }
@@ -91,6 +93,27 @@ public class Activity implements Serializable {
     public ImageIcon createActivityImage(String fileName) {
         activityImage = new ImageIcon(fileName);
         return activityImage;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew() {
+        isNew = true;
+    }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "activityName='" + activityName + '\'' +
+                ", activityInstruction='" + activityInstruction + '\'' +
+                ", activityInfo='" + activityInfo + '\'' +
+                ", isCompleted=" + isCompleted +
+                ", activityUser='" + activityUser + '\'' +
+                ", activityImage=" + activityImage +
+                ", isNew=" + isNew +
+                '}';
     }
 }
 

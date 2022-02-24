@@ -1,11 +1,13 @@
 package client.gui;
 
 import server.Activity;
+import server.Buffer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
 
 public class MainPanel extends JPanel {
     private MainFrame mainFrame;
@@ -100,5 +102,9 @@ public class MainPanel extends JPanel {
         public void windowDeactivated(WindowEvent e) {
             isMinimized = true;
         }
+    }
+
+    public void saveActivity(String name, String instructions, String description, BufferedImage image) {
+        mainFrame.saveActivity(name, instructions, description, image);
     }
 }

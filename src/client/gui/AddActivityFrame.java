@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 
 /**
  * @author Satya Singh
@@ -11,12 +12,14 @@ import java.awt.event.WindowEvent;
  * the JPanel that will make up the 'Add new exercise' window
  */
 public class AddActivityFrame extends JFrame {
+    private MainPanel mainPanel;
 
     /**
      * A constructor that calls the setupFrame function
      */
-    public AddActivityFrame() {
+    public AddActivityFrame(MainPanel mainPanel) {
         setupFrame();
+        this.mainPanel = mainPanel;
     }
 
     /**
@@ -41,6 +44,10 @@ public class AddActivityFrame extends JFrame {
         setContentPane(addActivityPanel);
         pack();
         setVisible(true);
+    }
+
+    public void saveActivity(String name, String instructions, String description, BufferedImage image) {
+        mainPanel.saveActivity(name, instructions, description, image);
     }
 
     /**
