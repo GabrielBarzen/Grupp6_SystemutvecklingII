@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -121,6 +122,7 @@ public class ReceiverServer {
 
             while (running) {
                 try {
+                    sleep(2000);
                     Object object = ois.readObject();
                     receiveBuffer.put(object);
 
@@ -131,6 +133,7 @@ public class ReceiverServer {
 
                         switch (userType) {
                             case LOGIN:
+                                //sleep(2000);
                                 socketHashMap.put(userName, socketStreamObject);
                                 break;
                             case LOGOUT:
@@ -138,7 +141,7 @@ public class ReceiverServer {
                                 break;
                         }
                     }
-                } catch (IOException | ClassNotFoundException e) {
+                } catch (IOException | ClassNotFoundException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }

@@ -2,12 +2,14 @@ package client.gui;
 
 import server.Activity;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.*;
+import java.io.File;
 import java.util.*;
 import java.awt.event.*;
 import java.util.Timer;
@@ -34,6 +36,7 @@ public class AppPanel extends JPanel {
     private JPanel intervalPnl;
     private JLabel lblInterval;
     private JButton btnAddExercise;
+    private TrayIcon trayIcon;
 
     private BorderLayout borderLayout = new BorderLayout();
     private ActionListener listener = new ButtonListener();
@@ -46,6 +49,7 @@ public class AppPanel extends JPanel {
     private Timer timer;
     private int minuteInterval;
     private int secondInterval;
+    private Activity currentActivity;
 
 
     public AppPanel(MainPanel mainPanel) {
@@ -174,6 +178,7 @@ public class AppPanel extends JPanel {
             minuteInterval--;
             if (minuteInterval == -1) {
                 stopTimer();
+                showWindowsNotification();
             }
             secondInterval = 59;
         }
@@ -204,7 +209,7 @@ public class AppPanel extends JPanel {
         taActivityInfo.setPreferredSize(new Dimension(200, 80));
         taActivityInfo.setLineWrap(true);
         taActivityInfo.setWrapStyleWord(true);
-        Font font = new Font("SansSerif", Font.PLAIN, 14); //Sarseriff
+        Font font = new Font("SansSerif", Font.PLAIN, 14);
         taActivityInfo.setFont(font);
         taActivityInfo.setEditable(false);
     }
@@ -265,6 +270,7 @@ public class AppPanel extends JPanel {
     }
 
     public void showNotification(Activity activity) {
+
         Toolkit.getDefaultToolkit().beep();
         ImageIcon activityIcon = createActivityIcon(activity);
         String[] buttons = {"Jag har gjort aktiviteten!", "Påminn mig om fem minuter",};
@@ -273,17 +279,55 @@ public class AppPanel extends JPanel {
         int answer = welcomePane.showOptionDialog(null, instructions, activity.getActivityName(),
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, activityIcon, buttons, buttons[0]);
         if (answer == 0) {
-            activity.setCompleted(true);
-            mainPanel.sendActivityFromGUI(activity);
-            updateActivityList(activity);
+            updateAppPanelCompletedActivity(activity);
+
 
         } else {
-            stopTimer();
-            startTimer(5, 59);
-            activity.setCompleted(false);
-            mainPanel.sendActivityFromGUI(activity);
+            updateAppPanelSnooze(activity);
         }
     }
+
+    private void updateAppPanelSnooze(Activity activity) {
+        stopTimer();
+        startTimer(5, 59);
+        activity.setCompleted(false);
+        mainPanel.sendActivityFromGUI(activity);
+    }
+
+    private void updateAppPanelCompletedActivity(Activity activity) {
+        activity.setCompleted(true);
+        mainPanel.sendActivityFromGUI(activity);
+        updateActivityList(activity);
+    }
+
+    /**
+     * @author Satya Singh
+     * This function checks to see if the window is minimized and if so,
+     * displays a Windows notification to the user informing them that it's time to do an exercise.
+     */
+    public void showWindowsNotification() {
+        if(mainPanel.checkIfMinimized()) {
+            try {
+                SystemTray systemTray = SystemTray.getSystemTray();
+
+                Image image = ImageIO.read(new File("imagesClient/exercise.png"));
+
+                trayIcon = new TrayIcon(image, "Motion dags");
+                trayIcon.setImageAutoSize(true);
+                trayIcon.setToolTip("EDIM");
+                systemTray.add(trayIcon);
+                trayIcon.displayMessage("Dags att göra en övning", "Every Day In Motion", TrayIcon.MessageType.NONE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void sendNotification(Activity activity) {
+        currentActivity = activity;
+        showNotification(activity);
+    }
+
 
     public class welcomePane extends JOptionPane {
         @Override
@@ -336,4 +380,5 @@ public class AppPanel extends JPanel {
             }
         }
     }
+
 }

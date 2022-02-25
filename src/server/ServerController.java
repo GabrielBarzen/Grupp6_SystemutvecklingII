@@ -178,7 +178,7 @@ public class ServerController extends Thread {
      */
     public void logOutUser(String username) {
         try {
-            sleep(5000);
+            sleep(2000);
             socketHashMap.get(username).getOos().close();
             socketHashMap.get(username).getOis().close();
             socketHashMap.get(username).getSocket().close();
