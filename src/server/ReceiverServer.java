@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -132,6 +133,7 @@ public class ReceiverServer {
 
                         switch (userType) {
                             case LOGIN:
+                                //sleep(2000);
                                 socketHashMap.put(userName, socketStreamObject);
                                 break;
                             case LOGOUT:
