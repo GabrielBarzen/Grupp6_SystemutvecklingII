@@ -43,23 +43,25 @@ public class ClientCommunicationController {
     /**
      * Tries to create a new socket and connect to the server's IP.
      */
-    public void connect() {
+    public ClientCommunicationController connect() {
         try {
             socket = new Socket("127.0.0.1", 4343);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return this;
     }
 
     /**
      * This method tries to close the socket and the connection to the server.
-     * @return
+     * @return boolean
      */
     public boolean disconnect() {
         isConnected = false;
         try {
             Thread.sleep(2000);
             socket.close();
+
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
@@ -154,5 +156,13 @@ public class ClientCommunicationController {
                 }
             }
         }
+    }
+
+    public boolean isConnected() {
+        return isConnected;
+    }
+
+    public void setConnected(boolean connected) {
+        isConnected = connected;
     }
 }

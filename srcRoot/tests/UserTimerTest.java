@@ -8,7 +8,6 @@ import server.User;
 import server.UserTimer;
 
 import java.io.IOException;
-import java.net.BindException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
