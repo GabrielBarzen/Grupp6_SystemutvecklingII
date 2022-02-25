@@ -121,6 +121,7 @@ public class ReceiverServer {
 
             while (running) {
                 try {
+                    sleep(2000);
                     Object object = ois.readObject();
                     receiveBuffer.put(object);
 
@@ -138,7 +139,7 @@ public class ReceiverServer {
                                 break;
                         }
                     }
-                } catch (IOException | ClassNotFoundException e) {
+                } catch (IOException | ClassNotFoundException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
