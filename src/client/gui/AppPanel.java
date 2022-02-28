@@ -9,6 +9,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.*;
+import java.awt.List;
 import java.io.File;
 import java.util.*;
 import java.awt.event.*;
@@ -20,7 +21,7 @@ import java.util.Timer;
  * @version 1.0
  * @author Oscar Kareld, Chanon Borgstrom, Carolin Nordstrom
  */
-public class AppPanel extends JPanel {
+public class AppPanel extends JPanel implements ActionListener {
     private MainPanel mainPanel;
 
     private String[] interval;
@@ -29,6 +30,7 @@ public class AppPanel extends JPanel {
     private JComboBox cmbTimeLimit;
     private LinkedList<Activity> activities;
     private JList activityList;
+    private Vector list = new Vector();
 
     private JButton btnRemoveActivity;
     private JButton btnLogOut;
@@ -39,7 +41,7 @@ public class AppPanel extends JPanel {
     private TrayIcon trayIcon;
 
     private BorderLayout borderLayout = new BorderLayout();
-    private ActionListener listener = new ButtonListener();
+    //private ActionListener listener = new ButtonListener();
     private DefaultListModel listModel;
 
     private String className = "Class: AppPanel: ";
@@ -78,10 +80,14 @@ public class AppPanel extends JPanel {
         add(taActivityInfo, BorderLayout.EAST);
         add(intervalPnl, BorderLayout.WEST);
 
-        btnLogOut.addActionListener(listener);
+        btnLogOut.addActionListener(this);
+        btnInterval.addActionListener(this);
+        btnRemoveActivity.addActionListener(this);
+        addActivityListener();
+        /*btnLogOut.addActionListener(listener);
         btnInterval.addActionListener(listener);
         btnRemoveActivity.addActionListener(listener);
-        addActivityListener();
+        addActivityListener();*/
     }
 
     /**
@@ -99,7 +105,7 @@ public class AppPanel extends JPanel {
 
         btnInterval = new JButton("Ändra intervall");
         btnAddExercise = new JButton("Lägg till övning");
-        btnAddExercise.addActionListener(listener);
+        btnAddExercise.addActionListener(this);
         lblInterval = new JLabel();
         lblTimerInfo = new JLabel();
         startTimer(Integer.parseInt((String) cmbTimeLimit.getSelectedItem()), 59);
@@ -217,6 +223,7 @@ public class AppPanel extends JPanel {
     public void createActivityList() {
         listModel = new DefaultListModel();
         activityList = new JList<>(listModel);
+        //activityList = new JList();
         activityList.setPreferredSize(new Dimension(400, 320));
         activityList.setBorder(BorderFactory.createTitledBorder("Avklarade aktiviteter"));
         activityList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
@@ -247,10 +254,27 @@ public class AppPanel extends JPanel {
         stopTimer();
         startTimer(Integer.parseInt((String) cmbTimeLimit.getSelectedItem()), 59);
         activities.add(activity);
-        listModel.addElement(activity.getActivityName() + " " + activity.getTime());
+        list.add(activity.getActivityName() + activity.getTime());
+        activityList.setListData(list);
         String newActivityName = splitActivityNameAndTime(activity.getActivityName());
         activity.setActivityName(newActivityName);
         updateUI();
+    }
+    private void updateActivityListWithOneRemoved() {
+        int activityToRemoveIndex = activityList.getSelectedIndex();
+        String activityToRemove = String.valueOf(activityList.getSelectedValue());
+        System.out.println("Remove: " + activityToRemove);
+        /*for (Activity a:activities ) {
+            String titleTime = a.getActivityName() + " - " + a.getTime();
+            if(titleTime.equals(activityToRemove)){
+                activityList.remove(activityToRemoveIndex);
+                System.out.println("Removed: "+ a.getActivityName());
+            }
+
+        }*/
+        activityList.remove(activityToRemoveIndex);
+        activityList.setSelectedIndex(0);
+        //activityList.removeListSelectionListener(listner);
     }
 
     public void showActivityInfo(String activityInfo) {
@@ -280,8 +304,6 @@ public class AppPanel extends JPanel {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, activityIcon, buttons, buttons[0]);
         if (answer == 0) {
             updateAppPanelCompletedActivity(activity);
-
-
         } else {
             updateAppPanelSnooze(activity);
         }
@@ -328,6 +350,30 @@ public class AppPanel extends JPanel {
         showNotification(activity);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        Object click = e.getSource();
+        int interval;
+        if (click == btnLogOut) {
+            mainPanel.logOut();
+        }
+        if (click == btnInterval) {
+            interval = Integer.parseInt((String) cmbTimeLimit.getSelectedItem());
+            countTimerInterval(interval);
+            mainPanel.sendChosenInterval(interval);
+            updateLblInterval();
+        }
+        if(click == btnAddExercise) {
+            new AddActivityFrame(mainPanel);
+        }
+        if(click == btnRemoveActivity){
+            updateActivityListWithOneRemoved();
+
+        }
+
+    }
+
 
     public class welcomePane extends JOptionPane {
         @Override
@@ -346,39 +392,6 @@ public class AppPanel extends JPanel {
                 "Hur ofta du vill ha dessa notiser kan du ställa in själv.", "Välkommen till Edim ", 2, new ImageIcon(newImg));
     }
 
-    class ButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            Object click = e.getSource();
-            int interval;
-            if (click == btnLogOut) {
-                mainPanel.logOut();
-            }
-            if (click == btnInterval) {
-                interval = Integer.parseInt((String) cmbTimeLimit.getSelectedItem());
-                countTimerInterval(interval);
-                mainPanel.sendChosenInterval(interval);
-                updateLblInterval();
-            }
-            if(click == btnAddExercise) {
-                new AddActivityFrame(mainPanel);
-            }
-            if(click == btnRemoveActivity){
-                System.out.println(activityList.getSelectedValue());
-                System.out.println(activityList.getSelectedIndex());
-                int activityToRemoveIndex = activityList.getSelectedIndex();
-                String activityToRemove = String.valueOf(activityList.getSelectedValue());
-                String activityName = splitActivityNameAndTime(activityToRemove);
-                /*for (Activity a:activities ) {
-                    if(a.getActivityName().equals(activityName)){
-                        activities.remove(a);
-                    }
-                }*/
-                //activityList.remove(activityToRemoveIndex);
-                activityList.remove(activityList.getSelectedIndex());
-                updateUI();
 
-            }
-        }
-    }
 
 }
