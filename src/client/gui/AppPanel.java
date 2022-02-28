@@ -38,6 +38,7 @@ public class AppPanel extends JPanel {
     private JLabel lblInterval;
     private JButton btnAddExercise;
     private TrayIcon trayIcon;
+    private JScrollBar scrollBar;
 
     private BorderLayout borderLayout = new BorderLayout();
     private ActionListener listener = new ButtonListener();
@@ -74,15 +75,12 @@ public class AppPanel extends JPanel {
 
         btnLogOut = new JButton("Logga ut");
 
-        add(activityList, BorderLayout.CENTER);
+        //add(activityList, BorderLayout.CENTER);
         add(btnLogOut, BorderLayout.SOUTH);
         add(taActivityInfo, BorderLayout.EAST);
         add(intervalPnl, BorderLayout.WEST);
 
-        /*btnLogOut.addActionListener(this);
-        btnInterval.addActionListener(this);
-        btnRemoveActivity.addActionListener(this);
-        addActivityListener();*/
+
         btnLogOut.addActionListener(listener);
         btnInterval.addActionListener(listener);
         btnRemoveActivity.addActionListener(listener);
@@ -225,6 +223,16 @@ public class AppPanel extends JPanel {
         activityList.setPreferredSize(new Dimension(400, 320));
         activityList.setBorder(BorderFactory.createTitledBorder("Avklarade aktiviteter"));
         activityList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scrollpane = new JScrollPane(activityList);
+        scrollpane.setVerticalScrollBar(new JScrollBar(Adjustable.VERTICAL));
+        scrollpane.setVisible(true);
+        scrollpane.setPreferredSize(new Dimension(420,320));
+        add(scrollpane, BorderLayout.CENTER);
+        /*JScrollBar scrollBar = new JScrollBar(Adjustable.VERTICAL);
+        scrollBar.setVisible(true);
+        scrollBar.setPreferredSize(new Dimension(20,320));
+        activityList.add(scrollBar);
+        add(activityList, BorderLayout.CENTER);*/
         Font font = new Font("SansSerif", Font.PLAIN, 14);
         activityList.setFont(font);
     }
@@ -379,7 +387,7 @@ public class AppPanel extends JPanel {
             }
             if(click == btnRemoveActivity){
                 if(activityList == null || activities.isEmpty()){
-                    JOptionPane.showConfirmDialog(null, "Du har inga utförda övningar än!","Här var det tomt", JOptionPane.OK_CANCEL_OPTION);
+                    JOptionPane.showConfirmDialog(null, "Du har inga utförda övningar än!","Här var det tomt", JOptionPane.OK_OPTION);
                 }
                 else {
                     updateActivityListWithOneRemoved();
