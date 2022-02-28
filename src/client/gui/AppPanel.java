@@ -21,7 +21,7 @@ import java.util.Timer;
  * @version 1.0
  * @author Oscar Kareld, Chanon Borgstrom, Carolin Nordstrom
  */
-public class AppPanel extends JPanel implements ActionListener {
+public class AppPanel extends JPanel {
     private MainPanel mainPanel;
 
     private String[] interval;
@@ -30,7 +30,6 @@ public class AppPanel extends JPanel implements ActionListener {
     private JComboBox cmbTimeLimit;
     private LinkedList<Activity> activities;
     private JList activityList;
-    private Vector list = new Vector();
 
     private JButton btnRemoveActivity;
     private JButton btnLogOut;
@@ -41,7 +40,7 @@ public class AppPanel extends JPanel implements ActionListener {
     private TrayIcon trayIcon;
 
     private BorderLayout borderLayout = new BorderLayout();
-    //private ActionListener listener = new ButtonListener();
+    private ActionListener listener = new ButtonListener();
     private DefaultListModel listModel;
 
     private String className = "Class: AppPanel: ";
@@ -80,14 +79,14 @@ public class AppPanel extends JPanel implements ActionListener {
         add(taActivityInfo, BorderLayout.EAST);
         add(intervalPnl, BorderLayout.WEST);
 
-        btnLogOut.addActionListener(this);
+        /*btnLogOut.addActionListener(this);
         btnInterval.addActionListener(this);
         btnRemoveActivity.addActionListener(this);
-        addActivityListener();
-        /*btnLogOut.addActionListener(listener);
+        addActivityListener();*/
+        btnLogOut.addActionListener(listener);
         btnInterval.addActionListener(listener);
         btnRemoveActivity.addActionListener(listener);
-        addActivityListener();*/
+        addActivityListener();
     }
 
     /**
@@ -105,7 +104,7 @@ public class AppPanel extends JPanel implements ActionListener {
 
         btnInterval = new JButton("Ändra intervall");
         btnAddExercise = new JButton("Lägg till övning");
-        btnAddExercise.addActionListener(this);
+        btnAddExercise.addActionListener(listener);
         lblInterval = new JLabel();
         lblTimerInfo = new JLabel();
         startTimer(Integer.parseInt((String) cmbTimeLimit.getSelectedItem()), 59);
@@ -152,7 +151,7 @@ public class AppPanel extends JPanel implements ActionListener {
     }
 
     public void createCBTimeLimit() {
-        interval = new String[]{"1", "5", "15", "30", "45", "60"};
+        interval = new String[]{"1", "5", "15", "30", "45", "60"}; //todo: ta bort 1:an vid release
         cmbTimeLimit = new JComboBox<>(interval);
         cmbTimeLimit.setSelectedIndex(3);
     }
@@ -223,7 +222,6 @@ public class AppPanel extends JPanel implements ActionListener {
     public void createActivityList() {
         listModel = new DefaultListModel();
         activityList = new JList<>(listModel);
-        //activityList = new JList();
         activityList.setPreferredSize(new Dimension(400, 320));
         activityList.setBorder(BorderFactory.createTitledBorder("Avklarade aktiviteter"));
         activityList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
@@ -234,11 +232,13 @@ public class AppPanel extends JPanel implements ActionListener {
     public void addActivityListener() {
         activityList.addListSelectionListener(e -> {
             String activityName = (String) activityList.getSelectedValue();
-            String newActivityName = splitActivityNameAndTime(activityName);
-            for (Activity activity : activities) {
-                if (activity.getActivityName().equals(newActivityName)) {
-                    showActivityInfo(activity.getActivityInfo());
+            if(activityName != null){
+                String newActivityName = splitActivityNameAndTime(activityName);
+                for (Activity activity : activities) {
+                    if (activity.getActivityName().equals(newActivityName)) {
+                        showActivityInfo(activity.getActivityInfo());
 
+                    }
                 }
             }
         });
@@ -254,27 +254,36 @@ public class AppPanel extends JPanel implements ActionListener {
         stopTimer();
         startTimer(Integer.parseInt((String) cmbTimeLimit.getSelectedItem()), 59);
         activities.add(activity);
-        list.add(activity.getActivityName() + activity.getTime());
-        activityList.setListData(list);
+        listModel.addElement(activity.getActivityName() + " " + activity.getTime());
         String newActivityName = splitActivityNameAndTime(activity.getActivityName());
         activity.setActivityName(newActivityName);
         updateUI();
     }
-    private void updateActivityListWithOneRemoved() {
-        int activityToRemoveIndex = activityList.getSelectedIndex();
-        String activityToRemove = String.valueOf(activityList.getSelectedValue());
-        System.out.println("Remove: " + activityToRemove);
-        /*for (Activity a:activities ) {
-            String titleTime = a.getActivityName() + " - " + a.getTime();
-            if(titleTime.equals(activityToRemove)){
-                activityList.remove(activityToRemoveIndex);
-                System.out.println("Removed: "+ a.getActivityName());
-            }
 
-        }*/
-        activityList.remove(activityToRemoveIndex);
-        activityList.setSelectedIndex(0);
-        //activityList.removeListSelectionListener(listner);
+    /**
+     * Author: Linn Borgström
+     * Date: 2022-02-28
+     * Deletes the chosen index from the center panel from the list and updates the GUI.
+     * Prompts for confirmation before deleting
+     */
+    private void updateActivityListWithOneRemoved() {
+
+        int answer = JOptionPane.showConfirmDialog(null, "Är du säker på att du vill ångra att du gjort denna övning?", "Ta bort ut utförd övning", JOptionPane.YES_NO_OPTION);
+        if(answer == 0) {
+            int activityToRemoveIndex = activityList.getSelectedIndex();
+            String activityToRemove = (String) activityList.getSelectedValue();
+            String activityName = splitActivityNameAndTime(activityToRemove);
+            listModel.remove(activityToRemoveIndex);
+            taActivityInfo.setText(" ");
+            updateUI();
+            for (Activity a:activities ) {
+                if(a.getActivityName().equals(activityName)){
+                    activities.remove(a);
+                }
+            }
+         }
+
+
     }
 
     public void showActivityInfo(String activityInfo) {
@@ -350,28 +359,34 @@ public class AppPanel extends JPanel implements ActionListener {
         showNotification(activity);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    private class ButtonListener implements ActionListener {
 
-        Object click = e.getSource();
-        int interval;
-        if (click == btnLogOut) {
-            mainPanel.logOut();
-        }
-        if (click == btnInterval) {
-            interval = Integer.parseInt((String) cmbTimeLimit.getSelectedItem());
-            countTimerInterval(interval);
-            mainPanel.sendChosenInterval(interval);
-            updateLblInterval();
-        }
-        if(click == btnAddExercise) {
-            new AddActivityFrame(mainPanel);
-        }
-        if(click == btnRemoveActivity){
-            updateActivityListWithOneRemoved();
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object click = e.getSource();
+            int interval;
+            if (click == btnLogOut) {
+                mainPanel.logOut();
+            }
+            if (click == btnInterval) {
+                interval = Integer.parseInt((String) cmbTimeLimit.getSelectedItem());
+                countTimerInterval(interval);
+                mainPanel.sendChosenInterval(interval);
+                updateLblInterval();
+            }
+            if(click == btnAddExercise) {
+                new AddActivityFrame(mainPanel);
+            }
+            if(click == btnRemoveActivity){
+                if(activityList == null || activities.isEmpty()){
+                    JOptionPane.showConfirmDialog(null, "Du har inga utförda övningar än!","Här var det tomt", JOptionPane.OK_CANCEL_OPTION);
+                }
+                else {
+                    updateActivityListWithOneRemoved();
+                }
 
+            }
         }
-
     }
 
 
