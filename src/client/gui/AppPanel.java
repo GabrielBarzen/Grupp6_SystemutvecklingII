@@ -75,7 +75,7 @@ public class AppPanel extends JPanel {
 
         btnLogOut = new JButton("Logga ut");
 
-        //add(activityList, BorderLayout.CENTER);
+        add(activityList, BorderLayout.CENTER);
         add(btnLogOut, BorderLayout.SOUTH);
         add(taActivityInfo, BorderLayout.EAST);
         add(intervalPnl, BorderLayout.WEST);
@@ -223,7 +223,7 @@ public class AppPanel extends JPanel {
         activityList.setPreferredSize(new Dimension(400, 320));
         activityList.setBorder(BorderFactory.createTitledBorder("Avklarade aktiviteter"));
         activityList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
-        JScrollPane scrollpane = new JScrollPane(activityList);
+        /*JScrollPane scrollpane = new JScrollPane(activityList);
         scrollpane.setVerticalScrollBar(new JScrollBar(Adjustable.VERTICAL));
         scrollpane.setVisible(true);
         scrollpane.setPreferredSize(new Dimension(420,320));
@@ -387,7 +387,7 @@ public class AppPanel extends JPanel {
             }
             if(click == btnRemoveActivity){
                 if(activityList == null || activities.isEmpty()){
-                    JOptionPane.showConfirmDialog(null, "Du har inga utförda övningar än!","Här var det tomt", JOptionPane.OK_OPTION);
+                    JOptionPane.showMessageDialog(null, "Du har inga utförda övningar än!","Här var det tomt", JOptionPane.OK_OPTION);
                 }
                 else {
                     updateActivityListWithOneRemoved();
