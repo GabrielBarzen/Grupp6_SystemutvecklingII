@@ -1,4 +1,4 @@
-package tests;
+
 //Benny
 import server.Buffer;
 import org.junit.jupiter.api.Test;

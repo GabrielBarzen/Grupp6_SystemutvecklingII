@@ -1,4 +1,4 @@
-package tests;
+
 //Benny
 import client.ClientCommunicationController;
 import client.ClientController;

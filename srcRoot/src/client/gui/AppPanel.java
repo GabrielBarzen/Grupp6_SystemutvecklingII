@@ -236,6 +236,7 @@ public class AppPanel extends JPanel {
         String newActivityName = splitActivityNameAndTime(activity.getActivityName());
         activity.setActivityName(newActivityName);
         updateUI();
+
     }
 
     public void showActivityInfo(String activityInfo) {
