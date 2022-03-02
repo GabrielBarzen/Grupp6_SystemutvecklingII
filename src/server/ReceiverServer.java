@@ -133,7 +133,6 @@ public class ReceiverServer {
 
                         switch (userType) {
                             case LOGIN:
-                                //sleep(2000);
                                 socketHashMap.put(userName, socketStreamObject);
                                 break;
                             case LOGOUT:
