@@ -30,6 +30,15 @@ public class ServerController extends Thread {
     private String userFilePath = "files/users.dat";
     private ImageReceiver imageReceiver;
     private String imagePath;
+
+    public ReceiverServer getReceiverServer() {
+        return receiverServer;
+    }
+
+    public void setReceiverServer(ReceiverServer receiverServer) {
+        this.receiverServer = receiverServer;
+    }
+
     /**
      * Constructs all the buffers and servers and HashMaps that is needed.
      *
@@ -37,6 +46,7 @@ public class ServerController extends Thread {
      */
     public ServerController(int port) {
         receiveBuffer = new Buffer<>();
+
         sendBuffer = new Buffer();
         socketHashMap = new HashMap();
         receiverServer = new ReceiverServer(port, socketHashMap, receiveBuffer);

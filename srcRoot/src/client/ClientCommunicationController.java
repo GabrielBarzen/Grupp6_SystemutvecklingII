@@ -57,12 +57,7 @@ public class ClientCommunicationController {
 
     /**
      * This method tries to close the socket and the connection to the server.
-<<<<<<< HEAD:srcRoot/src/client/ClientCommunicationController.java
      * @return boolean
-=======
-     *
-     * @return
->>>>>>> main:src/client/ClientCommunicationController.java
      */
     public boolean disconnect() {
         isConnected = false;

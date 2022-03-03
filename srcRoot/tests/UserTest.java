@@ -30,8 +30,7 @@ public class UserTest {
 
     @Test
     public void getUsername() {
-        user.setUsername("Göran");
-        assertEquals("Göran",user.getUsername());
+        assertEquals("Benny",user.getUsername());
     }
 
     @Test

@@ -6,4 +6,5 @@ public enum UserType {
     SENDUSER,
     SENDWELCOME,
     SENDINTERVAL,
+    OTHER
 }
