@@ -190,7 +190,7 @@ public class ServerController extends Thread {
     public SocketStreamObject logOutUser(String username) {
         SocketStreamObject socketStreamObject = null;
         try {
-            sleep(5000);
+            sleep(2000);
             socketHashMap.get(username).getOos().close();
             socketHashMap.get(username).getOis().close();
             socketHashMap.get(username).getSocket().close();

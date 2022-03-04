@@ -64,6 +64,7 @@ public class SenderServer {
         public void run() {
             while (true) {
                 try {
+                    sleep(2000);
                     Object object = sendBuffer.get();
                     if (object instanceof User) {
                         User sendUser = (User) object;
