@@ -9,6 +9,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.*;
+import java.awt.List;
 import java.io.File;
 import java.util.*;
 import java.awt.event.*;
@@ -30,12 +31,14 @@ public class AppPanel extends JPanel {
     private LinkedList<Activity> activities;
     private JList activityList;
 
+    private JButton btnRemoveActivity;
     private JButton btnLogOut;
     private JButton btnInterval;
     private JPanel intervalPnl;
     private JLabel lblInterval;
     private JButton btnAddExercise;
     private TrayIcon trayIcon;
+    private JScrollBar scrollBar;
 
     private BorderLayout borderLayout = new BorderLayout();
     private ActionListener listener = new ButtonListener();
@@ -77,8 +80,10 @@ public class AppPanel extends JPanel {
         add(taActivityInfo, BorderLayout.EAST);
         add(intervalPnl, BorderLayout.WEST);
 
+
         btnLogOut.addActionListener(listener);
         btnInterval.addActionListener(listener);
+        btnRemoveActivity.addActionListener(listener);
         addActivityListener();
     }
 
@@ -92,6 +97,8 @@ public class AppPanel extends JPanel {
         intervalPnl.setLayout(new BorderLayout());
         intervalPnl.setBackground(clrPanels);
         intervalPnl.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.LIGHT_GRAY));
+
+        btnRemoveActivity = new JButton("Ta bort utförd aktivitet");
 
         btnInterval = new JButton("Ändra intervall");
         btnAddExercise = new JButton("Lägg till övning");
@@ -111,17 +118,23 @@ public class AppPanel extends JPanel {
         c.weightx = 0.5;
 
         c.gridx = 0;
-        c.gridy = 0;
+        c.gridy = 1;
         c.gridwidth = 1;
         centerPnl.add(cmbTimeLimit, c);
         c.gridwidth = 2;
         c.gridx = 1;
+        c.gridy = 1;
         centerPnl.add(btnInterval, c);
 
         c.gridwidth = 1;
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 3;
         centerPnl.add(btnAddExercise, c);
+
+        c.gridwidth = 5;
+        c.gridx = 0;
+        c.gridy = 0;
+        centerPnl.add(btnRemoveActivity,c);
 
         intervalPnl.add(lblInterval, BorderLayout.NORTH);
         intervalPnl.add(centerPnl, BorderLayout.CENTER);
@@ -136,7 +149,7 @@ public class AppPanel extends JPanel {
     }
 
     public void createCBTimeLimit() {
-        interval = new String[]{"1", "5", "15", "30", "45", "60"};
+        interval = new String[]{"1", "5", "15", "30", "45", "60"}; //todo: ta bort 1:an vid release
         cmbTimeLimit = new JComboBox<>(interval);
         cmbTimeLimit.setSelectedIndex(3);
     }
@@ -210,6 +223,16 @@ public class AppPanel extends JPanel {
         activityList.setPreferredSize(new Dimension(400, 320));
         activityList.setBorder(BorderFactory.createTitledBorder("Avklarade aktiviteter"));
         activityList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+        /*JScrollPane scrollpane = new JScrollPane(activityList);
+        scrollpane.setVerticalScrollBar(new JScrollBar(Adjustable.VERTICAL));
+        scrollpane.setVisible(true);
+        scrollpane.setPreferredSize(new Dimension(420,320));
+        add(scrollpane, BorderLayout.CENTER);
+        /*JScrollBar scrollBar = new JScrollBar(Adjustable.VERTICAL);
+        scrollBar.setVisible(true);
+        scrollBar.setPreferredSize(new Dimension(20,320));
+        activityList.add(scrollBar);
+        add(activityList, BorderLayout.CENTER);*/
         Font font = new Font("SansSerif", Font.PLAIN, 14);
         activityList.setFont(font);
     }
@@ -217,11 +240,13 @@ public class AppPanel extends JPanel {
     public void addActivityListener() {
         activityList.addListSelectionListener(e -> {
             String activityName = (String) activityList.getSelectedValue();
-            String newActivityName = splitActivityNameAndTime(activityName);
-            for (Activity activity : activities) {
-                if (activity.getActivityName().equals(newActivityName)) {
-                    showActivityInfo(activity.getActivityInfo());
+            if(activityName != null){
+                String newActivityName = splitActivityNameAndTime(activityName);
+                for (Activity activity : activities) {
+                    if (activity.getActivityName().equals(newActivityName)) {
+                        showActivityInfo(activity.getActivityInfo());
 
+                    }
                 }
             }
         });
@@ -241,6 +266,32 @@ public class AppPanel extends JPanel {
         String newActivityName = splitActivityNameAndTime(activity.getActivityName());
         activity.setActivityName(newActivityName);
         updateUI();
+
+    }
+
+    /**
+     * Author: Linn Borgström
+     * Date: 2022-02-28
+     * Deletes the chosen index from the center panel from the list and updates the GUI.
+     * Prompts for confirmation before deleting
+     */
+    private void updateActivityListWithOneRemoved() {
+
+        int answer = JOptionPane.showConfirmDialog(null, "Är du säker på att du vill ångra att du gjort denna övning?", "Ta bort ut utförd övning", JOptionPane.YES_NO_OPTION);
+        if(answer == 0) {
+            int activityToRemoveIndex = activityList.getSelectedIndex();
+            String activityToRemove = (String) activityList.getSelectedValue();
+            String activityName = splitActivityNameAndTime(activityToRemove);
+            listModel.remove(activityToRemoveIndex);
+            taActivityInfo.setText(" ");
+            updateUI();
+            for (Activity a:activities ) {
+                if(a.getActivityName().equals(activityName)){
+                    activities.remove(a);
+                }
+            }
+         }
+
 
     }
 
@@ -271,8 +322,6 @@ public class AppPanel extends JPanel {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, activityIcon, buttons, buttons[0]);
         if (answer == 0) {
             updateAppPanelCompletedActivity(activity);
-
-
         } else {
             updateAppPanelSnooze(activity);
         }
@@ -319,6 +368,36 @@ public class AppPanel extends JPanel {
         showNotification(activity);
     }
 
+    private class ButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object click = e.getSource();
+            int interval;
+            if (click == btnLogOut) {
+                mainPanel.logOut();
+            }
+            if (click == btnInterval) {
+                interval = Integer.parseInt((String) cmbTimeLimit.getSelectedItem());
+                countTimerInterval(interval);
+                mainPanel.sendChosenInterval(interval);
+                updateLblInterval();
+            }
+            if(click == btnAddExercise) {
+                new AddActivityFrame(mainPanel);
+            }
+            if(click == btnRemoveActivity){
+                if(activityList == null || activities.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Du har inga utförda övningar än!","Här var det tomt", JOptionPane.OK_OPTION);
+                }
+                else {
+                    updateActivityListWithOneRemoved();
+                }
+
+            }
+        }
+    }
+
 
     public class welcomePane extends JOptionPane {
         @Override
@@ -337,23 +416,6 @@ public class AppPanel extends JPanel {
                 "Hur ofta du vill ha dessa notiser kan du ställa in själv.", "Välkommen till Edim ", 2, new ImageIcon(newImg));
     }
 
-    class ButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            Object click = e.getSource();
-            int interval;
-            if (click == btnLogOut) {
-                mainPanel.logOut();
-            }
-            if (click == btnInterval) {
-                interval = Integer.parseInt((String) cmbTimeLimit.getSelectedItem());
-                countTimerInterval(interval);
-                mainPanel.sendChosenInterval(interval);
-                updateLblInterval();
-            }
-            if(click == btnAddExercise) {
-                new AddActivityFrame(mainPanel);
-            }
-        }
-    }
+
 
 }
