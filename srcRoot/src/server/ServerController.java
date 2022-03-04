@@ -164,10 +164,11 @@ public class ServerController extends Thread {
      *
      * @param user the received User which the UserTimer is connected to.
      */
-    public void createUserTimer(User user) {
+    public UserTimer createUserTimer(User user) {
         UserTimer userTimer = new UserTimer(this, user);
         userTimer.startTimer();
         userTimerHashMap.put(user.getUsername(), userTimer);
+        return userTimerHashMap.get(user.getUsername());
     }
 
     /**
@@ -339,6 +340,5 @@ public class ServerController extends Thread {
                 }
             }
         }
-
     }
 }
