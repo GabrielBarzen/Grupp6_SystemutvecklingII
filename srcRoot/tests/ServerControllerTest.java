@@ -34,6 +34,6 @@ public class ServerControllerTest {
         ImageIcon img = new ImageIcon();
         img.setImage(image);
         activity.setActivityImage(img);
-        assertEquals(activity, controller.saveActivityDetails(activity));
+        assertEquals(activity.getActivityInfo(), controller.saveActivityDetails(activity).getActivityInfo());
     }
 }
