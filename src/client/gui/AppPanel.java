@@ -88,6 +88,7 @@ public class AppPanel extends JPanel {
 
     /**
      * @author Satya Singh
+     * Altered by: Linn Borgström
      * This method creates the interval panel on the left side of the GUI and
      * populates it with componenets
      */
@@ -144,9 +145,22 @@ public class AppPanel extends JPanel {
 
     }
 
+    /**
+     * @Author: Linn Borgström
+     * Date: 2022-03-04
+     * gets the interval that has been set from the textArea after the user clicks the btnInterval
+     * @return minute interval
+     */
     public int getInterval() {
         return interval;
     }
+
+    /**
+     * @Author: Linn Borgström
+     * Date: 2022-03-04
+     * Sets the interval after the user clicks the btnInterval
+     * @param interval the text from the textArea cast to an integer
+     */
 
     public void setInterval(int interval) {
         this.interval = interval;
@@ -253,7 +267,7 @@ public class AppPanel extends JPanel {
 
     public void updateActivityList(Activity activity) {
         stopTimer();
-        startTimer(Integer.parseInt(txtAreaTimeLimit.getText()), 59);
+        startTimer(interval, 59);
         activities.add(activity);
         listModel.addElement(activity.getActivityName() + " " + activity.getTime());
         String newActivityName = splitActivityNameAndTime(activity.getActivityName());
