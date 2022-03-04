@@ -187,17 +187,19 @@ public class ServerController extends Thread {
      *
      * @param username
      */
-    public void logOutUser(String username) {
+    public SocketStreamObject logOutUser(String username) {
+        SocketStreamObject socketStreamObject = null;
         try {
             sleep(5000);
             socketHashMap.get(username).getOos().close();
             socketHashMap.get(username).getOis().close();
             socketHashMap.get(username).getSocket().close();
-            socketHashMap.remove(username);
+            socketStreamObject = socketHashMap.remove(username);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         System.out.println("User logged out: " + username);
+        return socketStreamObject;
     }
 
     /**
@@ -206,7 +208,7 @@ public class ServerController extends Thread {
      *
      * @param activity the received activity.
      */
-    public void setDelayedActivity(Activity activity) {
+    public UserTimer setDelayedActivity(Activity activity) {
         String userName = activity.getActivityUser();
         User user = userRegister.getUserHashMap().get(userName);
         user.setDelayedActivity(activity);
@@ -215,6 +217,7 @@ public class ServerController extends Thread {
         userTimer.setActiveDelay(true);
         userTimer.setDelayTimer(5);
         userTimer.startTimer();
+        return userTimer;
     }
 
     /**
@@ -237,7 +240,7 @@ public class ServerController extends Thread {
      *
      * @param activity
      */
-    public void saveActivityDetails(Activity activity) {
+    public Activity saveActivityDetails(Activity activity) {
         String path[] = activity.getActivityName().split(" ");
         imagePath = "imagesServer/" + path[0] + ".png";
 
@@ -258,6 +261,7 @@ public class ServerController extends Thread {
             e.printStackTrace();
         }
         activityRegister.updateRegister("files/activities.txt");
+        return activityRegister.getActivityRegister().getLast();
     }
 
     /**
