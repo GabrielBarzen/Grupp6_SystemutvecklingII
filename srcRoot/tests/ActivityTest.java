@@ -1,4 +1,3 @@
-package tests;
 
 
 
@@ -62,7 +61,8 @@ class ActivityTest {
      */
     @Test
     public void setCompleted(){
-        assertTrue(activity.setCompleted(true));
+        activity.setCompleted(true);
+        assertTrue(activity.isCompleted());
 
     }
     /**

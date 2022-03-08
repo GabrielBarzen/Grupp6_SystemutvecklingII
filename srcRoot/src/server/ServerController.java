@@ -30,6 +30,15 @@ public class ServerController extends Thread {
     private String userFilePath = "files/users.dat";
     private ImageReceiver imageReceiver;
     private String imagePath;
+
+    public ReceiverServer getReceiverServer() {
+        return receiverServer;
+    }
+
+    public void setReceiverServer(ReceiverServer receiverServer) {
+        this.receiverServer = receiverServer;
+    }
+
     /**
      * Constructs all the buffers and servers and HashMaps that is needed.
      *
@@ -37,6 +46,7 @@ public class ServerController extends Thread {
      */
     public ServerController(int port) {
         receiveBuffer = new Buffer<>();
+
         sendBuffer = new Buffer();
         socketHashMap = new HashMap();
         receiverServer = new ReceiverServer(port, socketHashMap, receiveBuffer);
@@ -154,10 +164,11 @@ public class ServerController extends Thread {
      *
      * @param user the received User which the UserTimer is connected to.
      */
-    public void createUserTimer(User user) {
+    public UserTimer createUserTimer(User user) {
         UserTimer userTimer = new UserTimer(this, user);
         userTimer.startTimer();
         userTimerHashMap.put(user.getUsername(), userTimer);
+        return userTimerHashMap.get(user.getUsername());
     }
 
     /**
@@ -176,17 +187,19 @@ public class ServerController extends Thread {
      *
      * @param username
      */
-    public void logOutUser(String username) {
+    public SocketStreamObject logOutUser(String username) {
+        SocketStreamObject socketStreamObject = null;
         try {
             sleep(2000);
             socketHashMap.get(username).getOos().close();
             socketHashMap.get(username).getOis().close();
             socketHashMap.get(username).getSocket().close();
-            socketHashMap.remove(username);
+            socketStreamObject = socketHashMap.remove(username);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         System.out.println("User logged out: " + username);
+        return socketStreamObject;
     }
 
     /**
@@ -195,7 +208,7 @@ public class ServerController extends Thread {
      *
      * @param activity the received activity.
      */
-    public void setDelayedActivity(Activity activity) {
+    public UserTimer setDelayedActivity(Activity activity) {
         String userName = activity.getActivityUser();
         User user = userRegister.getUserHashMap().get(userName);
         user.setDelayedActivity(activity);
@@ -204,6 +217,7 @@ public class ServerController extends Thread {
         userTimer.setActiveDelay(true);
         userTimer.setDelayTimer(5);
         userTimer.startTimer();
+        return userTimer;
     }
 
     /**
@@ -226,7 +240,7 @@ public class ServerController extends Thread {
      *
      * @param activity
      */
-    public void saveActivityDetails(Activity activity) {
+    public Activity saveActivityDetails(Activity activity) {
         String path[] = activity.getActivityName().split(" ");
         imagePath = "imagesServer/" + path[0] + ".png";
 
@@ -247,6 +261,7 @@ public class ServerController extends Thread {
             e.printStackTrace();
         }
         activityRegister.updateRegister("files/activities.txt");
+        return activityRegister.getActivityRegister().getLast();
     }
 
     /**
@@ -329,6 +344,5 @@ public class ServerController extends Thread {
                 }
             }
         }
-
     }
 }

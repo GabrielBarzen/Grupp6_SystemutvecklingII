@@ -23,7 +23,16 @@ public class ReceiverServer {
     private String className = "Class: ReceiverServer ";
     private LinkedList<ReceiverThread> threadPool;
     private Map<String, SocketStreamObject> socketHashMap;
-    private Buffer receiveBuffer;
+
+    public Buffer<Object> getReceiveBuffer() {
+        return receiveBuffer;
+    }
+
+    public void setReceiveBuffer(Buffer<Object> receiveBuffer) {
+        this.receiveBuffer = receiveBuffer;
+    }
+
+    private Buffer<Object> receiveBuffer;
 
     /**
      * Receives all necessary data and starts the server and then generates and starts the thread pool.

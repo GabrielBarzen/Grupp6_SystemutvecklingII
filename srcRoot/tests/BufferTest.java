@@ -1,11 +1,11 @@
-package tests;
+
 //Benny
 import server.Buffer;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BufferTest {
-    Buffer buffer=new Buffer();
+    Buffer<String> buffer=new Buffer<>();
     @Test
     public void put() throws InterruptedException {
 
