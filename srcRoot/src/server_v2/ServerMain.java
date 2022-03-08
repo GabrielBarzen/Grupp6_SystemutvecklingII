@@ -8,7 +8,7 @@ import java.io.IOException;
 public class ServerMain {
 
     private static int port = 4343;
-    private static boolean doLogging = false;
+    private static boolean doLogging = true;
 
     public static void main(String[] args) {
         for (String argument : args) {
@@ -18,7 +18,7 @@ public class ServerMain {
                     port = Integer.parseInt(splitArgument[1]);
                     break;
                 case "log":
-                    doLogging = true;
+                    doLogging = Boolean.parseBoolean(splitArgument[1]);
                 default:
                     break;
             }

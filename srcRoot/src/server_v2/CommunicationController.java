@@ -1,5 +1,6 @@
 package server_v2;
 
+import server.Buffer;
 import server_v2.API.MessageController;
 import server_v2.API.Receiver;
 import server_v2.API.Sender;
@@ -20,25 +21,29 @@ public class CommunicationController {
     ThreadPoolExecutor threadPoolExecutor;
     Map<User, MessageController> connectionMap;
     CommunicationController communicationController = this;
+    Buffer<Message> receiveBuffer = new Buffer<>();
 
     public CommunicationController() {
         threadPoolExecutor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         connectionMap  = new HashMap<>();
+        Thread thread = new Thread(new receiver_handler());
     }
 
     public void sendObject(User user, Message message) {
         connectionMap.get(user).getSender().send(message);
     }
 
-    public Object receiveMessage(Message message) {
-        switch (message.getType()) {
 
+    public void receiveMessage(Message message) {
+        receiveBuffer.put(message);
+    }
+    public Object handleMessage(Message message) {
+        switch (message.getType()) {
 
             case Login : {
                 Logger.log("illegal login", LogLevel.Warning);
             }
             break;
-
             case Logout : {
                 Logger.log("logout", LogLevel.Debug);
             } //TODO login with disconnect
@@ -46,7 +51,7 @@ public class CommunicationController {
 
             case NewActivity : {
                 Logger.log("new activity requested", LogLevel.Debug);
-                Message outgoingMessage = new Message(ActivityManager.getRandomActivity(),null,MessageType.OK);
+                Message outgoingMessage = new Message(ActivityManager.getRandomActivity(),null,MessageType.NewActivity);
                 sendObject(message.getUser(),outgoingMessage);
             } //TODO send new activity to client
             break;
@@ -74,6 +79,17 @@ public class CommunicationController {
         threadPoolExecutor.execute(runner);
     }
 
+    class receiver_handler implements Runnable {
+        @Override
+        public void run() {
+            try {
+                handleMessage(receiveBuffer.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     class establish_communication_runner implements Runnable {
 
         Receiver reciever;
@@ -88,7 +104,7 @@ public class CommunicationController {
         @Override
         public void run() {
             try {
-                ObjectInputStream stream = (ObjectInputStream) clientSocket.getInputStream();
+                ObjectInputStream stream = new ObjectInputStream(clientSocket.getInputStream());
                 Object obj = stream.readObject();
 
                 if (obj instanceof Message) {
@@ -103,6 +119,9 @@ public class CommunicationController {
                         sender.start();
 
                         connectionMap.put(user, new MessageController(reciever, sender));
+
+                        Message outgoingMessage = new Message(null,user,MessageType.Login);
+                        sender.send(outgoingMessage);
                     }
                 }
 

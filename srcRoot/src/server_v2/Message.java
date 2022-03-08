@@ -1,11 +1,13 @@
 package server_v2;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
     private MessageType type;
     private User user;
     private Object data;
 
-    Message(Object data, User user, MessageType messageType) {
+    public Message(Object data, User user, MessageType messageType) {
         this.data = data;
         this.type = messageType;
         this.user = user;

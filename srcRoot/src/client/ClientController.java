@@ -4,6 +4,8 @@ import server.Activity;
 
 
 import client.gui.MainFrame;
+import server_v2.Message;
+import server_v2.MessageType;
 import server_v2.User;
 import server.UserType;
 
@@ -62,7 +64,8 @@ public class ClientController {
     public void logIn() {
         user.setUserType(UserType.LOGIN);
         ccc = new ClientCommunicationController(this);
-        ccc.sendObject(user);
+        Message message = new Message(null, user, MessageType.Login);
+        ccc.sendObject(message);
     }
 
     /**

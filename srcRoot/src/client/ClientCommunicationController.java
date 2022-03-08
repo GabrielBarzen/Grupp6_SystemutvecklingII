@@ -1,6 +1,8 @@
 package client;
 
 import server.Activity;
+import server_v2.Message;
+import server_v2.MessageType;
 import server_v2.User;
 import server.UserType;
 
@@ -131,7 +133,6 @@ public class ClientCommunicationController {
             while (oisIsNull) {
                 try {
                     ois = new ObjectInputStream(socket.getInputStream());
-                    oisIsNull = false;
                 } catch (Exception e) {
                     e.printStackTrace();
                     try {
@@ -146,15 +147,17 @@ public class ClientCommunicationController {
                 try {
                     sleep(2000);
                     object = ois.readObject();
-                    if (object instanceof User) {
-                        User user = (User) object;
-                        clientController.receiveUser(user);
-                        if (user.getUserType() == UserType.LOGOUT) {
+                    if (object instanceof Message) {
+                        Message message = (Message) object;
+                        if(message.getType().equals(MessageType.Login)) {
+                            User user = message.getUser();
+                            clientController.receiveUser(user);
+                        } else if (message.getType().equals(MessageType.Logout)) {
                             disconnect();
+                        } else if (message.getType().equals(MessageType.NewActivity)) {
+                            Activity activity = (Activity) message.getData();
+                            clientController.receiveNotificationFromCCC(activity);
                         }
-                    } else if (object instanceof Activity) {
-                        Activity activity = (Activity) object;
-                        clientController.receiveNotificationFromCCC(activity);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
