@@ -1,5 +1,9 @@
 package server;
 
+import model.Buffer;
+import model.User;
+import model.UserType;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

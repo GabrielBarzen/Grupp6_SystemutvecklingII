@@ -4,8 +4,8 @@ import server.Activity;
 
 
 import client.gui.MainFrame;
-import server.User;
-import server.UserType;
+import model.User;
+import model.UserType;
 
 import java.awt.image.BufferedImage;
 

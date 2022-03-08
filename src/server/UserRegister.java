@@ -1,7 +1,8 @@
 package server;
 
+import model.User;
+
 import java.util.*;
-import java.util.concurrent.CancellationException;
 
 /**
  * This class handles all the user objects.
@@ -11,7 +12,7 @@ import java.util.concurrent.CancellationException;
  */
 
 public class UserRegister {
-    private Map<String,User> userHashMap;
+    private Map<String, User> userHashMap;
 
     private LinkedList<User> userLinkedList;
 

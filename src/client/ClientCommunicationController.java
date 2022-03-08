@@ -1,15 +1,15 @@
 package client;
 
+import model.Buffer;
 import server.Activity;
-import server.User;
-import server.UserType;
+import model.User;
+import model.UserType;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /**

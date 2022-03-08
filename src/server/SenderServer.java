@@ -1,12 +1,14 @@
 package server;
 
+import model.Buffer;
+import model.User;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
+
 
 /**
  * This class creates a thread pool and handles the communication to the Client.

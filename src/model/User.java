@@ -1,4 +1,6 @@
-package server;
+package model;
+
+import server.Activity;
 
 import java.io.Serializable;
 import java.util.LinkedList;

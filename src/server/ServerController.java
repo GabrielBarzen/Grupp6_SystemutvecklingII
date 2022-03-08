@@ -1,13 +1,15 @@
 package server;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Random;
+import model.Buffer;
+import model.User;
+import model.UserType;
 
 /**
  * This class handles the logic of the in and out coming objects from the clients.
