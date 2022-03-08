@@ -21,8 +21,6 @@ public class CommunicationController {
     Map<User, MessageController> connectionMap;
     CommunicationController communicationController = this;
 
-
-
     public CommunicationController() {
         threadPoolExecutor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         connectionMap  = new HashMap<>();
@@ -34,27 +32,39 @@ public class CommunicationController {
 
     public Object receiveMessage(Message message) {
         switch (message.getType()) {
-            case Login -> {
+
+
+            case Login : {
                 Logger.log("illegal login", LogLevel.Warning);
             }
+            break;
 
-            case Logout -> {
-                Logger.log("logout", LogLevel.Debug); //TODO login with disconnect
-            }
+            case Logout : {
+                Logger.log("logout", LogLevel.Debug);
+            } //TODO login with disconnect
+            break;
 
-            case NewActivity -> {
-                Logger.log("new activity requested", LogLevel.Debug); //TODO send new activity to client
-            }
+            case NewActivity : {
+                Logger.log("new activity requested", LogLevel.Debug);
+                Message outgoingMessage = new Message(ActivityManager.getRandomActivity(),null,MessageType.OK);
+                sendObject(message.getUser(),outgoingMessage);
+            } //TODO send new activity to client
+            break;
 
-            case SaveActivity -> {
-                Logger.log("save activity requested", LogLevel.Debug); //TODO save activity to file
-            }
-            case OK -> {
-                Logger.log("message received on client", LogLevel.Debug); //TODO handle OK message
-            }
-            case Error -> {
-                Logger.log("error on client side", LogLevel.Debug); //TODO handle Error message
-            }
+            case SaveActivity : {
+                Logger.log("save activity requested", LogLevel.Debug);
+            } //TODO save activity to file
+            break;
+
+            case OK : {
+                Logger.log("message received on client", LogLevel.Debug);
+            } //TODO handle OK message
+            break;
+
+            case Error : {
+                Logger.log("error on client side", LogLevel.Debug);
+            } //TODO handle Error message
+            break;
         }
         return null;
     }
