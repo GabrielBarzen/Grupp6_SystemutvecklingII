@@ -16,7 +16,6 @@ public class BufferTest {
     public void get() throws InterruptedException {
         buffer.put("hej");
        assertEquals("hej",buffer.get());
-
     }
 
     @Test

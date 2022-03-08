@@ -30,8 +30,9 @@ public class User implements Serializable {
         return completedActivities;
     }
 
-    public void addActivityToList(Activity activity) {
-        completedActivities.add(activity);
+    public boolean addActivityToList(Activity activity) {
+        boolean bool = completedActivities.add(activity);
+        return bool;
     }
 
     public void setCompletedActivities(LinkedList<Activity> completedActivities) {

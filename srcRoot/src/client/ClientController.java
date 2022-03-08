@@ -35,9 +35,10 @@ public class ClientController {
      *
      * @param userName
      */
-    public void createUser(String userName) {
+    public User createUser(String userName) {
         user = new User(userName);
         logIn();
+        return user;
     }
 
     /**
@@ -45,9 +46,10 @@ public class ClientController {
      *
      * @param activity the received object.
      */
-    public void sendActivityToCCC(Activity activity) {
-        user.addActivityToList(activity);
+    public boolean sendActivityToCCC(Activity activity) {
+        boolean bool = user.addActivityToList(activity);
         ccc.sendObject(activity);
+        return bool;
     }
 
     public void saveActivity(Activity activity, BufferedImage image) {

@@ -1,5 +1,4 @@
 package client;
-
 import java.util.LinkedList;
 /**
  * Buffer class
@@ -7,22 +6,24 @@ import java.util.LinkedList;
  * @author Rolf Axelsson
  */
 public class Buffer<T> {
-    private LinkedList<T> buffer = new LinkedList<T>();
+	private LinkedList<T> buffer=new LinkedList<T>();
 
 
-    public synchronized void put(T obj) {
-        buffer.addLast(obj);
-        notifyAll();
-    }
-
-    public synchronized T get() throws InterruptedException {
-        while(buffer.isEmpty()) {
-            wait();
-        }
-        return buffer.removeFirst();
-    }
-
-    public int size() {
-        return buffer.size();
-    }
+	public synchronized Object put(T obj) {
+		buffer.addLast(obj);
+		notifyAll();
+		return obj;
+	}
+	
+	public synchronized T get() throws InterruptedException {
+		while(buffer.isEmpty()) {
+			wait();
+		}
+		return buffer.removeFirst();
+	}
+	
+	public int size() {
+		return buffer.size();
+	}
 }
+
