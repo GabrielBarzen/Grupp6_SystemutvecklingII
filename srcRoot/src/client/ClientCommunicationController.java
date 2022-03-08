@@ -1,7 +1,7 @@
 package client;
 
 import server.Activity;
-import server.User;
+import server_v2.User;
 import server.UserType;
 
 import javax.imageio.ImageIO;
@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /**

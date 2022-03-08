@@ -1,7 +1,8 @@
 package server;
 
+import server_v2.User;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.ServerSocket;

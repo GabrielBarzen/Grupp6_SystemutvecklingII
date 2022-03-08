@@ -1,8 +1,7 @@
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import server.Activity;
 import server.ServerController;
-import server.User;
+import server_v2.User;
 
 import javax.swing.*;
 

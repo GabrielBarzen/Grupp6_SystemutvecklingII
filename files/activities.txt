@@ -38,11 +38,3 @@ Knäböj på ett ben
 Gör 10 knäböj på ett ben! Det andra benet ska peka rakt framåt. &Börja med 5 på höger ben och avsluta med 5 på vänstra.&
 Du har nu tränat lår, rumpa, balans och dessutom ökat din koncentration.
 imagesServer/ettben.jpg
-test activity, delete
-test activity, delete
-test activity, delete
-imagesServer/test.png
-test activity, delete
-test activity, delete
-test activity, delete
-imagesServer/test.png

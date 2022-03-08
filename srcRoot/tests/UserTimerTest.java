@@ -4,7 +4,7 @@ package tests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.ServerController;
-import server.User;
+import server_v2.User;
 import server.UserTimer;
 
 import java.io.IOException;

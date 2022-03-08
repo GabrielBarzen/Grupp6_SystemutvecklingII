@@ -1,4 +1,7 @@
-package server;
+package server_v2;
+
+import server.Activity;
+import server.UserType;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -89,5 +92,10 @@ public class User implements Serializable {
     public Activity setDelayedActivity(Activity delayedActivity) {
         this.delayedActivity = delayedActivity;
         return delayedActivity;
+    }
+
+    @Override
+    public int hashCode() {
+        return username.hashCode();
     }
 }

@@ -1,5 +1,7 @@
 package server;
 
+import server_v2.User;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
