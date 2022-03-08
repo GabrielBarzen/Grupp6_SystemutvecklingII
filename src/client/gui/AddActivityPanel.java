@@ -2,6 +2,7 @@ package client.gui;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -149,6 +150,7 @@ public class AddActivityPanel extends JPanel {
      */
     private void selectImage() {
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Image files", "png", "jpg", "jpeg", "gif"));
         File file = null;
         int response = fileChooser.showOpenDialog(null);
         if(response == JFileChooser.APPROVE_OPTION) {
