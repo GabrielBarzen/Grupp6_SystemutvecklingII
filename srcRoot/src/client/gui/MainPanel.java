@@ -61,6 +61,11 @@ public class MainPanel extends JPanel {
         return isMinimized;
     }
 
+    public void getNewActivity() {
+        mainFrame.getNewActivity();
+
+    }
+
     /**
      * @author Satya Singh
      * This class listens for when the window is minimized or maximized and sets the

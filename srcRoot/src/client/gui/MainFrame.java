@@ -131,4 +131,8 @@ public class MainFrame extends JFrame {
 
         clientController.saveActivity(activity, image);
     }
+
+    public void getNewActivity() {
+        clientController.getNewActivity();
+    }
 }

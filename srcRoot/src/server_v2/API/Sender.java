@@ -54,10 +54,9 @@ public class Sender implements Runnable {
         while (isRunning) {
             try {
                 outputStream.writeObject(buffer.get());
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                stop();
             }
         }
     }

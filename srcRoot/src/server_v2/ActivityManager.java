@@ -44,6 +44,7 @@ public class ActivityManager {
                 activity.setActivityInfo(myReader.nextLine());
                 activity.createActivityImage(myReader.nextLine());
                 activityList.add(activity);
+                System.out.println(activity);
             }
 
         } catch (IOException e) {

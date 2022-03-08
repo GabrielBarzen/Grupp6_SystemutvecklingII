@@ -11,6 +11,8 @@ public class ServerMain {
     private static boolean doLogging = true;
 
     public static void main(String[] args) {
+        ActivityManager activityManager = new ActivityManager("files/activities.txt");
+
         for (String argument : args) {
             String[] splitArgument = argument.split(":");
             switch (splitArgument[0]) {

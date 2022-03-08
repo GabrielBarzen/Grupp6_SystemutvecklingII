@@ -7,9 +7,7 @@ import server_v2.API.Sender;
 import server_v2.logging.LogLevel;
 import server_v2.logging.Logger;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,16 +102,22 @@ public class CommunicationController {
         @Override
         public void run() {
             try {
-                ObjectInputStream stream = new ObjectInputStream(clientSocket.getInputStream());
-                Object obj = stream.readObject();
+
+                InputStream is = clientSocket.getInputStream();
+                OutputStream os = clientSocket.getOutputStream();
+
+                ObjectInputStream ois = new ObjectInputStream(is);
+                ObjectOutputStream oos = new ObjectOutputStream(os);
+
+                Object obj = ois.readObject();
 
                 if (obj instanceof Message) {
                     Message message = (Message) obj;
                     if (message.getType().equals(MessageType.Login)) {
                         User user = message.getUser();
 
-                        reciever = new Receiver(communicationController, new ObjectInputStream(clientSocket.getInputStream()));
-                        sender = new Sender(communicationController, new ObjectOutputStream(clientSocket.getOutputStream()));
+                        reciever = new Receiver(communicationController, ois);
+                        sender = new Sender(communicationController, oos);
 
                         reciever.start();
                         sender.start();

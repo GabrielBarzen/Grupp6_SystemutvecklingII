@@ -50,7 +50,8 @@ public class ClientController {
      */
     public void sendActivityToCCC(Activity activity) {
         user.addActivityToList(activity);
-        ccc.sendObject(activity);
+        Message message = new Message(activity,user,MessageType.NewActivity);
+        ccc.sendObject(message);
     }
 
     public void saveActivity(Activity activity, BufferedImage image) {
@@ -66,6 +67,7 @@ public class ClientController {
         ccc = new ClientCommunicationController(this);
         Message message = new Message(null, user, MessageType.Login);
         ccc.sendObject(message);
+        ccc.sendObject(new Message(MessageType.NewActivity));
     }
 
     /**
@@ -74,6 +76,7 @@ public class ClientController {
     public void logOut() {
         user.setUserType(UserType.LOGOUT);
         ccc.sendObject(user);
+
     }
 
     /**
@@ -114,4 +117,7 @@ public class ClientController {
         ccc.sendObject(user);
     }
 
+    public void getNewActivity() {
+        sendActivityToCCC(currentActivity);
+    }
 }

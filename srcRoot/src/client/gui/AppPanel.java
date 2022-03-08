@@ -204,6 +204,7 @@ public class AppPanel extends JPanel {
 
     public void stopTimer() {
         timer.cancel();
+        mainPanel.getNewActivity();
     }
 
     public void createTAActivityInfo() {
