@@ -52,7 +52,17 @@ public class ClientMain {
     }
 
     public void setupMainPanel(MainPanel panel) {
+
+        panel.getCreateNewActivityButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                frame.swapPanel(new ActivityEditorPanel());
+            }
+        });
+        System.out.println("SETUP MAIN PANEL"); //TODO action listeners for panel
     }
     public void setupActivityEditor(ActivityEditorPanel panel) {
+        System.out.println("SETUP ACTIVITY EDITOR PANEL"); //TODO action listeners for panel
+
     }
 }

@@ -18,14 +18,16 @@ public class MainPanel extends EDIMPanel {
     private JButton removeActivityFromCompletedList;
     private JSpinner activityTimerMinutesSpinner;
     private JList<Activity> activityList;
-    private JLabel activityInfo;
-    private JLabel timeRemaining;
+    private JLabel activityInfoLabel;
+    private JLabel timeRemainingLabel;
 
     private int panelWidth = 1280;
     private int panelHeight = 720;
 
     public MainPanel(){
         super(new GridBagLayout());
+        super.setWidth(1280);
+        super.setHeight(720);
         GridBagConstraints c = new GridBagConstraints();
 
         JPanel controlPanel = new JPanel(new GridBagLayout());
@@ -46,8 +48,8 @@ public class MainPanel extends EDIMPanel {
         removeActivityFromCompletedList = new JButton();
         activityTimerMinutesSpinner = new JSpinner();
         activityList = new JList<>();
-        activityInfo = new JLabel();
-        timeRemaining = new JLabel();
+        activityInfoLabel = new JLabel();
+        timeRemainingLabel = new JLabel();
 
 
         controlPanel.setPreferredSize(new Dimension(panelWidth/3-30,panelHeight-100));
@@ -59,7 +61,7 @@ public class MainPanel extends EDIMPanel {
         setTimerPanel.add(setTimeButton);
         controlPannerInner.add(setTimerPanel);
         controlPannerInner.add(createNewActivityButton);
-        controlPannerInner.add(timeRemaining);
+        controlPannerInner.add(timeRemainingLabel);
 
         activityTimerMinutesSpinner.setPreferredSize(new Dimension(60,30));
         activityTimerMinutesSpinner.setValue(30);
@@ -84,7 +86,7 @@ public class MainPanel extends EDIMPanel {
         activityList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
-                activityInfo.setText(activityList.getSelectedValue().getActivityInfo());
+                activityInfoLabel.setText(activityList.getSelectedValue().getActivityInfo());
             }
         });
 
@@ -92,8 +94,8 @@ public class MainPanel extends EDIMPanel {
         listPanel.add(activityList);
 
 
-        activityInfo.setPreferredSize(new Dimension(panelWidth/3-30,panelHeight-100));
-        dataPanel.add(activityInfo);
+        activityInfoLabel.setPreferredSize(new Dimension(panelWidth/3-30,panelHeight-100));
+        dataPanel.add(activityInfoLabel);
 
         removeActivityFromCompletedList.setText("Ta bort aktivitet");
         removeActivityFromCompletedList.setPreferredSize(new Dimension(140,30));
@@ -144,70 +146,38 @@ public class MainPanel extends EDIMPanel {
 
     @Override
     public Dimension defaultDimension() {
-        return new Dimension(panelWidth,panelHeight);
+        return new Dimension(super.getWidth(),super.getHeight());
     }
 
     public JButton getExitButton() {
         return exitButton;
     }
 
-    public void setExitButton(JButton exitButton) {
-        this.exitButton = exitButton;
-    }
-
     public JButton getCreateNewActivityButton() {
         return createNewActivityButton;
-    }
-
-    public void setCreateNewActivityButton(JButton createNewActivityButton) {
-        this.createNewActivityButton = createNewActivityButton;
     }
 
     public JButton getSetTimeButton() {
         return setTimeButton;
     }
 
-    public void setSetTimeButton(JButton setTimeButton) {
-        this.setTimeButton = setTimeButton;
-    }
-
     public JButton getRemoveActivityFromCompletedList() {
         return removeActivityFromCompletedList;
-    }
-
-    public void setRemoveActivityFromCompletedList(JButton removeActivityFromCompletedList) {
-        this.removeActivityFromCompletedList = removeActivityFromCompletedList;
     }
 
     public JSpinner getActivityTimerMinutesSpinner() {
         return activityTimerMinutesSpinner;
     }
 
-    public void setActivityTimerMinutesSpinner(JSpinner activityTimerMinutesSpinner) {
-        this.activityTimerMinutesSpinner = activityTimerMinutesSpinner;
-    }
-
     public JList<Activity> getActivityList() {
         return activityList;
     }
 
-    public void setActivityList(JList<Activity> activityList) {
-        this.activityList = activityList;
+    public JLabel getActivityInfoLabel() {
+        return activityInfoLabel;
     }
 
-    public JLabel getActivityInfo() {
-        return activityInfo;
-    }
-
-    public void setActivityInfo(JLabel activityInfo) {
-        this.activityInfo = activityInfo;
-    }
-
-    public JLabel getTimeRemaining() {
-        return timeRemaining;
-    }
-
-    public void setTimeRemaining(JLabel timeRemaining) {
-        this.timeRemaining = timeRemaining;
+    public JLabel getTimeRemainingLabel() {
+        return timeRemainingLabel;
     }
 }

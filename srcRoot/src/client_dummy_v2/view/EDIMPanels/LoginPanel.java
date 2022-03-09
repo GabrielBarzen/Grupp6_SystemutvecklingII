@@ -20,6 +20,9 @@ public class LoginPanel extends EDIMPanel {
     private JButton cancelButton;
     public LoginPanel(){
         super(new GridBagLayout());
+        super.setWidth(640);
+        super.setHeight(120);
+
         GridBagConstraints c = new GridBagConstraints();
 
 
@@ -75,7 +78,7 @@ public class LoginPanel extends EDIMPanel {
 
     @Override
     public Dimension defaultDimension() {
-        return new Dimension(640,240);
+        return new Dimension(super.getWidth(),super.getHeight());
     }
 
     public JButton getCancelButton() {
