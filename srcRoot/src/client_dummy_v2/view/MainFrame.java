@@ -6,6 +6,9 @@ import client_dummy_v2.view.EDIMPanels.LoginPanel;
 import client_dummy_v2.view.EDIMPanels.MainPanel;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 
 public class MainFrame extends JFrame {
 
@@ -22,6 +25,7 @@ public class MainFrame extends JFrame {
             e.printStackTrace();
         }
         swapPanel(new LoginPanel());
+
 
     }
 

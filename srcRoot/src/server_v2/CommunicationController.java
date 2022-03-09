@@ -35,6 +35,7 @@ public class CommunicationController {
     public void receiveMessage(Message message) {
         receiveBuffer.put(message);
     }
+
     public Object handleMessage(Message message) {
         switch (message.getType()) {
 
