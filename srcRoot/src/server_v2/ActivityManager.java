@@ -10,29 +10,29 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class ActivityManager {
-    private static ArrayList<Activity> activityList;
+    private ArrayList<Activity> activityList;
 
-    public static Activity getRandomActivity(){
+    public Activity getRandomActivity(){
         Random random = new Random();
         return activityList.get(random.nextInt(activityList.size()));
     }
 
-    public static Activity getActivity(int index){
+    public Activity getActivity(int index){
         return activityList.get(index);
     }
 
-    public static ArrayList<Activity> getActivities(){
+    public ArrayList<Activity> getActivities(){
         return activityList;
     }
 
 
     public ActivityManager(String file) {
-        buildRegister(file);
+        this.activityList = buildRegister(file);
     }
 
-    public static ArrayList<Activity> buildRegister(String file) {
+    public ArrayList<Activity> buildRegister(String file) {
 
-        activityList = new ArrayList<Activity>();
+        ArrayList<Activity> activityList = new ArrayList<Activity>();
         Scanner myReader;
 
         try  {

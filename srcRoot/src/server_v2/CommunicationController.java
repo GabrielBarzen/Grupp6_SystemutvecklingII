@@ -50,9 +50,9 @@ public class CommunicationController {
 
             case NewActivity : {
                 Logger.log("new activity requested", LogLevel.Debug);
-                Message outgoingMessage = new Message(ActivityManager.getRandomActivity(),null,MessageType.NewActivity);
+                Message outgoingMessage = new Message(ServerMain.getActivityManager().getRandomActivity(),null,MessageType.NewActivity);
                 sendObject(message.getUser(),outgoingMessage);
-            } //TODO send new activity to client
+            }
             break;
 
             case SaveActivity : {

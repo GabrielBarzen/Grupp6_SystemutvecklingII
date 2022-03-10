@@ -9,9 +9,10 @@ public class ServerMain {
 
     private static int port = 4343;
     private static boolean doLogging = true;
+    private static ActivityManager activityManager = new ActivityManager("files/activities.txt");
+
 
     public static void main(String[] args) {
-        ActivityManager activityManager = new ActivityManager("files/activities.txt");
 
         for (String argument : args) {
             String[] splitArgument = argument.split(":");
@@ -34,5 +35,9 @@ public class ServerMain {
         }
         Thread connectionHandlerThread = new Thread(handler);
         connectionHandlerThread.start();
+    }
+
+    public static ActivityManager getActivityManager() {
+        return activityManager;
     }
 }
