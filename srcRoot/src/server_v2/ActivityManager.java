@@ -53,8 +53,8 @@ public class ActivityManager {
         return activityList;
     }
 
-    public static void updateRegister(String filePath) {
-        buildRegister(filePath);
-    }
 
+    public void saveActivity(Activity data) {
+        //TODO implement saveing data, can omly be done after Activities.txt is updated to new format along with buildregister.
+    }
 }

@@ -1,5 +1,6 @@
 package server_v2;
 
+import server.Activity;
 import server.Buffer;
 import server_v2.API.MessageController;
 import server_v2.API.Receiver;
@@ -57,6 +58,8 @@ public class CommunicationController {
 
             case SaveActivity : {
                 Logger.log("save activity requested", LogLevel.Debug);
+                if (message.getData() instanceof Activity)
+                ServerMain.getActivityManager().saveActivity((Activity) message.getData());
             } //TODO save activity to file
             break;
 
