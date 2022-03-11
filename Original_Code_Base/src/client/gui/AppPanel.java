@@ -1,15 +1,12 @@
 package client.gui;
 
-import server.Activity;
+import model.Activity;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import java.awt.*;
-import java.awt.List;
 import java.io.File;
 import java.util.*;
 import java.awt.event.*;

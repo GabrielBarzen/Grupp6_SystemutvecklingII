@@ -1,7 +1,5 @@
 package server;
-
-
-import server_v2.User;
+import model.User;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

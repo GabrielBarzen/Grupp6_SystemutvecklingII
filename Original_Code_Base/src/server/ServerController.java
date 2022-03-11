@@ -1,6 +1,6 @@
 package server;
 
-import server_v2.User;
+
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -9,6 +9,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Random;
+
+import model.Activity;
+import model.Buffer;
+import model.User;
+import model.UserType;
 
 /**
  * This class handles the logic of the in and out coming objects from the clients.

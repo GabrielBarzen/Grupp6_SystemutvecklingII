@@ -1,7 +1,6 @@
 package client.gui;
 
-import server.Activity;
-import server.Buffer;
+import model.Activity;
 
 import javax.swing.*;
 import java.awt.*;

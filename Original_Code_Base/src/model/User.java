@@ -1,10 +1,7 @@
-<<<<<<<< HEAD:New_Code_Base/src/com/grp6/edim/shared/User.java
-package com.grp6.edim.shared;
-========
 package model;
 
-import server.Activity;
->>>>>>>> Experimental:src/model/User.java
+
+
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -25,6 +22,15 @@ public class User implements Serializable {
     private boolean isOnline;
     private Activity delayedActivity;
     private String className="Class: User ";
+    private UserType userType;
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
 
     public User(String username) {
         this.username = username;

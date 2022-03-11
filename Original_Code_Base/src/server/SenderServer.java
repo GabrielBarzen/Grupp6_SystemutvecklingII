@@ -1,12 +1,15 @@
 package server;
 
-import server_v2.User;
 
+import model.Activity;
+import model.Buffer;
+import model.User;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+
 
 /**
  * This class creates a thread pool and handles the communication to the Client.
@@ -25,11 +28,10 @@ public class SenderServer {
 
     /**
      * Receives all necessary data and then generates and starts the thread pool.
-     *
-     * @param socketHashMap
+     *  @param socketHashMap
      * @param sendBuffer
      */
-    public SenderServer(HashMap<String, SocketStreamObject> socketHashMap, Buffer sendBuffer) {
+    public SenderServer(HashMap<String, SocketStreamObject> socketHashMap, Buffer<Object> sendBuffer) {
         this.socketHashMap = socketHashMap;
         this.sendBuffer = sendBuffer;
         this.threadPool = new LinkedList<>();

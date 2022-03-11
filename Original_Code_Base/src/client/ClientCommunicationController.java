@@ -1,9 +1,7 @@
 package client;
 
-import server.Activity;
-import server_v2.Message;
-import server_v2.MessageType;
-import server_v2.User;
+import model.Buffer;
+
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -146,7 +144,7 @@ public class ClientCommunicationController {
                 try {
                     sleep(2000);
                     object = ois.readObject();
-                    if (object instanceof Message) {
+                    /*if (object instanceof Message) {
                         Message message = (Message) object;
                         if(message.getType().equals(MessageType.Login)) {
                             User user = message.getUser();
@@ -157,7 +155,7 @@ public class ClientCommunicationController {
                             Activity activity = (Activity) message.getData();
                             clientController.receiveNotificationFromCCC(activity);
                         }
-                    }
+                    }*///TODO REVERT
                 } catch (Exception e) {
                     e.printStackTrace();
 

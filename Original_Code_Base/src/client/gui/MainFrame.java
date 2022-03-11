@@ -1,7 +1,7 @@
 package client.gui;
 
 import client.ClientController;
-import server.Activity;
+import model.Activity;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

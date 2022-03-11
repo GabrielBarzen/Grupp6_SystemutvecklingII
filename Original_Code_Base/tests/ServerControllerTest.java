@@ -1,7 +1,8 @@
+import model.User;
 import org.junit.jupiter.api.Test;
-import server.Activity;
+import model.Activity;
 import server.ServerController;
-import server_v2.User;
+
 
 import javax.swing.*;
 

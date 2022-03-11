@@ -1,9 +1,9 @@
 
 //Benny
 
+import model.User;
 import org.junit.jupiter.api.Test;
-import server.Activity;
-import server_v2.User;
+import model.Activity;
 import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,8 +1,9 @@
 
 //Benny
+import model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import server_v2.User;
+
 import server.UserRegister;
 
 import java.util.HashMap;

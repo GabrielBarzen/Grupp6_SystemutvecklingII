@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import server.Activity;
+import model.Activity;
 import server.ActivityRegister;
 import java.util.LinkedList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
