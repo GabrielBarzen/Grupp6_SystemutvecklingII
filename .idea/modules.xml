@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Grupp6_SystemutvecklingII.iml" filepath="$PROJECT_DIR$/Grupp6_SystemutvecklingII.iml" />
+      <module fileurl="file://$PROJECT_DIR$/New_Code_Base/New_Code_Base.iml" filepath="$PROJECT_DIR$/New_Code_Base/New_Code_Base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Original_Code_Base/Original_Code_Base.iml" filepath="$PROJECT_DIR$/Original_Code_Base/Original_Code_Base.iml" />
+    </modules>
+  </component>
+</project>
