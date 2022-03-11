@@ -1,10 +1,7 @@
-<<<<<<<< HEAD:New_Code_Base/src/com/grp6/edim/shared/User.java
-package com.grp6.edim.shared;
-========
-package model;
 
-import server.Activity;
->>>>>>>> Experimental:src/model/User.java
+package com.grp6.edim.shared;
+
+
 
 import java.io.Serializable;
 import java.util.LinkedList;
