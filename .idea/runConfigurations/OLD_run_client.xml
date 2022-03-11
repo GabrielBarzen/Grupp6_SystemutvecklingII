@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="OLD_run_client" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="client.StartClient" />
+    <module name="Original_Code_Base" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Original_Code_Base" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="client.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
