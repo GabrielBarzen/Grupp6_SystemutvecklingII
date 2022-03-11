@@ -34,7 +34,6 @@ public class CommunicationController {
         connectionMap.get(user).getSender().send(message);
     }
 
-
     public void receiveMessage(Message message) {
         receiveBuffer.put(message);
     }
