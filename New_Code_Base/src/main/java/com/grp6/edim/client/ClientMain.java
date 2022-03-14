@@ -1,12 +1,10 @@
 package com.grp6.edim.client;
 
-import com.grp6.edim.client.controller.Receiver;
 import com.grp6.edim.client.view.EDIMPanels.ActivityEditorPanel;
 import com.grp6.edim.client.view.EDIMPanels.LoginPanel;
 import com.grp6.edim.client.view.MainFrame;
 import com.grp6.edim.client.view.EDIMPanels.MainPanel;
 import com.grp6.edim.shared.*;
-import jdk.swing.interop.SwingInterOpUtils;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +16,6 @@ public class ClientMain {
 
     private MainFrame frame;
     private int port = 4343;
-    private static ActivityManager activityManager;
     private ActivityEditorPanel panel;
     private Message message;
 
@@ -90,10 +87,6 @@ public class ClientMain {
         });
         System.out.println("SETUP ACTIVITY EDITOR PANEL"); //TODO action listeners for panel
 
-    }
-
-    public static ActivityManager getActivityManager() {
-        return activityManager;
     }
 
     public ActivityEditorPanel getPanel() {
