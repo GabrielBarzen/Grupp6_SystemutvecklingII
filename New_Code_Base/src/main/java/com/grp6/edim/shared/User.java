@@ -1,7 +1,5 @@
 package com.grp6.edim.shared;
 
-import com.grp6.edim.shared.Activity;
-
 import java.io.Serializable;
 import java.util.LinkedList;
 
