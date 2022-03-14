@@ -72,6 +72,7 @@ public class ClientMain {
                 frame.swapPanel(new ActivityEditorPanel());
             }
         });
+
         System.out.println("SETUP MAIN PANEL"); //TODO action listeners for panel
     }
     public void setupActivityEditor(ActivityEditorPanel panel) {

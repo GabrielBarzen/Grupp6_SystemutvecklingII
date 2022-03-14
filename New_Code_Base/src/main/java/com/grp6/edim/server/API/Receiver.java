@@ -24,8 +24,6 @@ public class Receiver implements Runnable {
         this.inputStream = inputStream;
     }
 
-
-
     public void start() {
         if (thread == null) {
             isRunning = true;
