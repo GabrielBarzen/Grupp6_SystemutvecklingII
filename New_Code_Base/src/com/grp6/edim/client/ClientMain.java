@@ -1,17 +1,26 @@
 package com.grp6.edim.client;
 
+import com.grp6.edim.client.controller.Receiver;
 import com.grp6.edim.client.view.EDIMPanels.ActivityEditorPanel;
 import com.grp6.edim.client.view.EDIMPanels.LoginPanel;
 import com.grp6.edim.client.view.MainFrame;
 import com.grp6.edim.client.view.EDIMPanels.MainPanel;
+import com.grp6.edim.shared.*;
+import jdk.swing.interop.SwingInterOpUtils;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
 
 public class ClientMain {
 
-    MainFrame frame;
+    private MainFrame frame;
+    private int port = 4343;
+    private static ActivityManager activityManager;
+    private ActivityEditorPanel panel;
+    private Message message;
 
     public static void main(String[] args) {
         new ClientMain();
@@ -23,6 +32,13 @@ public class ClientMain {
 
     private void startClient() {
         frame = new MainFrame(this);
+        try {
+            Socket socket = new Socket("localhost", port);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println();
     }
 
     public void setupLogin(LoginPanel loginPanel) {
@@ -62,7 +78,29 @@ public class ClientMain {
         System.out.println("SETUP MAIN PANEL"); //TODO action listeners for panel
     }
     public void setupActivityEditor(ActivityEditorPanel panel) {
+        panel.getSaveButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Activity activity = new Activity();
+                activity.setActivityName(panel.getTitleInputField().getText());
+                activity.setDescription(panel.getDescriptionTextArea().getText());
+                activity.setActivityInstruction(panel.getInstructionTextArea().getText());
+                message = new Message(activity, new User("Isak"), MessageType.SaveActivity);
+            }
+        });
         System.out.println("SETUP ACTIVITY EDITOR PANEL"); //TODO action listeners for panel
 
+    }
+
+    public static ActivityManager getActivityManager() {
+        return activityManager;
+    }
+
+    public ActivityEditorPanel getPanel() {
+        return panel;
+    }
+
+    public Message getMessage() {
+        return message;
     }
 }

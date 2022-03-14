@@ -1,4 +1,4 @@
-package com.grp6.edim.server;
+package com.grp6.edim.shared;
 
 import com.grp6.edim.server.logging.LogLevel;
 import com.grp6.edim.server.logging.Logger;

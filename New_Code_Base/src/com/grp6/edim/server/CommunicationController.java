@@ -1,8 +1,6 @@
 package com.grp6.edim.server;
 
-import com.grp6.edim.shared.Activity;
-import com.grp6.edim.shared.Buffer;
-import com.grp6.edim.shared.User;
+import com.grp6.edim.shared.*;
 
 import com.grp6.edim.server.API.MessageController;
 import com.grp6.edim.server.API.Receiver;
@@ -53,7 +51,7 @@ public class CommunicationController {
 
             case NewActivity : {
                 Logger.log("new activity requested", LogLevel.Debug);
-                Message outgoingMessage = new Message(ServerMain.getActivityManager().getRandomActivity(),null,MessageType.NewActivity);
+                Message outgoingMessage = new Message(ServerMain.getActivityManager().getRandomActivity(),null, MessageType.NewActivity);
                 sendObject(message.getUser(),outgoingMessage);
             }
             break;

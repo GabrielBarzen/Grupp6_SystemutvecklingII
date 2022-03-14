@@ -24,6 +24,10 @@ public class MainFrame extends JFrame {
 
     }
 
+    public EDIMPanel getPanel() {
+        return panel;
+    }
+
     public void swapPanel(EDIMPanel panel) {
         this.remove(this.panel);
         this.panel = panel;
