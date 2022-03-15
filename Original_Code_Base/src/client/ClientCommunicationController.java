@@ -1,6 +1,9 @@
 package client;
 
+import model.Activity;
 import model.Buffer;
+import model.User;
+import model.UserType;
 
 
 import javax.imageio.ImageIO;
@@ -141,21 +144,20 @@ public class ClientCommunicationController {
             }
 
             while (isConnected) {
+
                 try {
                     sleep(2000);
                     object = ois.readObject();
-                    /*if (object instanceof Message) {
-                        Message message = (Message) object;
-                        if(message.getType().equals(MessageType.Login)) {
-                            User user = message.getUser();
-                            clientController.receiveUser(user);
-                        } else if (message.getType().equals(MessageType.Logout)) {
+                    if (object instanceof User) {
+                        User user = (User) object;
+                        clientController.receiveUser(user);
+                        if (user.getUserType() == UserType.LOGOUT) {
                             disconnect();
-                        } else if (message.getType().equals(MessageType.NewActivity)) {
-                            Activity activity = (Activity) message.getData();
-                            clientController.receiveNotificationFromCCC(activity);
                         }
-                    }*///TODO REVERT
+                    } else if (object instanceof Activity) {
+                        Activity activity = (Activity) object;
+                        clientController.receiveNotificationFromCCC(activity);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
 
