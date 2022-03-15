@@ -152,5 +152,22 @@ class ActivityTest {
         assertTrue(activity.isCompleted());
     }
 
+    /**
+     * @author Satya Singh
+     * Invalid value (empty user) test for getting the activity user
+     */
+    @Test
+    public void getActivityUserEmptyUser(){
+        assertEquals(null, activity.getActivityUser());
 
+    }
+    /**
+     * @author Satya Singh
+     * Invalid value (empty user) test for setting the activity user
+     */
+    @Test
+    public void setActivityUserEmptyUser(){
+        assertEquals(null,activity.setActivityUser(null));
+
+    }
 }

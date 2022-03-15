@@ -38,4 +38,13 @@ public class ActivityRegisterTest {
     public void createActivityRegister() {
         assertNotNull(activityRegister.createRegister("files/activities.txt"));
     }
+
+    /**
+     * @author Satya Singh
+     * Invalid value (non existent file) test for creating an activity register
+     */
+    @Test
+    public void createActivityRegisterInvalidFile() {
+        assertNotNull(activityRegister.createRegister("nonExistent.txt"));
+    }
 }
