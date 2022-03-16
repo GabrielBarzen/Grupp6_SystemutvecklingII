@@ -11,11 +11,9 @@ import java.io.ObjectInputStream;
 public class Receiver implements Runnable {
 
     private CommunicationController communicationController;
-
     private boolean isRunning = false;
-
     private ObjectInputStream inputStream;
-    Thread thread = null;
+    private Thread thread = null;
 
 
     public Receiver(CommunicationController communicationController, ObjectInputStream inputStream) {

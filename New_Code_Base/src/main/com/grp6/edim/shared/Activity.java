@@ -14,15 +14,10 @@ import java.util.Date;
 
 public class Activity implements Serializable {
     private static final long serialVersionUID = 200428L;
-    private String activityName;
-    private String activityInstruction;
-    private String activityInfo;
-    private boolean isCompleted = false;
-    private String activityUser;
-    private ImageIcon activityImage;
-    private boolean isNew = false;
-
-    public Activity() {}
+    private String name;
+    private String instruction;
+    private String info;
+    private ImageIcon image;
 
     public String getTime() {
         Date date = new Date();
@@ -32,86 +27,66 @@ public class Activity implements Serializable {
     }
 
     public Activity(String activityName) {
-        this.activityName=activityName;
+        this.name =activityName;
     }
 
-    public String getActivityInfo() {
-        return activityInfo;
+    public String getInfo() {
+        return info;
     }
 
     public String setDescription(String activityInfo) {
-        this.activityInfo = activityInfo;
+        this.info = activityInfo;
         return activityInfo;
     }
 
     public String setActivityName(String activityName) {
-        this.activityName=activityName;
+        this.name =activityName;
         return activityName;
     }
 
-    public String getActivityName() {
-        return activityName;
+    public String getName() {
+        return name;
     }
 
-    public String getActivityInstruction() {
-        return activityInstruction;
+    public String getInstruction() {
+        return instruction;
     }
 
-    public String setActivityInstruction(String activityInstruction) {
-        this.activityInstruction = activityInstruction;
-        return activityInstruction;
+    public String setInstruction(String activityInstruction) {
+        this.instruction = activityInstruction;
+        return instruction;
     }
 
-    public boolean isCompleted() {
-        return isCompleted;
+    public ImageIcon setImage(ImageIcon icon) {
+        image = icon;
+        return image;
     }
 
-    public boolean setCompleted(boolean completed) {
-        isCompleted = completed;
-        return completed;
-    }
-
-    public String getActivityUser() {
-        return activityUser;
-    }
-
-    public String setActivityUser(String activityUser) {
-        this.activityUser = activityUser;
-        return activityUser;
-    }
-
-    public ImageIcon setActivityImage(ImageIcon icon) {
-        activityImage = icon;
-        return icon;
-    }
-
-    public ImageIcon getActivityImage() {
-        return activityImage;
+    public ImageIcon getImage() {
+        return image;
     }
 
     public ImageIcon createActivityImage(String fileName) {
-        activityImage = new ImageIcon(fileName);
-        return activityImage;
+        image = new ImageIcon(fileName);
+        return image;
     }
 
-    public boolean isNew() {
-        return isNew;
+
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setNew() {
-        isNew = true;
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     @Override
     public String toString() {
         return "Activity{" +
-                "activityName='" + activityName + '\'' +
-                ", activityInstruction='" + activityInstruction + '\'' +
-                ", activityInfo='" + activityInfo + '\'' +
-                ", isCompleted=" + isCompleted +
-                ", activityUser='" + activityUser + '\'' +
-                ", activityImage=" + activityImage +
-                ", isNew=" + isNew +
+                "activityName='" + name + '\'' +
+                ", activityInstruction='" + instruction + '\'' +
+                ", activityInfo='" + info + '\'' +
+                ", activityImage=" + image +
                 '}';
     }
 }
