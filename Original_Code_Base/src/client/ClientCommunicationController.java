@@ -133,6 +133,7 @@ public class ClientCommunicationController {
             while (oisIsNull) {
                 try {
                     ois = new ObjectInputStream(socket.getInputStream());
+                    oisIsNull = ois == null;
                 } catch (Exception e) {
                     e.printStackTrace();
                     try {
