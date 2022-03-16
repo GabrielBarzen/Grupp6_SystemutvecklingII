@@ -1,8 +1,5 @@
 package com.grp6.edim.client.controller;
 
-import com.grp6.edim.client.controller.Receiver;
-import com.grp6.edim.client.controller.Sender;
-
 public class Communication {
 
     private Receiver receiver;

@@ -2,7 +2,6 @@ package com.grp6.edim.server;
 
 import com.grp6.edim.server.logging.LogLevel;
 import com.grp6.edim.server.logging.Logger;
-import com.grp6.edim.shared.ActivityManager;
 
 import java.io.IOException;
 

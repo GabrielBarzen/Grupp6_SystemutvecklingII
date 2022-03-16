@@ -1,5 +1,6 @@
 package com.grp6.edim.client;
 
+import com.grp6.edim.client.controller.CommunicationControllerClient;
 import com.grp6.edim.client.view.EDIMPanels.ActivityEditorPanel;
 import com.grp6.edim.client.view.EDIMPanels.LoginPanel;
 import com.grp6.edim.client.view.MainFrame;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.TimerTask;
 
 public class ClientMain {
 
@@ -18,6 +20,8 @@ public class ClientMain {
     private int port = 4343;
     private ActivityEditorPanel panel;
     private Message message;
+    CommunicationControllerClient controllerClient;
+    private User user;
 
     public static void main(String[] args) {
         new ClientMain();
@@ -36,6 +40,7 @@ public class ClientMain {
             e.printStackTrace();
         }
         System.out.println();
+        controllerClient = new CommunicationControllerClient();
     }
 
     public void setupLogin(LoginPanel loginPanel) {
@@ -47,6 +52,8 @@ public class ClientMain {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println("Add login logic, username info : " + textField.getText()); //TODO add login logic
+                user = new User(textField.getText());
+                controllerClient.sendObject(new Message(null, user, MessageType.Login));
                 frame.swapPanel(new MainPanel());
             }
         });
@@ -66,6 +73,14 @@ public class ClientMain {
 
     public void setupMainPanel(MainPanel panel) {
 
+        panel.getSetTimeButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int value = (Integer) panel.getActivityTimerMinutesSpinner().getValue();
+                controllerClient.startActivityTimer(value);
+            }
+        });
+
         panel.getCreateNewActivityButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -75,7 +90,8 @@ public class ClientMain {
 
         System.out.println("SETUP MAIN PANEL"); //TODO action listeners for panel
     }
-    public void setupActivityEditor(ActivityEditorPanel panel) {
+
+        public void setupActivityEditor(ActivityEditorPanel panel) {
         panel.getSaveButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,7 +99,8 @@ public class ClientMain {
                 activity.setActivityName(panel.getTitleInputField().getText());
                 activity.setDescription(panel.getDescriptionTextArea().getText());
                 activity.setActivityInstruction(panel.getInstructionTextArea().getText());
-                message = new Message(activity, new User("Isak"), MessageType.SaveActivity);
+                message = new Message(activity, user, MessageType.SaveActivity);
+                controllerClient.sendObject(message); //TODO lägg till bild
             }
         });
         System.out.println("SETUP ACTIVITY EDITOR PANEL"); //TODO action listeners for panel

@@ -1,4 +1,4 @@
-package com.grp6.edim.shared;
+package com.grp6.edim.server;
 
 import com.grp6.edim.server.logging.LogLevel;
 import com.grp6.edim.server.logging.Logger;
@@ -6,7 +6,6 @@ import com.grp6.edim.shared.Activity;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
