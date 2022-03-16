@@ -50,7 +50,7 @@ public class ActivityManager {
                         }
                         case "instruction" -> {
                             if (activity != null){
-                                activity.setActivityInstruction(split[1]);
+                                activity.setInstruction(split[1]);
                             }
                         }
                         case "description" -> {
@@ -60,7 +60,7 @@ public class ActivityManager {
                         }
                         case "image_path" -> {
                             if (activity != null){
-                                activity.setActivityImage(new ImageIcon(split[1]));
+                                activity.setImage(new ImageIcon(split[1]));
                                 activityList.add(activity);
                                 activity = null;
                             }
@@ -78,16 +78,16 @@ public class ActivityManager {
 
     public void saveActivity(Activity data) {
 
-        if (data.getActivityName() == null) {
+        if (data.getName() == null) {
             return;
         }
-        if (data.getActivityInstruction() == null) {
+        if (data.getInstruction() == null) {
             return;
         }
-        if (data.getActivityInfo() == null) {
+        if (data.getInfo() == null) {
             return;
         }
-        if (data.getActivityImage() == null) {
+        if (data.getImage() == null) {
             return;
         }
 
@@ -95,12 +95,12 @@ public class ActivityManager {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("files/activities.dat"))) {
                 Activity activity = null;
 
-                writer.write("title:" + activity.getActivityName());
-                writer.write("instruction:" + activity.getActivityInstruction());
-                writer.write("description:" + activity.getActivityInfo());
+                writer.write("title:" + activity.getName());
+                writer.write("instruction:" + activity.getInstruction());
+                writer.write("description:" + activity.getInfo());
 
-                ImageIcon icon = activity.getActivityImage();
-                String imagePath = "images_server/" + activity.getActivityName() + ".jpg";
+                ImageIcon icon = activity.getImage();
+                String imagePath = "images_server/" + activity.getName() + ".jpg";
                 BufferedImage image = (BufferedImage) icon.getImage();
 
                 try {

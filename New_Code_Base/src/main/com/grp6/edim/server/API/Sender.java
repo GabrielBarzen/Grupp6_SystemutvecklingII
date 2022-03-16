@@ -12,10 +12,9 @@ public class Sender implements Runnable {
 
     private CommunicationController communicationController;
     private boolean isRunning = false;
-    ObjectOutputStream outputStream;
-    Buffer<Object> buffer = new Buffer<>();
-
-    Thread thread = null;
+    private ObjectOutputStream outputStream;
+    private Buffer<Object> buffer = new Buffer<>();
+    private Thread thread = null;
 
     public void start() {
         if (thread == null) {

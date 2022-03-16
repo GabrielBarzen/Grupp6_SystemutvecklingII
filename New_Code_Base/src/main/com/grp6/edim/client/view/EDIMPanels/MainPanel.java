@@ -87,7 +87,7 @@ public class MainPanel extends EDIMPanel {
         activityList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
-                activityInfoLabel.setText(activityList.getSelectedValue().getActivityInfo());
+                activityInfoLabel.setText(activityList.getSelectedValue().getInfo());
             }
         });
 

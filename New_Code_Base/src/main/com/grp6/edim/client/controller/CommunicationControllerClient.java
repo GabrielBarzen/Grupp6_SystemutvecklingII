@@ -114,9 +114,9 @@ public class CommunicationControllerClient {
         Toolkit.getDefaultToolkit().beep();
         ImageIcon activityIcon = createActivityIcon(activity);
         String[] buttons = {"Jag har gjort aktiviteten!", "Påminn mig om fem minuter",};
-        String[] instructions = activity.getActivityInstruction().split("&");
+        String[] instructions = activity.getInstruction().split("&");
 
-        int answer = JOptionPane.showOptionDialog(null, instructions, activity.getActivityName(),
+        int answer = JOptionPane.showOptionDialog(null, instructions, activity.getName(),
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, activityIcon, buttons, buttons[0]);
         if (answer == 0) {
             //TODO lista ska uppdateras
@@ -128,7 +128,7 @@ public class CommunicationControllerClient {
     }
 
     public ImageIcon createActivityIcon(Activity activity) {
-        ImageIcon activityIcon = activity.getActivityImage();
+        ImageIcon activityIcon = activity.getImage();
         Image image = activityIcon.getImage();
         Image newImg = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
         return new ImageIcon(newImg);

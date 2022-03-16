@@ -8,10 +8,8 @@ public class ConnectionHandler implements Runnable {
 
     private int port;
     private boolean logging;
-
     private ServerSocket connectionSocket;
     private CommunicationController communicationController;
-
     private boolean isRunning = true;
 
     public ConnectionHandler(int port, boolean doLogging) throws IOException {

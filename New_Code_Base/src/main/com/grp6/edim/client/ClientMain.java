@@ -113,10 +113,9 @@ public class ClientMain {
         panel.getSaveButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Activity activity = new Activity();
-                activity.setActivityName(panel.getTitleInputField().getText());
+                Activity activity = new Activity(panel.getTitleInputField().getText());
                 activity.setDescription(panel.getDescriptionTextArea().getText());
-                activity.setActivityInstruction(panel.getInstructionTextArea().getText());
+                activity.setInstruction(panel.getInstructionTextArea().getText());
                 message = new Message(activity, user, MessageType.SaveActivity);
                 controllerClient.sendObject(message); //TODO lägg till bild
             }

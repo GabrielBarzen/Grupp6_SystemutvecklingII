@@ -16,10 +16,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class CommunicationController {
 
-    ThreadPoolExecutor threadPoolExecutor;
-    HashMap<User, MessageController> connectionMap;
-    CommunicationController communicationController = this;
-    Buffer<Message> receiveBuffer = new Buffer<>();
+
+    private ThreadPoolExecutor threadPoolExecutor;
+    private Map<User, MessageController> connectionMap;
+    private CommunicationController communicationController = this;
+    private Buffer<Message> receiveBuffer = new Buffer<>();
+
 
     public CommunicationController() {
         threadPoolExecutor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
@@ -106,10 +108,10 @@ public class CommunicationController {
 
     class establish_communication_runner implements Runnable {
 
-        Receiver reciever;
-        Sender sender;
+        private Receiver reciever;
+        private Sender sender;
 
-        Socket clientSocket;
+        private Socket clientSocket;
 
         establish_communication_runner(Socket socket) {
             clientSocket = socket;
