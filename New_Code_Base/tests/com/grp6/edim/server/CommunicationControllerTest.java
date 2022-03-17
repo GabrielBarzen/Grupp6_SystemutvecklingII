@@ -5,7 +5,6 @@ import com.grp6.edim.shared.Message;
 import com.grp6.edim.shared.MessageType;
 import com.grp6.edim.shared.User;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,13 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class CommunicationControllerTest {
     private CommunicationController communicationController;
-
-    @BeforeAll
-    static void startServer() throws IOException {
-        ConnectionHandler handler = new ConnectionHandler(4343, false);
-        Thread connectionHandlerThread = new Thread(handler);
-        connectionHandlerThread.start();
-    }
 
     @BeforeEach
     void setUp() {

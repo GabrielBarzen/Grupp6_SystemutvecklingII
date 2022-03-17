@@ -1,8 +1,9 @@
 
 import client.ClientController;
 import model.UserType;
-import org.junit.jupiter.api.*;
-import server.ServerController;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,12 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ClientControllerTest {
     private ClientController clientController;
-
-    @BeforeAll
-    static void startServer() {
-        ServerController server = new ServerController(4343);
-        server.start();
-    }
 
     @BeforeEach
     void setUp() {
