@@ -40,8 +40,9 @@ public class CommunicationController {
 
     }
 
-    public void receiveMessage(Message message) {
+    public Buffer<Message> receiveMessage(Message message) {
         receiveBuffer.put(message);
+        return receiveBuffer;
     }
 
     public Object handleMessage(Message message) {
@@ -91,6 +92,11 @@ public class CommunicationController {
         threadPoolExecutor.execute(runner);
     }
 
+    public ThreadPoolExecutor getThreadPoolExecutor() {
+        return threadPoolExecutor;
+    }
+
+    public
     class receiver_handler implements Runnable {
         @Override
         public void run() {
