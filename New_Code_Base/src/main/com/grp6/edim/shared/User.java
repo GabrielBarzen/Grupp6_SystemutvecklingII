@@ -83,6 +83,12 @@ public class User implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        User user = (User) o;
+        return user.getUsername().equals(this.getUsername());
+    }
+
+    @Override
     public int hashCode() {
         return username.hashCode();
     }

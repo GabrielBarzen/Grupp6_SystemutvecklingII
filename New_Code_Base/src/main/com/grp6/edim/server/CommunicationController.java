@@ -29,18 +29,24 @@ public class CommunicationController {
         thread.start();
     }
 
-    public void sendObject(User user, Message message) {
-        connectionMap.get(user).getSender().send(message);
-        System.out.println(message.getType() + " sent");
+    public void sendObject(Message message) {
+
+        System.out.println("getting user    : " + message.getUser().getUsername() + ", in hashmap : " + connectionMap + ", with hashcode : " + message.getUser().hashCode());
+
+        System.out.println("Hashmap contents : ");
+        for (Map.Entry entry: connectionMap.entrySet()) {
+            System.out.println(entry);
+        }
+        connectionMap.get(message.getUser()).getSender().send(message);
+
     }
 
     public void receiveMessage(Message message) {
         receiveBuffer.put(message);
-        System.out.println(message.getType() + " received");
     }
 
     public Object handleMessage(Message message) {
-        System.out.println("what server");
+
         switch (message.getType()) {
 
             case Login : {
@@ -54,10 +60,10 @@ public class CommunicationController {
 
             case NewActivity : {
                 Logger.log("new activity requested", LogLevel.Debug);
-                Message outgoingMessage = new Message(ServerMain.getActivityManager().getRandomActivity(),null, MessageType.NewActivity);
-                System.out.println(message.getUser().getUsername());
-                sendObject(message.getUser(),outgoingMessage);
-                System.out.println(message.getType());
+                Message outgoingMessage = new Message(ServerMain.getActivityManager().getRandomActivity(),message.getUser(), MessageType.NewActivity);
+
+                sendObject(outgoingMessage);
+
             }
             break;
 
@@ -117,7 +123,7 @@ public class CommunicationController {
                 OutputStream os = clientSocket.getOutputStream();
                 InputStream is = clientSocket.getInputStream();
 
-                System.out.println("här");
+
                 ObjectOutputStream oos = new ObjectOutputStream(os);
                 ObjectInputStream ois = new ObjectInputStream(is);
 
@@ -128,7 +134,7 @@ public class CommunicationController {
                     if (message.getType().equals(MessageType.Login)) {
                         User user = message.getUser();
 
-                        System.out.println("wassaaaaaaa");
+
 
                         reciever = new Receiver(communicationController, ois);
                         sender = new Sender(communicationController, oos);
@@ -136,14 +142,16 @@ public class CommunicationController {
                         reciever.start();
                         sender.start();
 
-                        System.out.println(user.getUsername());
-                        MessageController messageController = new MessageController(reciever, sender);
-                        connectionMap.put(user, messageController);
-                        //User user1 = new User("Isak");
-                        MessageController messageController1 = connectionMap.get(user);
 
+                        MessageController messageController = new MessageController(reciever, sender);
+
+                        System.out.println("putting user    : " + user.getUsername() + ", in hashmap : " + connectionMap + ", with hashcode : " + user.hashCode());
+                        connectionMap.put(user, messageController);
+                        System.out.println("put user        : " + user.getUsername() + ", in hashmap : " + connectionMap + ", with hashcode : " + user.hashCode());
+
+
+                        MessageController messageController1 = connectionMap.get(user);
                         Message outgoingMessage = new Message(null,user,MessageType.Login);
-                        //sender.send(outgoingMessage);
                         messageController1.getSender().send(outgoingMessage);
                     }
                 }
