@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class CommunicationController {
 
     ThreadPoolExecutor threadPoolExecutor;
-    Map<User, MessageController> connectionMap;
+    HashMap<User, MessageController> connectionMap;
     CommunicationController communicationController = this;
     Buffer<Message> receiveBuffer = new Buffer<>();
 
@@ -26,17 +26,21 @@ public class CommunicationController {
         threadPoolExecutor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         connectionMap  = new HashMap<>();
         Thread thread = new Thread(new receiver_handler());
+        thread.start();
     }
 
     public void sendObject(User user, Message message) {
         connectionMap.get(user).getSender().send(message);
+        System.out.println(message.getType() + " sent");
     }
 
     public void receiveMessage(Message message) {
         receiveBuffer.put(message);
+        System.out.println(message.getType() + " received");
     }
 
     public Object handleMessage(Message message) {
+        System.out.println("what server");
         switch (message.getType()) {
 
             case Login : {
@@ -51,7 +55,9 @@ public class CommunicationController {
             case NewActivity : {
                 Logger.log("new activity requested", LogLevel.Debug);
                 Message outgoingMessage = new Message(ServerMain.getActivityManager().getRandomActivity(),null, MessageType.NewActivity);
+                System.out.println(message.getUser().getUsername());
                 sendObject(message.getUser(),outgoingMessage);
+                System.out.println(message.getType());
             }
             break;
 
@@ -84,7 +90,9 @@ public class CommunicationController {
         @Override
         public void run() {
             try {
-                handleMessage(receiveBuffer.get());
+                while (true) {
+                    handleMessage(receiveBuffer.get());
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -106,11 +114,12 @@ public class CommunicationController {
         public void run() {
             try {
 
-                InputStream is = clientSocket.getInputStream();
                 OutputStream os = clientSocket.getOutputStream();
+                InputStream is = clientSocket.getInputStream();
 
-                ObjectInputStream ois = new ObjectInputStream(is);
+                System.out.println("här");
                 ObjectOutputStream oos = new ObjectOutputStream(os);
+                ObjectInputStream ois = new ObjectInputStream(is);
 
                 Object obj = ois.readObject();
 
@@ -119,16 +128,23 @@ public class CommunicationController {
                     if (message.getType().equals(MessageType.Login)) {
                         User user = message.getUser();
 
+                        System.out.println("wassaaaaaaa");
+
                         reciever = new Receiver(communicationController, ois);
                         sender = new Sender(communicationController, oos);
 
                         reciever.start();
                         sender.start();
 
-                        connectionMap.put(user, new MessageController(reciever, sender));
+                        System.out.println(user.getUsername());
+                        MessageController messageController = new MessageController(reciever, sender);
+                        connectionMap.put(user, messageController);
+                        //User user1 = new User("Isak");
+                        MessageController messageController1 = connectionMap.get(user);
 
                         Message outgoingMessage = new Message(null,user,MessageType.Login);
-                        sender.send(outgoingMessage);
+                        //sender.send(outgoingMessage);
+                        messageController1.getSender().send(outgoingMessage);
                     }
                 }
 

@@ -1,5 +1,6 @@
 package com.grp6.edim.client.controller;
 
+import com.grp6.edim.client.ClientMain;
 import com.grp6.edim.shared.*;
 
 import com.grp6.edim.server.logging.LogLevel;
@@ -7,29 +8,47 @@ import com.grp6.edim.server.logging.Logger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.*;
+import java.net.Socket;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class CommunicationControllerClient {
 
-    private ThreadPoolExecutor threadPoolExecutor;
-    private Map<User, Communication> connectionMap;
-    private CommunicationControllerClient communicationController = this;
+    private Communication communication;
     private Buffer<Message> sendBuffer = new Buffer<>();
     private Timer timer;
     private User user;
     private int value;
+    private ClientMain main;
+    private Socket socket;
+    private Receiver receiver;
+    private Sender sender;
 
-    public CommunicationControllerClient() {
-        connectionMap = new HashMap<>();
+    public CommunicationControllerClient(ClientMain main, Socket socket) {
         Thread thread = new Thread(new receiver_handler());
+        thread.start();
+        this.main = main;
+        this.socket = socket;
+
+        ObjectInputStream ois = null;
+        ObjectOutputStream oos = null;
+        try {
+            ois = new ObjectInputStream(socket.getInputStream());
+            oos = new ObjectOutputStream(socket.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        receiver = new Receiver(this, ois);
+        sender = new Sender(this, oos);
+        receiver.start();
+        sender.start();
+        communication = new Communication(receiver, sender);
     }
 
     public void sendObject(Message message) {
-        connectionMap.get(message.getUser()).getSender().send(message);
+        System.out.println(message.getUser().getUsername());
+        communication.getSender().send(message);
     }
 
 
@@ -38,6 +57,7 @@ public class CommunicationControllerClient {
     }
 
     public void handleMessage(Message message) {
+        System.out.println("what client");
         switch (message.getType()) {
 
             case Login: {
@@ -53,6 +73,7 @@ public class CommunicationControllerClient {
 
             case NewActivity: {
                 Logger.log("new activity requested", LogLevel.Debug);
+                System.out.println("new activity");
                 showNotification((Activity) message.getData());
             }
             break;
@@ -69,18 +90,26 @@ public class CommunicationControllerClient {
         }
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     class receiver_handler implements Runnable {
         @Override
         public void run() {
             try {
-                handleMessage(sendBuffer.get());
+                while (true) {
+                    handleMessage(sendBuffer.get());
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
+
     public void showNotification(Activity activity) {
+        System.out.println("inne i showNotification");
 
         Toolkit.getDefaultToolkit().beep();
         ImageIcon activityIcon = createActivityIcon(activity);
@@ -91,6 +120,7 @@ public class CommunicationControllerClient {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, activityIcon, buttons, buttons[0]);
         if (answer == 0) {
             //TODO lista ska uppdateras
+            main.getMainPanel().getActivityList();
             startActivityTimer(value * 60 * 1000);
         } else {
             startActivityTimer(5 * 60 * 1000);
@@ -107,9 +137,11 @@ public class CommunicationControllerClient {
     public void startActivityTimer(int value) {
         this.value = value;
         timer = new java.util.Timer();
+        System.out.println("timertask starting");
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                System.out.println("Timertask started");
                 sendObject(new Message(null, user, MessageType.NewActivity));
             }
         }, value);

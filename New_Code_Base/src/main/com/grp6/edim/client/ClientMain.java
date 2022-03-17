@@ -1,6 +1,9 @@
 package com.grp6.edim.client;
 
+import com.grp6.edim.client.controller.Communication;
 import com.grp6.edim.client.controller.CommunicationControllerClient;
+import com.grp6.edim.client.controller.Receiver;
+import com.grp6.edim.client.controller.Sender;
 import com.grp6.edim.client.view.EDIMPanels.ActivityEditorPanel;
 import com.grp6.edim.client.view.EDIMPanels.LoginPanel;
 import com.grp6.edim.client.view.MainFrame;
@@ -22,6 +25,8 @@ public class ClientMain {
     private Message message;
     CommunicationControllerClient controllerClient;
     private User user;
+    private MainPanel mainPanel = new MainPanel();
+    private Socket socket;
 
     public static void main(String[] args) {
         new ClientMain();
@@ -34,13 +39,12 @@ public class ClientMain {
     private void startClient() {
         frame = new MainFrame(this);
         try {
-            Socket socket = new Socket("localhost", port);
+            socket = new Socket("localhost", port);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println();
-        controllerClient = new CommunicationControllerClient();
+        controllerClient = new CommunicationControllerClient(this, socket);
     }
 
     public void setupLogin(LoginPanel loginPanel) {
@@ -54,7 +58,8 @@ public class ClientMain {
                 System.out.println("Add login logic, username info : " + textField.getText()); //TODO add login logic
                 user = new User(textField.getText());
                 controllerClient.sendObject(new Message(null, user, MessageType.Login));
-                frame.swapPanel(new MainPanel());
+                controllerClient.setUser(user);
+                frame.swapPanel(mainPanel);
             }
         });
 
@@ -77,7 +82,8 @@ public class ClientMain {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int value = (Integer) panel.getActivityTimerMinutesSpinner().getValue();
-                controllerClient.startActivityTimer(value);
+                controllerClient.startActivityTimer(value * 10000);
+                System.out.println(value);
             }
         });
 
@@ -113,5 +119,13 @@ public class ClientMain {
 
     public Message getMessage() {
         return message;
+    }
+
+    public MainFrame getFrame() {
+        return frame;
+    }
+
+    public MainPanel getMainPanel() {
+        return mainPanel;
     }
 }
