@@ -94,6 +94,14 @@ public class ActivityManager {
         try  {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("files/activities.dat"))) {
 
+                for (Activity activity: activityList) {
+                    writer.write("title:" + activity.getName());
+                    writer.write("instruction:" + activity.getInstruction());
+                    writer.write("description:" + activity.getInfo());
+                    String imagePath = "images_server/" + activity.getName() + ".jpg";
+                }
+
+
                 writer.write("title:" + data.getName());
                 writer.write("instruction:" + data.getInstruction());
                 writer.write("description:" + data.getInfo());
