@@ -99,6 +99,13 @@ public class ClientMain {
             }
         });
 
+        panel.getRemoveActivityFromCompletedList().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.getListModel().remove(mainPanel.getActivityList().getSelectedIndex());
+            }
+        });
+
         panel.getCreateNewActivityButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -117,16 +124,28 @@ public class ClientMain {
                 Activity activity = new Activity(panel.getTitleInputField().getText());
                 activity.setDescription(panel.getDescriptionTextArea().getText());
                 activity.setInstruction(panel.getInstructionTextArea().getText());
+                activity.setImage(panel.getIcon());
                 message = new Message(activity, user, MessageType.SaveActivity);
                 controllerClient.sendObject(message); //TODO lägg till bild
             }
         });
+
+        panel.getImageSubmitButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.selectImage();
+            }
+        });
+
+        panel.getCancelButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.swapPanel(mainPanel);
+            }
+        });
+
         System.out.println("SETUP ACTIVITY EDITOR PANEL"); //TODO action listeners for panel
 
-    }
-
-    public ActivityEditorPanel getPanel() {
-        return panel;
     }
 
     public Message getMessage() {
