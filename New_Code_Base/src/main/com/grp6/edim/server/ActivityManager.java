@@ -96,18 +96,25 @@ public class ActivityManager {
 
                 for (Activity activity: activityList) {
                     writer.write("title:" + activity.getName());
+                    writer.newLine();
                     writer.write("instruction:" + activity.getInstruction());
+                    writer.newLine();
                     writer.write("description:" + activity.getInfo());
+                    writer.newLine();
                     String imagePath = "images_server/" + activity.getName() + ".jpg";
+                    writer.newLine();
                 }
 
 
                 writer.write("title:" + data.getName());
+                writer.newLine();
                 writer.write("instruction:" + data.getInstruction());
+                writer.newLine();
                 writer.write("description:" + data.getInfo());
-
+                writer.newLine();
                 ImageIcon icon = data.getImage();
                 String imagePath = "images_server/" + data.getName() + ".jpg";
+                writer.newLine();
                 BufferedImage image = (BufferedImage) icon.getImage();
 
                 try {
