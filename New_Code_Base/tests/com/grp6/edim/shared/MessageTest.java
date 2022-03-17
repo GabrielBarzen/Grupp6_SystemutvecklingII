@@ -1,10 +1,13 @@
-package com.grp6.edim.server;
+package com.grp6.edim.shared;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Author: Viktor Näslund
+ */
 class MessageTest {
 
     Message message;

@@ -1,11 +1,14 @@
 package com.grp6.edim.shared;
 
-import com.grp6.edim.server.MessageType;
+import com.grp6.edim.shared.MessageType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Author: Viktor Näslund
+ */
 class ActivityTest {
 
 
@@ -17,19 +20,18 @@ class ActivityTest {
     }
 
     @Test
-    void getActivityName() {
-        assertEquals("Name", activity.getActivityName());
+    void setActivityName() {
+        assertEquals("Name", activity.setActivityName("Name"));
     }
 
     @Test
-    void getActivityInfo() {
-        activity.setDescription("Info");
-        assertEquals("Info", activity.getActivityInfo());
+    void setDescription() {
+        assertEquals("Info", activity.setDescription("Info"));
     }
 
     @Test
-    void getActivityUser() {
-        activity.setActivityUser("User");
-        assertEquals("User", activity.getActivityUser());
+    void getInstruction() {
+        activity.setInstruction("Instruction");
+        assertEquals("Instruction", activity.getInstruction());
     }
 }
