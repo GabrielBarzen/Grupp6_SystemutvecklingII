@@ -49,7 +49,7 @@ public class CommunicationController {
         switch (message.getType()) {
 
             case Login : {
-                Logger.log("illegal login", LogLevel.Warning);
+                Logger.log("Invalid login, login not handled by handleMessage method", LogLevel.Warning);
             }
             break;
             case Logout : {
@@ -150,7 +150,7 @@ public class CommunicationController {
 
 
                         MessageController messageController1 = connectionMap.get(user);
-                        Message outgoingMessage = new Message(null,user,MessageType.Login);
+                        Message outgoingMessage = new Message("Login OK",user,MessageType.OK);
                         messageController1.getSender().send(outgoingMessage);
                     }
                 }
