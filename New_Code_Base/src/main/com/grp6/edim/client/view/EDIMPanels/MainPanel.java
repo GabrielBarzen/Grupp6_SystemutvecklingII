@@ -5,10 +5,7 @@ package com.grp6.edim.client.view.EDIMPanels;
 import com.grp6.edim.shared.Activity;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
 import java.awt.*;
 
 public class MainPanel extends EDIMPanel {
@@ -21,6 +18,8 @@ public class MainPanel extends EDIMPanel {
     private JList<Activity> activityList;
     private JLabel activityInfoLabel;
     private JLabel timeRemainingLabel;
+    private JPanel listPanel;
+    private DefaultListModel model;
 
     private int panelWidth = 1280;
     private int panelHeight = 720;
@@ -34,7 +33,7 @@ public class MainPanel extends EDIMPanel {
         JPanel controlPanel = new JPanel(new GridBagLayout());
         JPanel controlPannerInner = new JPanel();
         controlPannerInner.setLayout(new BoxLayout(controlPannerInner,BoxLayout.PAGE_AXIS));
-        JPanel listPanel = new JPanel(new FlowLayout());
+        listPanel = new JPanel(new FlowLayout());
         JPanel dataPanel = new JPanel(new FlowLayout());
         JPanel buttonPanel = new JPanel(new FlowLayout());
 
@@ -90,6 +89,9 @@ public class MainPanel extends EDIMPanel {
                 activityInfoLabel.setText(activityList.getSelectedValue().getInfo());
             }
         });
+
+        model = new DefaultListModel();
+        activityList = new JList<>(model);
 
         activityList.setPreferredSize(new Dimension(panelWidth/3-30,panelHeight-100));
         listPanel.add(activityList);
@@ -180,5 +182,9 @@ public class MainPanel extends EDIMPanel {
 
     public JLabel getTimeRemainingLabel() {
         return timeRemainingLabel;
+    }
+
+    public DefaultListModel getListModel() {
+        return model;
     }
 }
