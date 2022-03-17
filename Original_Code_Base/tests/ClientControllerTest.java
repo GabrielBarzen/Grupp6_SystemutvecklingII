@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Ardian Glamniki
+ */
 class ClientControllerTest {
     private ClientController clientController;
 
