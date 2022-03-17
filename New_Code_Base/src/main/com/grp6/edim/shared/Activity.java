@@ -1,6 +1,7 @@
 package com.grp6.edim.shared;
 
 import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,7 +18,7 @@ public class Activity implements Serializable {
     private String name;
     private String instruction;
     private String info;
-    private ImageIcon image;
+    private BufferedImage image;
 
     public String getTime() {
         Date date = new Date();
@@ -57,19 +58,15 @@ public class Activity implements Serializable {
         return instruction;
     }
 
-    public ImageIcon setImage(ImageIcon icon) {
-        image = icon;
+    public BufferedImage setImage(BufferedImage bufferedImage) {
+        this.image = bufferedImage;
+        return this.image;
+    }
+
+    public BufferedImage getImage() {
         return image;
     }
 
-    public ImageIcon getImage() {
-        return image;
-    }
-
-    public ImageIcon createActivityImage(String fileName) {
-        image = new ImageIcon(fileName);
-        return image;
-    }
 
 
     public void setName(String name) {

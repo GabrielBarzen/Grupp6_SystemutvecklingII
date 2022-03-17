@@ -128,7 +128,7 @@ public class CommunicationControllerClient {
     }
 
     public ImageIcon createActivityIcon(Activity activity) {
-        ImageIcon activityIcon = activity.getImage();
+        ImageIcon activityIcon = new ImageIcon(activity.getImage());
         Image image = activityIcon.getImage();
         Image newImg = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
         return new ImageIcon(newImg);
