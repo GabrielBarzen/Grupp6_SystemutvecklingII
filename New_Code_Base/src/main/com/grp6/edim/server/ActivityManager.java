@@ -93,14 +93,13 @@ public class ActivityManager {
 
         try  {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("files/activities.dat"))) {
-                Activity activity = null;
 
-                writer.write("title:" + activity.getName());
-                writer.write("instruction:" + activity.getInstruction());
-                writer.write("description:" + activity.getInfo());
+                writer.write("title:" + data.getName());
+                writer.write("instruction:" + data.getInstruction());
+                writer.write("description:" + data.getInfo());
 
-                ImageIcon icon = activity.getImage();
-                String imagePath = "images_server/" + activity.getName() + ".jpg";
+                ImageIcon icon = data.getImage();
+                String imagePath = "images_server/" + data.getName() + ".jpg";
                 BufferedImage image = (BufferedImage) icon.getImage();
 
                 try {
