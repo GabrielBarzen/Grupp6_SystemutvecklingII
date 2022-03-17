@@ -53,6 +53,14 @@ public class ClientController {
         ccc.sendObject(image);
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public ClientCommunicationController getClientCommunicationController() {
+        return ccc;
+    }
+
     /**
      * Sets the UserType to LOGIN and sends the user object to ClientCommunicationController.
      */
