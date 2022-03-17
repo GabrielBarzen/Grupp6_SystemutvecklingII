@@ -2,6 +2,7 @@ package com.grp6.edim.client.view.EDIMPanels;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public abstract class EDIMPanel extends JPanel {
 

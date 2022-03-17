@@ -1,5 +1,7 @@
 package com.grp6.edim.client.view.EDIMPanels;
 
+import com.grp6.edim.shared.User;
+
 import javax.swing.*;
 import java.awt.*;
 

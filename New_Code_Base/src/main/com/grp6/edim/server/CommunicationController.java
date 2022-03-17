@@ -1,15 +1,12 @@
 package com.grp6.edim.server;
 
-import com.grp6.edim.shared.Activity;
-import com.grp6.edim.shared.Buffer;
-import com.grp6.edim.shared.User;
+import com.grp6.edim.shared.*;
 
 import com.grp6.edim.server.API.MessageController;
 import com.grp6.edim.server.API.Receiver;
 import com.grp6.edim.server.API.Sender;
 import com.grp6.edim.server.logging.LogLevel;
 import com.grp6.edim.server.logging.Logger;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
@@ -28,10 +25,19 @@ public class CommunicationController {
         threadPoolExecutor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         connectionMap  = new HashMap<>();
         Thread thread = new Thread(new receiver_handler());
+        thread.start();
     }
 
-    public void sendObject(User user, Message message) {
-        connectionMap.get(user).getSender().send(message);
+    public void sendObject(Message message) {
+
+        System.out.println("getting user    : " + message.getUser().getUsername() + ", in hashmap : " + connectionMap + ", with hashcode : " + message.getUser().hashCode());
+
+        System.out.println("Hashmap contents : ");
+        for (Map.Entry entry: connectionMap.entrySet()) {
+            System.out.println(entry);
+        }
+        connectionMap.get(message.getUser()).getSender().send(message);
+
     }
 
     public void receiveMessage(Message message) {
@@ -39,6 +45,7 @@ public class CommunicationController {
     }
 
     public Object handleMessage(Message message) {
+
         switch (message.getType()) {
 
             case Login : {
@@ -52,8 +59,10 @@ public class CommunicationController {
 
             case NewActivity : {
                 Logger.log("new activity requested", LogLevel.Debug);
-                Message outgoingMessage = new Message(ServerMain.getActivityManager().getRandomActivity(),null,MessageType.NewActivity);
-                sendObject(message.getUser(),outgoingMessage);
+                Message outgoingMessage = new Message(ServerMain.getActivityManager().getRandomActivity(),message.getUser(), MessageType.NewActivity);
+
+                sendObject(outgoingMessage);
+
             }
             break;
 
@@ -86,7 +95,9 @@ public class CommunicationController {
         @Override
         public void run() {
             try {
-                handleMessage(receiveBuffer.get());
+                while (true) {
+                    handleMessage(receiveBuffer.get());
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -108,11 +119,12 @@ public class CommunicationController {
         public void run() {
             try {
 
-                InputStream is = clientSocket.getInputStream();
                 OutputStream os = clientSocket.getOutputStream();
+                InputStream is = clientSocket.getInputStream();
 
-                ObjectInputStream ois = new ObjectInputStream(is);
+
                 ObjectOutputStream oos = new ObjectOutputStream(os);
+                ObjectInputStream ois = new ObjectInputStream(is);
 
                 Object obj = ois.readObject();
 
@@ -121,16 +133,25 @@ public class CommunicationController {
                     if (message.getType().equals(MessageType.Login)) {
                         User user = message.getUser();
 
+
+
                         reciever = new Receiver(communicationController, ois);
                         sender = new Sender(communicationController, oos);
 
                         reciever.start();
                         sender.start();
 
-                        connectionMap.put(user, new MessageController(reciever, sender));
 
+                        MessageController messageController = new MessageController(reciever, sender);
+
+                        System.out.println("putting user    : " + user.getUsername() + ", in hashmap : " + connectionMap + ", with hashcode : " + user.hashCode());
+                        connectionMap.put(user, messageController);
+                        System.out.println("put user        : " + user.getUsername() + ", in hashmap : " + connectionMap + ", with hashcode : " + user.hashCode());
+
+
+                        MessageController messageController1 = connectionMap.get(user);
                         Message outgoingMessage = new Message(null,user,MessageType.Login);
-                        sender.send(outgoingMessage);
+                        messageController1.getSender().send(outgoingMessage);
                     }
                 }
 

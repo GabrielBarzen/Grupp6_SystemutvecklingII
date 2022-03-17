@@ -1,20 +1,24 @@
-package com.grp6.edim.server.API;
+package com.grp6.edim.client.controller;
 
-import com.grp6.edim.shared.Buffer;
-import com.grp6.edim.server.CommunicationController;
 import com.grp6.edim.server.logging.LogLevel;
 import com.grp6.edim.server.logging.Logger;
+import com.grp6.edim.shared.Buffer;
 import com.grp6.edim.shared.Message;
 
 import java.io.ObjectOutputStream;
 
 public class Sender implements Runnable {
-
-    private CommunicationController communicationController;
+    private CommunicationControllerClient communicationController;
     private boolean isRunning = false;
     private ObjectOutputStream outputStream;
     private Buffer<Object> buffer = new Buffer<>();
+
     private Thread thread = null;
+
+    public Sender(CommunicationControllerClient communicationController, ObjectOutputStream outputStream) {
+        this.communicationController = communicationController;
+        this.outputStream = outputStream;
+    }
 
     public void start() {
         if (thread == null) {
@@ -36,20 +40,13 @@ public class Sender implements Runnable {
         }
     }
 
-    public Sender(CommunicationController communicationController, ObjectOutputStream outputStream) {
-        this.communicationController = communicationController;
-        this.outputStream = outputStream;
-    }
-
     public void send(Message obj) {
         buffer.put(obj);
     }
 
-
-
     @Override
     public void run() {
-        while (isRunning) {
+        while(isRunning) {
             try {
                 outputStream.writeObject(buffer.get());
             } catch (Exception e) {
@@ -58,6 +55,4 @@ public class Sender implements Runnable {
             }
         }
     }
-
-
 }

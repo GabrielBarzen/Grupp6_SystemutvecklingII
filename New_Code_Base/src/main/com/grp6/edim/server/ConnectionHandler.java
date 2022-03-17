@@ -36,4 +36,7 @@ public class ConnectionHandler implements Runnable {
         isRunning = false;
     }
 
+    public int getPort() {
+        return port;
+    }
 }

@@ -1,10 +1,9 @@
-
 package com.grp6.edim.shared;
-
-
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.Objects;
+
 
 /**
  * This class handles the information about a user-object.
@@ -34,4 +33,12 @@ public class User implements Serializable {
     public int hashCode() {
         return username.hashCode();
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        User user = (User) o;
+        return user.username.equals(this.getUsername());
+    }
+
 }

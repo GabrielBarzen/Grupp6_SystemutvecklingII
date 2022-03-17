@@ -1,6 +1,4 @@
-package com.grp6.edim.server;
-
-import com.grp6.edim.shared.User;
+package com.grp6.edim.shared;
 
 import java.io.Serializable;
 

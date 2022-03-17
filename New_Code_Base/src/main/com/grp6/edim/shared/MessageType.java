@@ -1,4 +1,4 @@
-package com.grp6.edim.server;
+package com.grp6.edim.shared;
 
 public enum MessageType {
     Login,
