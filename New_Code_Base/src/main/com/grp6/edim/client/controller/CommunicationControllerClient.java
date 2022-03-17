@@ -17,7 +17,7 @@ public class CommunicationControllerClient {
 
     private Communication communication;
     private Buffer<Message> sendBuffer = new Buffer<>();
-    private Timer timer;
+    private Timer timer = new Timer();
     private User user;
     private int value;
     private ClientMain main;
@@ -136,7 +136,7 @@ public class CommunicationControllerClient {
 
     public void startActivityTimer(int value) {
         this.value = value;
-        timer = new java.util.Timer();
+        timer = new Timer();
         System.out.println("timertask starting");
         timer.schedule(new TimerTask() {
             @Override
@@ -145,6 +145,10 @@ public class CommunicationControllerClient {
                 sendObject(new Message(null, user, MessageType.NewActivity));
             }
         }, value);
+    }
+
+    public void stopActivityTimer() {
+        timer.cancel();
     }
 }
 

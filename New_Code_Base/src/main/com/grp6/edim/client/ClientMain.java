@@ -82,6 +82,7 @@ public class ClientMain {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int value = (Integer) panel.getActivityTimerMinutesSpinner().getValue();
+                controllerClient.stopActivityTimer();
                 controllerClient.startActivityTimer(value * 10000);
                 System.out.println(value);
             }
