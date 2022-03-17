@@ -7,7 +7,6 @@ import com.grp6.edim.server.API.Receiver;
 import com.grp6.edim.server.API.Sender;
 import com.grp6.edim.server.logging.LogLevel;
 import com.grp6.edim.server.logging.Logger;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;

@@ -82,11 +82,6 @@ public class User implements Serializable {
         return delayedActivity;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        User user = (User) o;
-        return user.getUsername().equals(this.getUsername());
-    }
 
     @Override
     public int hashCode() {

@@ -2,6 +2,7 @@ package com.grp6.edim.client.controller;
 
 public class Communication {
 
+
     private Receiver receiver;
     private Sender sender;
 
@@ -24,6 +25,7 @@ public class Communication {
 
     public void setSender(Sender sender) {
         this.sender = sender;
+
     }
 
 }

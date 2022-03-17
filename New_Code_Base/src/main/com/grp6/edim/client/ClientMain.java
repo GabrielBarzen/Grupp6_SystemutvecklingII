@@ -1,18 +1,23 @@
 package com.grp6.edim.client;
 
+
 import com.grp6.edim.client.controller.Communication;
 import com.grp6.edim.client.controller.CommunicationControllerClient;
 import com.grp6.edim.client.controller.Receiver;
 import com.grp6.edim.client.controller.Sender;
+
 import com.grp6.edim.client.view.EDIMPanels.ActivityEditorPanel;
 import com.grp6.edim.client.view.EDIMPanels.LoginPanel;
 import com.grp6.edim.client.view.MainFrame;
 import com.grp6.edim.client.view.EDIMPanels.MainPanel;
+
 import com.grp6.edim.shared.*;
+
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.util.TimerTask;
@@ -28,6 +33,7 @@ public class ClientMain {
     private MainPanel mainPanel = new MainPanel();
     private Socket socket;
 
+
     public static void main(String[] args) {
         new ClientMain();
     }
@@ -38,6 +44,7 @@ public class ClientMain {
 
     private void startClient() {
         frame = new MainFrame(this);
+
         try {
             socket = new Socket("localhost", port);
 
@@ -45,6 +52,7 @@ public class ClientMain {
             e.printStackTrace();
         }
         controllerClient = new CommunicationControllerClient(this, socket);
+
     }
 
     public void setupLogin(LoginPanel loginPanel) {
@@ -56,10 +64,12 @@ public class ClientMain {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println("Add login logic, username info : " + textField.getText()); //TODO add login logic
+
                 user = new User(textField.getText());
                 controllerClient.sendObject(new Message(null, user, MessageType.Login));
                 controllerClient.setUser(user);
                 frame.swapPanel(mainPanel);
+
             }
         });
 
@@ -98,6 +108,7 @@ public class ClientMain {
         System.out.println("SETUP MAIN PANEL"); //TODO action listeners for panel
     }
 
+
         public void setupActivityEditor(ActivityEditorPanel panel) {
         panel.getSaveButton().addActionListener(new ActionListener() {
             @Override
@@ -129,4 +140,5 @@ public class ClientMain {
     public MainPanel getMainPanel() {
         return mainPanel;
     }
+
 }

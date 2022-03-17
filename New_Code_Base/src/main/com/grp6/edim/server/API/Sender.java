@@ -2,9 +2,9 @@ package com.grp6.edim.server.API;
 
 import com.grp6.edim.shared.Buffer;
 import com.grp6.edim.server.CommunicationController;
-import com.grp6.edim.shared.Message;
 import com.grp6.edim.server.logging.LogLevel;
 import com.grp6.edim.server.logging.Logger;
+import com.grp6.edim.shared.Message;
 
 import java.io.ObjectOutputStream;
 
