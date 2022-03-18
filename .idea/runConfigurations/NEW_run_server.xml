@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="NEW_run_server" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.grp6.edim.server.ServerMain" />
+    <module name="New_Code_Base" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/New_Code_Base" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
