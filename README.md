@@ -19,4 +19,9 @@ Run the bundled configuration : ```OLD_run_server```</br>
 2. Run client </br>
 Run the bundled configuration : ```OLD_run_client```</br>
 
+## Test
+To run tests read individual readmes in :
+Original_Code_Base/tests
+New_Code_Base/tests
+
 
