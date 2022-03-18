@@ -38,3 +38,19 @@ title:Knäböj på ett ben
 instruction:Gör 10 knäböj på ett ben! Det andra benet ska peka rakt framåt. &Börja med 5 på höger ben och avsluta med 5 på vänstra.&
 description:Du har nu tränat lår, rumpa, balans och dessutom ökat din koncentration.
 image_path:images_server/ettben.jpg
+title:Calf raises
+instruction:Ställ dig på tårna och pausa en kort stund innan du ställer dig ned igen. Upprepa 20 gånger.
+description:Nu har du tränat benmusklerna samt ökat blodcirkulationen.
+image_path:images_server/calfRaises.jpg
+title:Plank
+instruction:Placera armbågarna och tårna i marken. Spänn magen och håll kvar positionen så länge du orkar (högst 2 min).
+description:Plankan tränar främst magmusklerna men involverar& nästan varje muskelgrupp i kroppen.
+image_path:images_server/plank.jpg
+title:Wallsit
+instruction:Ställ dig med ryggen mot en vägg och böj knäna så du står i en sittposition.Håll i 1 min.
+description:Nu har du tränat underkroppen, magmusklerna samt ökat din uthållighet.
+image_path:images_server/wallsit.jpg
+title:Sidoutfall
+instruction:Stå med fötterna ihop och kliv rakt ut i sidled med ena foten,& låt andra benet stå kvar samtidigt som du sjunker nedåt/bakåt med rumpan. Upprepa 10 gånger på varje ben.
+description:Nu har du tränat musklerna i underkroppen och dina höfter.
+image_path:images_server/lateralLunge.jpg
