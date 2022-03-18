@@ -4,8 +4,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -20,7 +18,7 @@ public class ActivityEditorPanel extends EDIMPanel {
     private JButton saveButton;
     private JLabel imageLabel = new JLabel();
     private BufferedImage bufferedImage;
-    private ImageIcon icon;
+    private BufferedImage icon;
 
 
     public ActivityEditorPanel(){
@@ -137,8 +135,8 @@ public class ActivityEditorPanel extends EDIMPanel {
         if(response == JFileChooser.APPROVE_OPTION) {
             file = fileChooser.getSelectedFile();
             try {
-                icon = new ImageIcon(scaleImage(120,120, ImageIO.read(new File(file.getAbsolutePath()))));
-                imageLabel.setIcon(icon);
+                icon = scaleImage(120,120, ImageIO.read(new File(file.getAbsolutePath())));
+                //imageLabel.setIcon(icon);
             } catch(Exception e) {}
         }
     }
@@ -184,7 +182,7 @@ public class ActivityEditorPanel extends EDIMPanel {
         return saveButton;
     }
 
-    public ImageIcon getIcon() {
+    public BufferedImage getIcon() {
         return icon;
     }
 }

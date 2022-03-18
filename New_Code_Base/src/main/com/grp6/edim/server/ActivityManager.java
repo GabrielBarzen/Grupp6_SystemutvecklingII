@@ -76,19 +76,19 @@ public class ActivityManager {
     }
 
 
-    public void saveActivity(Activity data) {
+    public String saveActivity(Activity data) {
 
         if (data.getName() == null) {
-            return;
+            return null;
         }
         if (data.getInstruction() == null) {
-            return;
+            return null;
         }
         if (data.getInfo() == null) {
-            return;
+            return null;
         }
         if (data.getImage() == null) {
-            return;
+            return "Needs to include an image";
         }
 
         try  {
@@ -102,6 +102,14 @@ public class ActivityManager {
                     writer.write("description:" + activity.getInfo());
                     writer.newLine();
                     String imagePath = "images_server/" + activity.getName() + ".jpg";
+                    BufferedImage image = (BufferedImage) activity.getImage().getImage();
+                    try {
+                        if(image != null) {
+                            File file = new File(imagePath);
+                            ImageIO.write(image, "jpg", file);
+                        }
+                    }catch(Exception e) {    }
+                    writer.write("image_path:" + imagePath);
                     writer.newLine();
                 }
 
@@ -122,15 +130,16 @@ public class ActivityManager {
                         File file = new File(imagePath);
                         ImageIO.write(image, "jpg", file);
                     }
-
                 }catch(Exception e) {    }
 
                 writer.write("image_path:" + imagePath);
 
 
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
