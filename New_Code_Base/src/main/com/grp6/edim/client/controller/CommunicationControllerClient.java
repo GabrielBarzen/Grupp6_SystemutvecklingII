@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.Socket;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -106,7 +107,7 @@ public class CommunicationControllerClient {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, activityIcon, buttons, buttons[0]);
         if (answer == 0) {
             //TODO lista ska uppdateras
-            main.getMainPanel().getListModel().addElement(activity.getName());
+            main.getMainPanel().getListModel().addElement(activity.getName() + new Date());
             startActivityTimer(value * 60 * 1000);
         } else {
             startActivityTimer(5 * 60 * 1000);

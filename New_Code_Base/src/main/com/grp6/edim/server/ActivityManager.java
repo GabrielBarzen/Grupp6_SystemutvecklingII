@@ -63,11 +63,12 @@ public class ActivityManager {
                         }
                         case "image_path" -> {
                             if (activity != null){
-
-                                activity.setImage(ImageIO.read(new File(split[1])));
-                                System.out.println(ImageIO.read(new File(split[1])));
-                                System.out.println(activity.getImage());
                                 System.out.println("path : " + split[1]);
+
+                                System.out.println(ImageIO.read(new File(split[1])));
+                                activity.setImage(ImageIO.read(new File(split[1])));
+                                System.out.println(activity.getImage());
+                                activity.setImgPath(split[1]);
                                 activityList.add(activity);
                                 activity = null;
                             }
@@ -118,6 +119,9 @@ public class ActivityManager {
                     writer.write("description:" + activity.getInfo());
                     writer.newLine();
                     String imagePath = "image_path:images_server/" + activity.getName() + ".jpeg";
+                    if (activity.getImgPath() != null) {
+                        imagePath = "image_path:" + activity.getImgPath();
+                    }
                     writer.write(imagePath);
                     writer.newLine();
                 }

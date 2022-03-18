@@ -20,6 +20,16 @@ public class Activity implements Serializable {
     private String name;
     private String instruction;
     private String info;
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
+    private String imgPath;
     private byte[] imageStore;
 
     public String getTime() {
