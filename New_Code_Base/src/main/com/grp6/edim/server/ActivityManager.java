@@ -101,8 +101,20 @@ public class ActivityManager {
                     writer.newLine();
                     writer.write("description:" + activity.getInfo());
                     writer.newLine();
+<<<<<<< HEAD
                     String imagePath = "images_server/" + activity.getName() + ".jpeg";
                     writer.write(imagePath);
+=======
+                    String imagePath = "images_server/" + activity.getName() + ".jpg";
+                    BufferedImage image = (BufferedImage) activity.getImage().getImage();
+                    try {
+                        if(image != null) {
+                            File file = new File(imagePath);
+                            ImageIO.write(image, "jpg", file);
+                        }
+                    }catch(Exception e) {    }
+                    writer.write("image_path:" + imagePath);
+>>>>>>> c0d12ab (path fix)
                     writer.newLine();
                 }
 
