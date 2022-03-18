@@ -12,6 +12,10 @@ import server.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+
+/**
+ * @Author Gabriel Modin Bärzén
+ */
 class CommunicationTest {
     ClientCommunicationController clientCommunicationController;
     ServerController server;
