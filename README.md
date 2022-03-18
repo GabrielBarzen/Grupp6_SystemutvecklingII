@@ -1,4 +1,6 @@
 # EDIM
+To run the new codebase java 14 or newer is required.
+To run the old codebase java 11 or newer is required.
 ## New Codebase
 The new codebase was created in sprint 4. </br>
 The developers for sprint 4 made the decision to create the new codebase as the architecture and structure of the old codebase  was difficult to develop for and contained other fundamental issues.
