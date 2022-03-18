@@ -182,7 +182,7 @@ public class ActivityEditorPanel extends EDIMPanel {
         return saveButton;
     }
 
-    public BufferedImage getIcon() {
+    public BufferedImage getImage() {
         return icon;
     }
 }

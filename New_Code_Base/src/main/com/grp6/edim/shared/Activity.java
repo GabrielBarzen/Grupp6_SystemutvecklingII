@@ -1,8 +1,8 @@
 package com.grp6.edim.shared;
 
-import javax.swing.*;
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.Serializable;
+import java.io.*;
 import java.util.Date;
 
 
@@ -18,7 +18,7 @@ public class Activity implements Serializable {
     private String name;
     private String instruction;
     private String info;
-    private BufferedImage image;
+    private byte[] imageStore;
 
     public String getTime() {
         Date date = new Date();
@@ -58,17 +58,18 @@ public class Activity implements Serializable {
         return instruction;
     }
 
-    public BufferedImage setImage(BufferedImage bufferedImage) {
-        this.image = bufferedImage;
-        return this.image;
+    public void setImage(BufferedImage bufferedImage) throws IOException {
+        ByteArrayOutputStream BAOS = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage,"jpg",BAOS);
+        this.imageStore = BAOS.toByteArray();
     }
 
-    public BufferedImage getImage() {
-        return image;
+    public BufferedImage getImage() throws IOException {
+        InputStream is = new ByteArrayInputStream(imageStore);
+        BufferedImage bi = ImageIO.read(is);
+        return bi;
+
     }
-
-
-
 
     public void setName(String name) {
         this.name = name;

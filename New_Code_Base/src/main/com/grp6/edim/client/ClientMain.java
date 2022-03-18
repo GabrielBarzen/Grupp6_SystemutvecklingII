@@ -124,7 +124,11 @@ public class ClientMain {
                 Activity activity = new Activity(panel.getTitleInputField().getText());
                 activity.setDescription(panel.getDescriptionTextArea().getText());
                 activity.setInstruction(panel.getInstructionTextArea().getText());
-                activity.setImage(panel.getIcon());
+                try {
+                    activity.setImage(panel.getImage());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
                 message = new Message(activity, user, MessageType.SaveActivity);
                 controllerClient.sendObject(message); //TODO lägg till bild
             }

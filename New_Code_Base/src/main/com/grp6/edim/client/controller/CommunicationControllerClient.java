@@ -128,10 +128,15 @@ public class CommunicationControllerClient {
     }
 
     public ImageIcon createActivityIcon(Activity activity) {
-        ImageIcon activityIcon = new ImageIcon(activity.getImage());
-        Image image = activityIcon.getImage();
-        Image newImg = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-        return new ImageIcon(newImg);
+        try {
+            ImageIcon activityIcon = new ImageIcon(activity.getImage());
+            Image image = activityIcon.getImage();
+            Image newImg = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+            return new ImageIcon(newImg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void startActivityTimer(int value) {

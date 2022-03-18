@@ -91,7 +91,11 @@ public class ActivityManager {
         if (data.getInfo() == null) {
             return null;
         }
-        if (data.getImage() == null) {
+        try {
+            if (data.getImage() == null) {
+                return "Needs to include an image";
+            }
+        } catch (Exception e) {
             return "Needs to include an image";
         }
 
