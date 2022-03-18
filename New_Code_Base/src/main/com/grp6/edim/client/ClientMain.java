@@ -114,6 +114,13 @@ public class ClientMain {
         });
 
         System.out.println("SETUP MAIN PANEL"); //TODO action listeners for panel
+
+        panel.getExitButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
     }
 
 
@@ -126,7 +133,8 @@ public class ClientMain {
                 activity.setInstruction(panel.getInstructionTextArea().getText());
                 activity.setImage(panel.getIcon());
                 message = new Message(activity, user, MessageType.SaveActivity);
-                controllerClient.sendObject(message); //TODO lägg till bild
+                controllerClient.sendObject(message);
+                frame.swapPanel(mainPanel);
             }
         });
 

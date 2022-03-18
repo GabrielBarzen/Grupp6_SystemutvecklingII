@@ -86,7 +86,7 @@ public class ActivityManager {
             return null;
         }
         if (data.getInstruction() == null) {
-            return null;
+            return "Needs to include an instruction";
         }
         if (data.getInfo() == null) {
             return null;
