@@ -65,6 +65,9 @@ public class ActivityManager {
                             if (activity != null){
 
                                 activity.setImage(ImageIO.read(new File(split[1])));
+                                System.out.println(ImageIO.read(new File(split[1])));
+                                System.out.println(activity.getImage());
+                                System.out.println("path : " + split[1]);
                                 activityList.add(activity);
                                 activity = null;
                             }
@@ -83,16 +86,20 @@ public class ActivityManager {
     public String saveActivity(Activity data) {
 
         if (data.getName() == null) {
+            Logger.log("Activity name is null", LogLevel.Debug);
             return null;
         }
         if (data.getInstruction() == null) {
+            Logger.log("Instruction is null", LogLevel.Debug);
             return null;
         }
         if (data.getInfo() == null) {
+            Logger.log("Description is null", LogLevel.Debug);
             return null;
         }
         try {
             if (data.getImage() == null) {
+                Logger.log("Image is null", LogLevel.Debug);
                 return "Needs to include an image";
             }
         } catch (Exception e) {
@@ -110,7 +117,7 @@ public class ActivityManager {
                     writer.newLine();
                     writer.write("description:" + activity.getInfo());
                     writer.newLine();
-                    String imagePath = "images_server/" + activity.getName() + ".jpeg";
+                    String imagePath = "image_path:images_server/" + activity.getName() + ".jpeg";
                     writer.write(imagePath);
                     writer.newLine();
                 }

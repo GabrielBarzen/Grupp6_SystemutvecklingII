@@ -16,9 +16,7 @@ public class ActivityEditorPanel extends EDIMPanel {
     private JButton imageSubmitButton;
     private JButton cancelButton;
     private JButton saveButton;
-    private JLabel imageLabel = new JLabel();
-    private BufferedImage bufferedImage;
-    private BufferedImage icon;
+    private BufferedImage image;
 
 
     public ActivityEditorPanel(){
@@ -135,9 +133,13 @@ public class ActivityEditorPanel extends EDIMPanel {
         if(response == JFileChooser.APPROVE_OPTION) {
             file = fileChooser.getSelectedFile();
             try {
-                icon = scaleImage(120,120, ImageIO.read(new File(file.getAbsolutePath())));
+                //image = scaleImage(120,120, ImageIO.read(file));
+                image = ImageIO.read(file);
+                System.out.println("image = " + image);
                 //imageLabel.setIcon(icon);
-            } catch(Exception e) {}
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -149,7 +151,6 @@ public class ActivityEditorPanel extends EDIMPanel {
         g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
         g2d.drawImage(img, 0, 0, w, h, null);
         g2d.dispose();
-        this.bufferedImage = bufferedImage;
         return bufferedImage;
     }
 
@@ -183,6 +184,6 @@ public class ActivityEditorPanel extends EDIMPanel {
     }
 
     public BufferedImage getImage() {
-        return icon;
+        return image;
     }
 }

@@ -69,8 +69,10 @@ public class CommunicationController {
 
             case SaveActivity : {
                 Logger.log("save activity requested", LogLevel.Debug);
-                if (message.getData() instanceof Activity)
-                ServerMain.getActivityManager().saveActivity((Activity) message.getData());
+                if (message.getData() instanceof Activity) {
+                    System.out.println((Activity) message.getData());
+                    ServerMain.getActivityManager().saveActivity((Activity) message.getData());
+                }
             } //TODO save activity to file
             break;
 

@@ -125,6 +125,7 @@ public class ClientMain {
                 activity.setDescription(panel.getDescriptionTextArea().getText());
                 activity.setInstruction(panel.getInstructionTextArea().getText());
                 try {
+                    System.out.println("image from panel : " + panel.getImage());
                     activity.setImage(panel.getImage());
                 } catch (Exception ex) {
                     ex.printStackTrace();
