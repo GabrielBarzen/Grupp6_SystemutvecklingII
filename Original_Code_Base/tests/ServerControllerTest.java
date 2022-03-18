@@ -11,6 +11,10 @@ import java.awt.image.BufferedImage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
+/**
+ * @Author Gabriel Modin Bärzén
+ */
 public class ServerControllerTest {
 
     ServerController controller = new ServerController(4343);
