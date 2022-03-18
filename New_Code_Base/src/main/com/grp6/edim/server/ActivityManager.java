@@ -7,6 +7,8 @@ import com.grp6.edim.shared.Buffer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.html.ImageView;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
@@ -61,6 +63,7 @@ public class ActivityManager {
                         }
                         case "image_path" -> {
                             if (activity != null){
+
                                 activity.setImage(ImageIO.read(new File(split[1])));
                                 activityList.add(activity);
                                 activity = null;
@@ -92,6 +95,8 @@ public class ActivityManager {
             return;
         }
 
+        activityList.add(data);
+
         try  {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("files/activities.dat"))) {
                 for (Activity activity: activityList) {
@@ -101,25 +106,14 @@ public class ActivityManager {
                     writer.newLine();
                     writer.write("description:" + activity.getInfo());
                     writer.newLine();
-<<<<<<< HEAD
                     String imagePath = "images_server/" + activity.getName() + ".jpeg";
                     writer.write(imagePath);
-=======
-                    String imagePath = "images_server/" + activity.getName() + ".jpg";
-                    BufferedImage image = (BufferedImage) activity.getImage().getImage();
-                    try {
-                        if(image != null) {
-                            File file = new File(imagePath);
-                            ImageIO.write(image, "jpg", file);
-                        }
-                    }catch(Exception e) {    }
-                    writer.write("image_path:" + imagePath);
->>>>>>> c0d12ab (path fix)
                     writer.newLine();
                 }
 
                 BufferedImage bufferedImage = data.getImage();
                 ImageIO.write(bufferedImage,"jpeg",new File("images_server/" + data.getName() + ".jpeg"));
+
 
             }
         } catch (IOException e) {

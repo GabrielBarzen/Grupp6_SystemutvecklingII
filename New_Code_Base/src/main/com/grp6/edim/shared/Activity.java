@@ -69,6 +69,7 @@ public class Activity implements Serializable {
 
 
 
+
     public void setName(String name) {
         this.name = name;
     }
