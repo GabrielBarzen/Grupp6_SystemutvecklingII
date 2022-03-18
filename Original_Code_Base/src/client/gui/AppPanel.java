@@ -8,6 +8,7 @@ import javax.swing.border.BevelBorder;
 
 import java.awt.*;
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.*;
 import java.awt.event.*;
 import java.util.Timer;
@@ -21,10 +22,9 @@ import java.util.Timer;
 public class AppPanel extends JPanel {
     private MainPanel mainPanel;
 
-    private String[] interval;
     private JLabel lblTimerInfo;
     private JTextArea taActivityInfo;
-    private JComboBox cmbTimeLimit;
+    private JTextArea txtAreaTimeLimit;
     private LinkedList<Activity> activities;
     private JList activityList;
 
@@ -35,7 +35,6 @@ public class AppPanel extends JPanel {
     private JLabel lblInterval;
     private JButton btnAddExercise;
     private TrayIcon trayIcon;
-    private JScrollBar scrollBar;
 
     private BorderLayout borderLayout = new BorderLayout();
     private ActionListener listener = new ButtonListener();
@@ -49,6 +48,7 @@ public class AppPanel extends JPanel {
     private int minuteInterval;
     private int secondInterval;
     private Activity currentActivity;
+    private int interval;
 
 
     public AppPanel(MainPanel mainPanel) {
@@ -67,7 +67,6 @@ public class AppPanel extends JPanel {
 
         createActivityList();
         createTAActivityInfo();
-        createCBTimeLimit();
         createIntervalPanel();
 
         btnLogOut = new JButton("Logga ut");
@@ -86,6 +85,7 @@ public class AppPanel extends JPanel {
 
     /**
      * @author Satya Singh
+     * Altered by: Linn Borgström
      * This method creates the interval panel on the left side of the GUI and
      * populates it with componenets
      */
@@ -102,7 +102,10 @@ public class AppPanel extends JPanel {
         btnAddExercise.addActionListener(listener);
         lblInterval = new JLabel();
         lblTimerInfo = new JLabel();
-        startTimer(Integer.parseInt((String) cmbTimeLimit.getSelectedItem()), 59);
+        txtAreaTimeLimit = new JTextArea();
+        txtAreaTimeLimit.setText("5");
+        txtAreaTimeLimit.setSize(5,5);
+        startTimer(5,59);
         updateLblInterval();
 
         JPanel centerPnl = new JPanel();
@@ -117,7 +120,7 @@ public class AppPanel extends JPanel {
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 1;
-        centerPnl.add(cmbTimeLimit, c);
+        centerPnl.add(txtAreaTimeLimit,c);
         c.gridwidth = 2;
         c.gridx = 1;
         c.gridy = 1;
@@ -139,17 +142,32 @@ public class AppPanel extends JPanel {
 
     }
 
-    public void updateLblInterval() {
-        int interval;
-        interval = Integer.parseInt((String) cmbTimeLimit.getSelectedItem());
-        lblInterval.setText("Aktivt tidsintervall: " + interval + " minuter");
+    /**
+     * @Author: Linn Borgström
+     * Date: 2022-03-04
+     * gets the interval that has been set from the textArea after the user clicks the btnInterval
+     * @return minute interval
+     */
+    public int getInterval() {
+        return interval;
     }
 
-    public void createCBTimeLimit() {
-        interval = new String[]{"5", "15", "30", "45", "60"};
-        cmbTimeLimit = new JComboBox<>(interval);
-        cmbTimeLimit.setSelectedIndex(3);
+
+    /**
+     * @Author: Linn Borgström
+     * Date: 2022-03-04
+     * Sets the interval after the user clicks the btnInterval
+     * @param interval the text from the textArea cast to an integer
+     */
+
+    public void setInterval(int interval) {
+        this.interval = interval;
     }
+
+    public void updateLblInterval() {
+        lblInterval.setText("Aktivt tidsintervall: " + getInterval() + " minuter");
+    }
+
 
     public void startTimer(int minutes, int seconds) {
         minuteInterval = minutes - 1;
@@ -221,16 +239,6 @@ public class AppPanel extends JPanel {
         activityList.setPreferredSize(new Dimension(400, 320));
         activityList.setBorder(BorderFactory.createTitledBorder("Avklarade aktiviteter"));
         activityList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
-        /*JScrollPane scrollpane = new JScrollPane(activityList);
-        scrollpane.setVerticalScrollBar(new JScrollBar(Adjustable.VERTICAL));
-        scrollpane.setVisible(true);
-        scrollpane.setPreferredSize(new Dimension(420,320));
-        add(scrollpane, BorderLayout.CENTER);
-        /*JScrollBar scrollBar = new JScrollBar(Adjustable.VERTICAL);
-        scrollBar.setVisible(true);
-        scrollBar.setPreferredSize(new Dimension(20,320));
-        activityList.add(scrollBar);
-        add(activityList, BorderLayout.CENTER);*/
         Font font = new Font("SansSerif", Font.PLAIN, 14);
         activityList.setFont(font);
     }
@@ -258,7 +266,7 @@ public class AppPanel extends JPanel {
 
     public void updateActivityList(Activity activity) {
         stopTimer();
-        startTimer(Integer.parseInt((String) cmbTimeLimit.getSelectedItem()), 59);
+        startTimer(interval, 59);
         activities.add(activity);
         listModel.addElement(activity.getActivityName() + " " + activity.getTime());
         String newActivityName = splitActivityNameAndTime(activity.getActivityName());
@@ -371,15 +379,38 @@ public class AppPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             Object click = e.getSource();
-            int interval;
+            int interval = 0;
             if (click == btnLogOut) {
                 mainPanel.logOut();
             }
             if (click == btnInterval) {
-                interval = Integer.parseInt((String) cmbTimeLimit.getSelectedItem());
-                countTimerInterval(interval);
-                mainPanel.sendChosenInterval(interval);
-                updateLblInterval();
+                boolean isNumber = false;
+                try {
+                    isNumber = true;
+                    interval = Integer.parseInt(txtAreaTimeLimit.getText());
+                    setInterval(interval);
+                    if(isNumber && interval >= 5){
+                            if (interval <= 300) {
+                                countTimerInterval(interval);
+                                mainPanel.sendChosenInterval(interval);
+                                updateLblInterval();
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "Läkare säger att det är dåligt att gå såhär länge utan paus...", "Läkarens order!", JOptionPane.OK_CANCEL_OPTION);
+                            }
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "Vänligen skriv in ett heltal över 5!","Ej ett heltal",JOptionPane.OK_CANCEL_OPTION);
+                    }
+
+
+
+                }catch (NumberFormatException n){
+                    JOptionPane.showMessageDialog(null, "Vänligen skriv in ett heltal!","Försök med en siffra",JOptionPane.OK_CANCEL_OPTION);
+                    isNumber = false;
+                }
+
+
             }
             if(click == btnAddExercise) {
                 new AddActivityFrame(mainPanel);
