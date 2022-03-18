@@ -94,20 +94,6 @@ public class CommunicationControllerClient {
         this.user = user;
     }
 
-    class receiver_handler implements Runnable {
-        @Override
-        public void run() {
-            try {
-                while (true) {
-                    handleMessage(sendBuffer.get());
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
     public void showNotification(Activity activity) {
         System.out.println("inne i showNotification");
 
@@ -154,6 +140,19 @@ public class CommunicationControllerClient {
 
     public void stopActivityTimer() {
         timer.cancel();
+    }
+
+    class receiver_handler implements Runnable {
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    handleMessage(sendBuffer.get());
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
