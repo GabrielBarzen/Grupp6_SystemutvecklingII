@@ -243,9 +243,11 @@ public class ServerController extends Thread {
     }
 
     /**
-     *
-     * @param activity
+     * @author Satya Singh
+     * Created this method to save an activity the Server thread had received.
+     * @param activity is the activity to be saved
      */
+
     public Activity saveActivityDetails(Activity activity) {
         String path[] = activity.getActivityName().split(" ");
         imagePath = "imagesServer/" + path[0] + ".png";
@@ -271,9 +273,11 @@ public class ServerController extends Thread {
     }
 
     /**
-     *
+     * @author Satya Singh
+     * This method receives an image from the ImageReceiver thread and saves it to imagesServer.
      * @param bufferedImage refers to the image to be saved
      */
+
     public void saveActivityImage(BufferedImage bufferedImage) {
         if(imagePath != null) {
             try {
@@ -332,6 +336,10 @@ public class ServerController extends Thread {
             }
         }
     }
+    /**
+     * @author Satya Singh
+     * receives an image and calls the saveActivityImage() method
+     */
 
     private class ImageReceiver extends Thread {
         private BufferedImage bufferedImage;
