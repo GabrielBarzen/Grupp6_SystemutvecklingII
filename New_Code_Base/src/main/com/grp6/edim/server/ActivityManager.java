@@ -3,9 +3,12 @@ package com.grp6.edim.server;
 import com.grp6.edim.server.logging.LogLevel;
 import com.grp6.edim.server.logging.Logger;
 import com.grp6.edim.shared.Activity;
+import com.grp6.edim.shared.Buffer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.html.ImageView;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
@@ -60,7 +63,8 @@ public class ActivityManager {
                         }
                         case "image_path" -> {
                             if (activity != null){
-                                activity.setImage(new ImageIcon(split[1]));
+
+                                activity.setImage(ImageIO.read(new File(split[1])));
                                 activityList.add(activity);
                                 activity = null;
                             }
@@ -91,9 +95,10 @@ public class ActivityManager {
             return "Needs to include an image";
         }
 
+        activityList.add(data);
+
         try  {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("files/activities.dat"))) {
-
                 for (Activity activity: activityList) {
                     writer.write("title:" + activity.getName());
                     writer.newLine();
@@ -101,38 +106,13 @@ public class ActivityManager {
                     writer.newLine();
                     writer.write("description:" + activity.getInfo());
                     writer.newLine();
-                    String imagePath = "images_server/" + activity.getName() + ".jpg";
-                    BufferedImage image = (BufferedImage) activity.getImage().getImage();
-                    try {
-                        if(image != null) {
-                            File file = new File(imagePath);
-                            ImageIO.write(image, "jpg", file);
-                        }
-                    }catch(Exception e) {    }
-                    writer.write("image_path:" + imagePath);
+                    String imagePath = "images_server/" + activity.getName() + ".jpeg";
+                    writer.write(imagePath);
                     writer.newLine();
                 }
 
-
-                writer.write("title:" + data.getName());
-                writer.newLine();
-                writer.write("instruction:" + data.getInstruction());
-                writer.newLine();
-                writer.write("description:" + data.getInfo());
-                writer.newLine();
-                ImageIcon icon = data.getImage();
-                String imagePath = "images_server/" + data.getName() + ".jpg";
-                writer.newLine();
-                BufferedImage image = (BufferedImage) icon.getImage();
-
-                try {
-                    if(image != null) {
-                        File file = new File(imagePath);
-                        ImageIO.write(image, "jpg", file);
-                    }
-                }catch(Exception e) {    }
-
-                writer.write("image_path:" + imagePath);
+                BufferedImage bufferedImage = data.getImage();
+                ImageIO.write(bufferedImage,"jpeg",new File("images_server/" + data.getName() + ".jpeg"));
 
 
             }
